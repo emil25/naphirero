@@ -143,17 +143,22 @@ nav.rovatok button.pp::before{content:none}
   background:var(--parazs);color:#fff;overflow:hidden;position:relative;
   display:flex;align-items:center;
 }
-.vb-panel{background:linear-gradient(180deg,#1d7a4f,#166341);box-shadow:0 2px 6px rgba(0,0,0,.15)}
-.vb-panel-in{max-width:var(--maxw);margin:0 auto;padding:10px 20px 12px}
+.vb-panel{background:transparent;padding:14px 20px 6px}
+.vb-panel-in{max-width:var(--maxw);margin:0 auto;text-align:center}
+.vb-panel-doboz{
+  display:inline-block;text-align:left;max-width:100%;
+  background:linear-gradient(180deg,#1d7a4f,#166341);box-shadow:0 2px 6px rgba(0,0,0,.15);
+  border-radius:8px;padding:12px 18px 14px;
+}
 .vb-panel-fej{
   color:#fff;font-family:'Archivo',sans-serif;font-weight:800;font-size:13px;letter-spacing:.03em;
   text-transform:uppercase;margin-bottom:9px;display:flex;align-items:center;gap:8px;
 }
 .vb-alcim{font-family:'Inter',sans-serif;font-weight:500;font-size:11.5px;color:#c8ecd9;text-transform:none;letter-spacing:0}
-.vb-kartyak{display:flex;gap:14px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px;justify-content:center}
+.vb-kartyak{display:flex;gap:12px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
 .vb-kartyak::-webkit-scrollbar{display:none}
 .vb-kartya{
-  flex:0 0 auto;min-width:165px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);
+  flex:0 0 auto;width:165px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);
   border-radius:5px;padding:8px 13px;color:#fff;
 }
 .vb-kartya .kor{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:8.5px;letter-spacing:.06em;
@@ -995,8 +1000,10 @@ footer{background:var(--ej);color:#8f98a8;margin-top:40px}
 
 <section class="vb-panel" id="vb-panel" hidden>
   <div class="vb-panel-in">
-    <div class="vb-panel-fej">⚽ Labdarúgó VB 2026 <span class="vb-alcim" id="vb-alcim"></span></div>
-    <div class="vb-kartyak" id="vb-kartyak"></div>
+    <div class="vb-panel-doboz">
+      <div class="vb-panel-fej">⚽ Labdarúgó VB 2026 <span class="vb-alcim" id="vb-alcim"></span></div>
+      <div class="vb-kartyak" id="vb-kartyak"></div>
+    </div>
   </div>
 </section>
 
@@ -1059,7 +1066,7 @@ footer{background:var(--ej);color:#8f98a8;margin-top:40px}
       </ul>
     </div>
   </div>
-  <div class="lablec-also">© <span id="ev"></span> naphíre.ro · Független, algoritmikus sajtószemle és AI-vezérelt hírplatform · Minden cikk a megjelölt forrás tulajdona · <span style="color:#4a5871">build 2026-07-05 05:05 UTC</span></div>
+  <div class="lablec-also">© <span id="ev"></span> naphíre.ro · Független, algoritmikus sajtószemle és AI-vezérelt hírplatform · Minden cikk a megjelölt forrás tulajdona · <span style="color:#4a5871">build 2026-07-05 05:30 UTC</span></div>
 </footer>
 
 <script>
