@@ -143,33 +143,66 @@ nav.rovatok button.pp::before{content:none}
   background:var(--parazs);color:#fff;overflow:hidden;position:relative;
   display:flex;align-items:center;
 }
-.vb-panel{background:transparent;padding:14px 20px 6px}
-.vb-panel-in{max-width:var(--maxw);margin:0 auto;text-align:center}
-.vb-panel-doboz{
-  display:inline-block;text-align:left;max-width:100%;
-  background:linear-gradient(180deg,#1d7a4f,#166341);box-shadow:0 2px 6px rgba(0,0,0,.15);
-  border-radius:8px;padding:12px 18px 14px;
+.vb-panel{
+  margin:0 calc(50% - 50vw);position:relative;overflow:hidden;
+  background:linear-gradient(100deg,#e60a8f 0%,#a020c8 28%,#5a1fb8 55%,#2440c0 100%);
 }
-.vb-panel-fej{
-  color:#fff;font-family:'Archivo',sans-serif;font-weight:800;font-size:13px;letter-spacing:.03em;
-  text-transform:uppercase;margin-bottom:9px;display:flex;align-items:center;gap:8px;
+.vb-panel::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:130px;
+  background:#f5e400;clip-path:polygon(0 0,100% 0,45% 100%,0 100%);
 }
-.vb-alcim{font-family:'Inter',sans-serif;font-weight:500;font-size:11.5px;color:#c8ecd9;text-transform:none;letter-spacing:0}
-.vb-kartyak{display:flex;gap:12px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.vb-panel-in{
+  max-width:var(--maxw);margin:0 auto;padding:0 20px;
+  display:flex;align-items:center;gap:16px;min-height:96px;position:relative;
+}
+.vb-logo{
+  flex-shrink:0;font-family:'Archivo',sans-serif;font-weight:900;font-stretch:80%;
+  color:#fff;font-size:19px;line-height:1.02;letter-spacing:-.01em;
+  text-shadow:0 2px 0 rgba(0,0,0,.15);padding-left:6px;
+}
+.vb-logo b{display:block;color:#f5e400;font-size:1.05em}
+.vb-gombok{display:flex;flex-direction:column;gap:7px;flex-shrink:0}
+.vb-gomb{
+  display:flex;align-items:center;gap:7px;background:#fff;color:#2c1a5e;
+  font-family:'Archivo',sans-serif;font-weight:800;font-size:11.5px;letter-spacing:.01em;
+  padding:8px 14px;border-radius:5px;white-space:nowrap;border:none;cursor:pointer;
+  transition:transform .15s;
+}
+.vb-gomb:hover{transform:translateY(-1px)}
+.vb-panel-fej,.vb-panel-doboz{display:none} /* korábbi elrendezés maradványa, már nem használt */
+.vb-alcim{display:none}
+.vb-kartyak{
+  display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;
+  flex:1;min-width:0;padding:14px 4px;
+}
 .vb-kartyak::-webkit-scrollbar{display:none}
 .vb-kartya{
-  flex:0 0 auto;width:165px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);
-  border-radius:5px;padding:8px 13px;color:#fff;
+  flex:0 0 auto;width:168px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);
+  border-radius:7px;padding:9px 13px;color:#fff;backdrop-filter:blur(2px);
 }
-.vb-kartya .kor{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:8.5px;letter-spacing:.06em;
-  text-transform:uppercase;color:#a9e6c4;margin-bottom:5px;display:block}
-.vb-sor{display:flex;align-items:center;justify-content:space-between;gap:10px;font-weight:700;font-size:12.5px;padding:1px 0}
-.vb-sor .csapat{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.vb-sor .gol{font-family:'Archivo',sans-serif;font-weight:900;font-size:13px;flex-shrink:0}
-.vb-kartya .helyszin{font-size:9px;color:#a9e6c4;margin-top:5px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.vb-kartya .kesz{color:#fff}
-.vb-kartya.jatszando{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.3)}
-@media (max-width:640px){.vb-kartya{min-width:165px}}
+.vb-kartya.jatszando{background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.4)}
+.vb-kartya .kor{
+  font-family:'JetBrains Mono',ui-monospace,monospace;font-size:8px;letter-spacing:.06em;
+  text-transform:uppercase;color:#ffe066;margin-bottom:6px;display:block;font-weight:700;
+}
+.vb-sor{display:flex;align-items:center;gap:7px;font-weight:800;font-size:13px;padding:2px 0}
+.vb-sor .zaszlo{font-size:15px;flex-shrink:0}
+.vb-sor .csapat{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1}
+.vb-sor .gol{font-family:'Archivo',sans-serif;font-weight:900;font-size:14px;flex-shrink:0}
+.vb-kartya .helyszin{
+  font-size:9px;color:#e8d5ff;margin-top:7px;display:block;white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis;font-weight:600;
+}
+@media (max-width:900px){
+  .vb-logo{font-size:15px}
+  .vb-panel::before{width:90px}
+}
+@media (max-width:640px){
+  .vb-panel-in{flex-wrap:wrap;padding:14px 16px;min-height:0}
+  .vb-gombok{flex-direction:row}
+  .vb-kartyak{width:100%;order:3;padding:6px 0 4px}
+  .vb-panel::before{display:none}
+}
 .hircsik .cimke{
   flex-shrink:0;background:var(--ej);
   font-family:'Archivo',sans-serif;font-weight:800;font-size:11px;letter-spacing:.12em;
@@ -1000,10 +1033,12 @@ footer{background:var(--ej);color:#8f98a8;margin-top:40px}
 
 <section class="vb-panel" id="vb-panel" hidden>
   <div class="vb-panel-in">
-    <div class="vb-panel-doboz">
-      <div class="vb-panel-fej">⚽ Labdarúgó VB 2026 <span class="vb-alcim" id="vb-alcim"></span></div>
-      <div class="vb-kartyak" id="vb-kartyak"></div>
+    <div class="vb-logo">FOCI-VB<b>2026</b></div>
+    <div class="vb-gombok">
+      <button class="vb-gomb" onclick="valtRovat('sport')">📄 Cikkek</button>
+      <button class="vb-gomb" id="vb-adatgomb" onclick="vbTovabbiMutat()">📊 Meccsek, adatok</button>
     </div>
+    <div class="vb-kartyak" id="vb-kartyak"></div>
   </div>
 </section>
 
@@ -1020,20 +1055,6 @@ footer{background:var(--ej);color:#8f98a8;margin-top:40px}
   <div class="media-sav-in">
     <div class="brand-logo brand-etv">Erdély<span>TV</span></div>
     <div class="media-lista video-lista media-elvalasztos" id="video-lista"></div>
-  </div>
-</section>
-
-<section class="media-sav blog-sav" id="blog-sav" hidden>
-  <div class="media-sav-in">
-    <div class="brand-logo brand-szkk">Székely Konyha<span>és Kert</span></div>
-    <div class="media-lista media-elvalasztos" id="blog-lista"></div>
-  </div>
-</section>
-
-<section class="media-sav noileg-sav" id="noileg-sav" hidden>
-  <div class="media-sav-in">
-    <div class="brand-logo brand-noileg">Nőileg<span>.ro</span></div>
-    <div class="media-lista media-elvalasztos" id="noileg-lista"></div>
   </div>
 </section>
 
@@ -1066,7 +1087,7 @@ footer{background:var(--ej);color:#8f98a8;margin-top:40px}
       </ul>
     </div>
   </div>
-  <div class="lablec-also">© <span id="ev"></span> naphíre.ro · Független, algoritmikus sajtószemle és AI-vezérelt hírplatform · Minden cikk a megjelölt forrás tulajdona · <span style="color:#4a5871">build 2026-07-05 05:30 UTC</span></div>
+  <div class="lablec-also">© <span id="ev"></span> naphíre.ro · Független, algoritmikus sajtószemle és AI-vezérelt hírplatform · Minden cikk a megjelölt forrás tulajdona · <span style="color:#4a5871">build 2026-07-05 06:30 UTC</span></div>
 </footer>
 
 <script>
@@ -1417,6 +1438,19 @@ async function vbAdatBetolt(){
     vbMeccsek = Array.isArray(adat.matches) ? adat.matches : [];
   }catch(e){ /* a VB-panel egyszerűen rejtve marad, ha nem elérhető */ }
 }
+const VB_ZASZLOK = {
+  'Argentina':'🇦🇷','Brazil':'🇧🇷','Norway':'🇳🇴','Mexico':'🇲🇽','England':'🏴',
+  'Portugal':'🇵🇹','Spain':'🇪🇸','USA':'🇺🇸','United States':'🇺🇸','Belgium':'🇧🇪',
+  'France':'🇫🇷','Germany':'🇩🇪','Netherlands':'🇳🇱','Italy':'🇮🇹','Croatia':'🇭🇷',
+  'Uruguay':'🇺🇾','Colombia':'🇨🇴','Japan':'🇯🇵','South Korea':'🇰🇷','Korea Republic':'🇰🇷',
+  'Morocco':'🇲🇦','Senegal':'🇸🇳','Ghana':'🇬🇭','Canada':'🇨🇦','Switzerland':'🇨🇭',
+  'Poland':'🇵🇱','Denmark':'🇩🇰','Sweden':'🇸🇪','Austria':'🇦🇹','Ecuador':'🇪🇨',
+  'Chile':'🇨🇱','Peru':'🇵🇪','Australia':'🇦🇺','Iran':'🇮🇷','Saudi Arabia':'🇸🇦',
+  'Qatar':'🇶🇦','Tunisia':'🇹🇳','Serbia':'🇷🇸','Wales':'🏴','Scotland':'🏴',
+  'Ukraine':'🇺🇦','Nigeria':'🇳🇬','Egypt':'🇪🇬','Algeria':'🇩🇿','Romania':'🇷🇴',
+  'Hungary':'🇭🇺','Czech Republic':'🇨🇿','Turkey':'🇹🇷','Greece':'🇬🇷','Ireland':'🇮🇪',
+  'New Zealand':'🇳🇿','Panama':'🇵🇦','Jamaica':'🇯🇲','Costa Rica':'🇨🇷','South Africa':'🇿🇦'
+};
 function vbCsapatNev(kod){
   // a még el nem dőlt ági párosításoknál (pl. "W74", "3A/B/C/D/F") egyelőre magát a kódot mutatjuk
   if (/^W\d+$/.test(kod)) return 'A ' + kod.slice(1) + '. mérkőzés győztese';
@@ -1425,37 +1459,49 @@ function vbCsapatNev(kod){
   if (/\//.test(kod)) return 'Legjobb 3. helyezettek egyike';
   return kod;
 }
+function vbZaszloHTML(kod){
+  const emoji = VB_ZASZLOK[kod];
+  return emoji ? `<span class="zaszlo">${emoji}</span>` : '';
+}
 function vbKartyaHTML(m){
   const jatszott = m.score && m.score.ft;
   const ma = m.date === new Date().toISOString().slice(0, 10);
   return `<div class="vb-kartya ${ma && !jatszott ? 'jatszando' : ''}">
     <span class="kor">${biztonsagos(m.round)}${m.group ? ' · ' + biztonsagos(m.group) : ''}</span>
-    <div class="vb-sor"><span class="csapat">${biztonsagos(vbCsapatNev(m.team1))}</span>${jatszott ? `<span class="gol">${m.score.ft[0]}</span>` : ''}</div>
-    <div class="vb-sor"><span class="csapat">${biztonsagos(vbCsapatNev(m.team2))}</span>${jatszott ? `<span class="gol">${m.score.ft[1]}</span>` : ''}</div>
+    <div class="vb-sor">${vbZaszloHTML(m.team1)}<span class="csapat">${biztonsagos(vbCsapatNev(m.team1))}</span>${jatszott ? `<span class="gol">${m.score.ft[0]}</span>` : ''}</div>
+    <div class="vb-sor">${vbZaszloHTML(m.team2)}<span class="csapat">${biztonsagos(vbCsapatNev(m.team2))}</span>${jatszott ? `<span class="gol">${m.score.ft[1]}</span>` : ''}</div>
     <span class="helyszin">${jatszott ? 'Végeredmény' : (m.time || '') } · ${biztonsagos(m.ground || '')}</span>
   </div>`;
+}
+let vbTeljesNezet = false;
+function vbTovabbiMutat(){
+  vbTeljesNezet = !vbTeljesNezet;
+  vbPanelFrissit();
 }
 function vbPanelFrissit(){
   const panel = document.getElementById('vb-panel');
   const kartyak = document.getElementById('vb-kartyak');
-  const alcim = document.getElementById('vb-alcim');
   if (!panel || !vbMeccsek.length) { if (panel) panel.hidden = true; return; }
 
   const maISO = new Date().toISOString().slice(0, 10);
-  const maiMeccsek = vbMeccsek.filter(m => m.date === maISO);
-  let mutatando = maiMeccsek;
-  let cim = 'Mai mérkőzések';
+  let mutatando;
 
-  if (!mutatando.length){
-    // ha ma nincs meccs, a legutóbbi eredményeket mutatjuk (visszafelé haladva, max. 5 napra)
-    const jatszottak = vbMeccsek.filter(m => m.score && m.score.ft).sort((a, b) => b.date.localeCompare(a.date));
-    mutatando = jatszottak.slice(0, 8);
-    cim = mutatando.length ? 'Legutóbbi eredmények' : '';
+  if (vbTeljesNezet){
+    // "Meccsek, adatok" gomb: a következő mérkőzések a naptár szerint, dátumtól függetlenül
+    mutatando = vbMeccsek.filter(m => m.date >= maISO).slice(0, 12);
+    if (!mutatando.length) mutatando = vbMeccsek.slice(-12);
+  } else {
+    const maiMeccsek = vbMeccsek.filter(m => m.date === maISO);
+    mutatando = maiMeccsek;
+    if (!mutatando.length){
+      // ha ma nincs meccs, a legutóbbi eredményeket mutatjuk
+      const jatszottak = vbMeccsek.filter(m => m.score && m.score.ft).sort((a, b) => b.date.localeCompare(a.date));
+      mutatando = jatszottak.slice(0, 8);
+    }
   }
   if (!mutatando.length){ panel.hidden = true; return; }
 
   panel.hidden = false;
-  alcim.textContent = '· ' + cim;
   kartyak.innerHTML = mutatando.map(vbKartyaHTML).join('');
 }
 
@@ -2403,15 +2449,11 @@ betoltBeallitasok().then(() => {
   mindenHirBetolt();
   vbAdatBetolt().then(vbPanelFrissit);
   videoSavFrissit();
-  blogSavFrissit();
-  noilegSavFrissit();
 });
 setInterval(() => {
   betoltBeallitasok().then(mindenHirBetolt);
   vbAdatBetolt().then(vbPanelFrissit);
   videoSavFrissit();
-  blogSavFrissit();
-  noilegSavFrissit();
 }, 5 * 60 * 1000); // 5 percenként automatikus frissítés
 </script>
 </body>
