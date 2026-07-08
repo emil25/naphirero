@@ -1031,17 +1031,6 @@ footer{background:var(--ej);color:#8f98a8;margin-top:40px}
   </nav>
 </header>
 
-<section class="vb-panel" id="vb-panel" hidden>
-  <div class="vb-panel-in">
-    <div class="vb-logo">FOCI-VB<b>2026</b></div>
-    <div class="vb-gombok">
-      <button class="vb-gomb" onclick="valtRovat('sport')">📄 Cikkek</button>
-      <button class="vb-gomb" id="vb-adatgomb" onclick="vbTovabbiMutat()">📊 Meccsek, adatok</button>
-    </div>
-    <div class="vb-kartyak" id="vb-kartyak"></div>
-  </div>
-</section>
-
 <main>
   <div id="tartalom">
     <div class="betoltes">
@@ -1087,7 +1076,7 @@ footer{background:var(--ej);color:#8f98a8;margin-top:40px}
       </ul>
     </div>
   </div>
-  <div class="lablec-also">© <span id="ev"></span> naphíre.ro · Független, algoritmikus sajtószemle és AI-vezérelt hírplatform · Minden cikk a megjelölt forrás tulajdona · <span style="color:#4a5871">build 2026-07-05 06:30 UTC</span></div>
+  <div class="lablec-also">© <span id="ev"></span> naphíre.ro · Független, algoritmikus sajtószemle és AI-vezérelt hírplatform · Minden cikk a megjelölt forrás tulajdona · <span style="color:#4a5871">build 2026-07-05 07:00 UTC</span></div>
 </footer>
 
 <script>
@@ -1771,12 +1760,14 @@ function napTemajaHTML(tema){
 /* regionális témasáv: az erdélyi portálok közös felkapott témája */
 function erdelyTemaHTML(tema){
   if (!tema) return '';
+  const cimke = tema.egyedi ? 'Erdélyből' : `· ${tema.forrasDb} portál írt róla`;
+  const listaCim = tema.egyedi ? 'További erdélyi hírek' : 'Így írták meg mások';
   return `<section class="tema-sav zold">
     <div class="tema-sav-in">
       <div class="ts-fej">
         <span class="ts-tick"></span> A nap témája
         <span class="regio-cimke">Erdély</span>
-        <span class="alcim">· ${tema.forrasDb} portál írt róla</span>
+        <span class="alcim">${cimke}</span>
       </div>
       <div class="ts-racs">
         <a class="ts-kep" ${dc(tema.fo)} href="${biztonsagos(tema.fo.link)}" target="_blank" rel="noopener">
@@ -1788,7 +1779,7 @@ function erdelyTemaHTML(tema){
           <p>${biztonsagos(tema.fo.lead)}</p>
         </a>
         <div class="ts-masok">
-          <div class="ts-masok-cim">Így írták meg mások</div>
+          <div class="ts-masok-cim">${listaCim}</div>
           ${tema.tobbi.map(h => `
             <a ${dc(h)} href="${biztonsagos(h.link)}" target="_blank" rel="noopener">
               <img class="favicon" src="${favicon(h.link)}" alt="" loading="lazy" onerror="this.style.visibility='hidden'">
@@ -2290,7 +2281,15 @@ function rajzol(){
   // az erdélyi portálok közös felkapott témája – a saját sávjába kerül, máshol nem ismétlődik
   let temaErdely = null;
   if (aktivRovat === 'mind' && !aktivForras && !keresoSzo){
-    temaErdely = napTemajaStabil(marad.filter(h => h.region === 'erdely'), 'erdely', 2, 72);
+    const erdelyJelolt = marad.filter(h => h.region === 'erdely');
+    temaErdely = napTemajaStabil(erdelyJelolt, 'erdely', 2, 72);
+    if (!temaErdely && erdelyJelolt.length){
+      // nincs olyan téma, amiről legalább 2 forrás írt – ilyenkor is mutassunk valamit,
+      // a hero-sávhoz hasonlóan: a legfrissebb, képes erdélyi hír legyen a "nap témája"
+      const fo = erdelyJelolt.find(h => h.kep) || erdelyJelolt[0];
+      const tobbi = erdelyJelolt.filter(h => h !== fo).slice(0, 4);
+      temaErdely = { fo, tobbi, forrasDb: 1, egyedi: true };
+    }
     if (temaErdely){
       const tl = new Set([temaErdely.fo.link, ...temaErdely.tobbi.map(h => h.link)]);
       marad = marad.filter(h => !tl.has(h.link));
@@ -2447,12 +2446,10 @@ document.getElementById('ev').textContent = new Date().getFullYear();
 betoltBeallitasok().then(() => {
   renderForrasaink();
   mindenHirBetolt();
-  vbAdatBetolt().then(vbPanelFrissit);
   videoSavFrissit();
 });
 setInterval(() => {
   betoltBeallitasok().then(mindenHirBetolt);
-  vbAdatBetolt().then(vbPanelFrissit);
   videoSavFrissit();
 }, 5 * 60 * 1000); // 5 percenként automatikus frissítés
 </script>
