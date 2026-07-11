@@ -1,53 +1,12 @@
-/* Cloudflare Pages Function – szerveroldali RSS-lekérő
-   A honlap /rss?url=<feed-cím> formában hívja (ez az 1. letöltési stratégia).
-   Előnye: nem függ ingyenes, korlátozott CORS-proxyktól, és gyorsítótáraz is.
+/*
+  Content-Security-Policy: default-src * 'unsafe-inline' 'unsafe-eval' data: blob:; connect-src *; img-src * data: blob:; style-src * 'unsafe-inline'; font-src * data:;
 
-   Telepítés: ez a fájl a "functions" mappában legyen, a feltöltött oldal
-   gyökerében lévő index.html MELLETT lévő functions/rss.js útvonalon.
-   Cloudflare Pages automatikusan felismeri, semmi mást nem kell beállítani. */
+/banner-regizene.gif
+  Content-Type: image/gif
+  Cache-Control: public, max-age=86400
 
-const ENGEDETT_HOSZTOK = [
-  'maszol.ro', 'kronikaonline.ro', 'szekelyhon.ro', 'transtelex.ro',
-  '3szek.ro', 'hargitanepe.ro', 'telex.hu', 'hvg.hu', '24.hu',
-  'index.hu', '444.hu', 'origo.hu', 'youtube.com',
-  'szekelykonyhaeskert.ro', 'noileg.ro'
-];
+/*.gif
+  Content-Type: image/gif
 
-export async function onRequest(context) {
-  const kert = new URL(context.request.url).searchParams.get('url');
-  if (!kert) return new Response('Hiányzó url paraméter', { status: 400 });
-
-  let cel;
-  try { cel = new URL(kert); } catch (e) {
-    return new Response('Érvénytelen URL', { status: 400 });
-  }
-  if (!/^https?:$/.test(cel.protocol))
-    return new Response('Csak http/https engedélyezett', { status: 400 });
-
-  // csak a honlapon használt hírforrásokat szolgáljuk ki, hogy ne váljon nyílt proxyvá
-  const gazda = cel.hostname.replace(/^www\./, '');
-  const engedett = ENGEDETT_HOSZTOK.some(h => gazda === h || gazda.endsWith('.' + h));
-  if (!engedett) return new Response('Nem engedélyezett forrás', { status: 403 });
-
-  try {
-    const valasz = await fetch(cel.toString(), {
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (compatible; NapHireRSS/1.0; +https://naphire.ro)',
-        'Accept': 'application/rss+xml, application/atom+xml, application/xml, text/xml, */*'
-      },
-      cf: { cacheTtl: 240, cacheEverything: true } // 4 perces él-gyorsítótár – kíméli a forrásokat
-    });
-    if (!valasz.ok) return new Response('A forrás nem elérhető', { status: 502 });
-    const szoveg = await valasz.text();
-    return new Response(szoveg, {
-      status: 200,
-      headers: {
-        'Content-Type': 'application/xml; charset=utf-8',
-        'Access-Control-Allow-Origin': '*',
-        'Cache-Control': 'public, max-age=240'
-      }
-    });
-  } catch (e) {
-    return new Response('Lekérési hiba', { status: 502 });
-  }
-}
+/*.webp
+  Content-Type: image/webp
