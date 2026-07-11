@@ -1031,6 +1031,21 @@ footer{background:var(--ej);color:#8f98a8;margin-top:40px}
   </nav>
 </header>
 
+<div class="hircsik" id="hircsik" hidden>
+  <div class="cimke"><span class="pont"></span>Élő</div>
+  <div class="csik-palya"><div class="csik-tartalom" id="hircsik-tartalom"></div></div>
+</div>
+
+<section class="vb-panel" id="vb-panel" hidden>
+  <div class="vb-panel-in">
+    <div class="vb-logo">FIFA<b>VB 2026</b></div>
+    <div class="vb-kartyak" id="vb-kartyak"></div>
+    <div class="vb-gombok">
+      <button class="vb-gomb" onclick="vbTovabbiMutat()">⚽ Meccsek, adatok</button>
+    </div>
+  </div>
+</section>
+
 <main>
   <div id="tartalom">
     <div class="betoltes">
@@ -1044,6 +1059,20 @@ footer{background:var(--ej);color:#8f98a8;margin-top:40px}
   <div class="media-sav-in">
     <div class="brand-logo brand-etv">Erdély<span>TV</span></div>
     <div class="media-lista video-lista media-elvalasztos" id="video-lista"></div>
+  </div>
+</section>
+
+<section class="media-sav blog-sav" id="blog-sav" hidden>
+  <div class="media-sav-in">
+    <div class="brand-logo brand-szkk">Székely Konyha <span>és Kert</span></div>
+    <div class="media-lista media-elvalasztos" id="blog-lista"></div>
+  </div>
+</section>
+
+<section class="media-sav noileg-sav" id="noileg-sav" hidden>
+  <div class="media-sav-in">
+    <div class="brand-logo brand-noileg">Nőileg <span>MAGAZIN</span></div>
+    <div class="media-lista media-elvalasztos" id="noileg-lista"></div>
   </div>
 </section>
 
@@ -1342,7 +1371,7 @@ async function mindenHirBetolt(){
     hirek.sort((a,b) => b.datum - a.datum);
     osszesHir = hirek;
     gyorsitotarKorabol = null;
-    if (osszesHir.length) rajzol(); // már az első beérkező forrásnál megjelenik az oldal
+    if (osszesHir.length){ rajzol(); hircsikFrissit(); } // már az első beérkező forrásnál megjelenik az oldal
   };
 
   const aktivForrasok = FORRASOK.filter(f => !BEALLITASOK.forrasokKi.includes(f.nev));
@@ -1369,6 +1398,19 @@ async function mindenHirBetolt(){
   document.getElementById('frissitve').textContent =
     'Frissítve: ' + new Date().toLocaleTimeString('hu-HU',{hour:'2-digit',minute:'2-digit'});
   rajzol();
+  hircsikFrissit();
+}
+
+/* ---------- Élő hírcsík: a legfrissebb címek folyamatosan futó sávja ---------- */
+function hircsikFrissit(){
+  const sav = document.getElementById('hircsik');
+  const cel = document.getElementById('hircsik-tartalom');
+  if (!sav || !cel) return;
+  if (!osszesHir.length){ sav.hidden = true; return; }
+  const elemek = osszesHir.slice(0, 12).map(h =>
+    `<a ${dc(h)} href="${biztonsagos(h.link)}" target="_blank" rel="noopener">${biztonsagos(h.cim)}</a>`).join('');
+  cel.innerHTML = elemek + elemek; // duplázva, hogy a -50%-os animáció folytonos legyen
+  sav.hidden = false;
 }
 
 /* ---------- Videó- és blogsáv: külön adatkészletek, nem keverednek a hírekbe ---------- */
@@ -1384,7 +1426,7 @@ async function mediaBetolt(forrasLista){
 }
 function mediaKartyaHTML(h){
   return `<a class="media-kartya" href="${biztonsagos(h.link)}" target="_blank" rel="noopener">
-    <div class="kep">${h.kep ? `<img src="${biztonsagos(h.kep)}" alt="" loading="lazy" onerror="this.parentElement.parentElement.remove()">` : ''}</div>
+    <div class="kep">${h.kep ? `<img src="${biztonsagos(h.kep)}" alt="" loading="lazy" onerror="this.remove()">` : ''}</div>
     <h4>${biztonsagos(h.cim)}</h4>
     <span class="meta">${idoOta(h.datum)}</span>
   </a>`;
@@ -1428,14 +1470,14 @@ async function vbAdatBetolt(){
   }catch(e){ /* a VB-panel egyszerűen rejtve marad, ha nem elérhető */ }
 }
 const VB_ZASZLOK = {
-  'Argentina':'🇦🇷','Brazil':'🇧🇷','Norway':'🇳🇴','Mexico':'🇲🇽','England':'🏴',
+  'Argentina':'🇦🇷','Brazil':'🇧🇷','Norway':'🇳🇴','Mexico':'🇲🇽','England':'🏴󠁧󠁢󠁥󠁮󠁧󠁿',
   'Portugal':'🇵🇹','Spain':'🇪🇸','USA':'🇺🇸','United States':'🇺🇸','Belgium':'🇧🇪',
   'France':'🇫🇷','Germany':'🇩🇪','Netherlands':'🇳🇱','Italy':'🇮🇹','Croatia':'🇭🇷',
   'Uruguay':'🇺🇾','Colombia':'🇨🇴','Japan':'🇯🇵','South Korea':'🇰🇷','Korea Republic':'🇰🇷',
   'Morocco':'🇲🇦','Senegal':'🇸🇳','Ghana':'🇬🇭','Canada':'🇨🇦','Switzerland':'🇨🇭',
   'Poland':'🇵🇱','Denmark':'🇩🇰','Sweden':'🇸🇪','Austria':'🇦🇹','Ecuador':'🇪🇨',
   'Chile':'🇨🇱','Peru':'🇵🇪','Australia':'🇦🇺','Iran':'🇮🇷','Saudi Arabia':'🇸🇦',
-  'Qatar':'🇶🇦','Tunisia':'🇹🇳','Serbia':'🇷🇸','Wales':'🏴','Scotland':'🏴',
+  'Qatar':'🇶🇦','Tunisia':'🇹🇳','Serbia':'🇷🇸','Wales':'🏴󠁧󠁢󠁷󠁬󠁳󠁿','Scotland':'🏴󠁧󠁢󠁳󠁣󠁴󠁿',
   'Ukraine':'🇺🇦','Nigeria':'🇳🇬','Egypt':'🇪🇬','Algeria':'🇩🇿','Romania':'🇷🇴',
   'Hungary':'🇭🇺','Czech Republic':'🇨🇿','Turkey':'🇹🇷','Greece':'🇬🇷','Ireland':'🇮🇪',
   'New Zealand':'🇳🇿','Panama':'🇵🇦','Jamaica':'🇯🇲','Costa Rica':'🇨🇷','South Africa':'🇿🇦'
@@ -1523,7 +1565,7 @@ function puhaHir(h){
 const ROVAT_KULCSOK = {
   sport:    ['sport','foci','labdarúg','labdarúgás','bajnoks','bajnokság','liga','olimpia','meccs',' vb',' eb','forma-1','forma–1',' f1','kézilabda','kosárlabda','vízilabda','úszás','tenisz','edző','gól','válogatott','fradi','ferencváros','atlétika','sakk','hoki','jégkorong','döntő','negyeddöntő','elődöntő'],
   gazdasag: ['gazdaság','gazdasági','forint','lej','infláció','tőzsde','gdp','adó','adók','bérek','minimálbér','nyugdíj','beruházás','árak','drágul','olcsóbb','üzemanyag','benzin','energiaár','bank','hitel','kamat','mnb','euró','költségvetés','munkaerő','munkanélküli','vállalat','cégek','export','import','gázár','áram'],
-  kultura:  ['kultúra','kulturális','film','mozi','színház','könyv','regény','koncert','zene','zenekar','fesztivál','kiállítás','múzeum','irodalom','irodalmi','művész','sorozat','opera','tánc','премьер','premier','díjat nyert','lemez','galéri']
+  kultura:  ['kultúra','kulturális','film','mozi','színház','könyv','regény','koncert','zene','zenekar','fesztivál','kiállítás','múzeum','irodalom','irodalmi','művész','sorozat','opera','tánc','premier','díjat nyert','lemez','galéri']
 };
 function rovatBesorol(h){
   const sz = ((h.kategoriak || '') + ' ' + h.cim).toLowerCase();
@@ -2196,7 +2238,20 @@ function figyeljBalHasab(){
   balFigyelo.observe(fb.children[0]);
 }
 window.addEventListener('load', kiegyenlitOldalsav);
-window.addEventListener('resize', () => { rajzol(); });
+/* csak akkor rajzolunk teljesen újra, ha a szélesség változott (mobilon a görgetés közbeni
+   címsáv-elrejtés is resize-t vált ki, ami korábban görgetés közben újraépítette az oldalt) */
+let utolsoSzelesseg = window.innerWidth, meretIdozito = null;
+window.addEventListener('resize', () => {
+  clearTimeout(meretIdozito);
+  meretIdozito = setTimeout(() => {
+    if (window.innerWidth !== utolsoSzelesseg){
+      utolsoSzelesseg = window.innerWidth;
+      rajzol();
+    } else {
+      kiegyenlitOldalsav();
+    }
+  }, 150);
+});
 
 function bannerHTML(kulcs, szoveg, oldalsavosCss, rejtsdHaUres){
   const b = BEALLITASOK.banners[kulcs];
@@ -2432,9 +2487,13 @@ document.getElementById('rovat-sav').addEventListener('click', e => {
   const b = e.target.closest('button');
   if (b) valtRovat(b.dataset.rovat);
 });
+let keresoIdozito = null;
 document.getElementById('kereso-mezo').addEventListener('input', e => {
-  keresoSzo = e.target.value.trim();
-  rajzol();
+  clearTimeout(keresoIdozito);
+  keresoIdozito = setTimeout(() => {
+    keresoSzo = e.target.value.trim();
+    rajzol();
+  }, 220); // gépelés közben nem építjük újra minden billentyűre az oldalt
 });
 document.getElementById('frissit-gomb').addEventListener('click', () => betoltBeallitasok().then(mindenHirBetolt));
 
@@ -2447,10 +2506,16 @@ betoltBeallitasok().then(() => {
   renderForrasaink();
   mindenHirBetolt();
   videoSavFrissit();
+  blogSavFrissit();
+  noilegSavFrissit();
+  vbAdatBetolt().then(vbPanelFrissit);
 });
 setInterval(() => {
   betoltBeallitasok().then(mindenHirBetolt);
   videoSavFrissit();
+  blogSavFrissit();
+  noilegSavFrissit();
+  vbAdatBetolt().then(vbPanelFrissit);
 }, 5 * 60 * 1000); // 5 percenként automatikus frissítés
 </script>
 </body>
