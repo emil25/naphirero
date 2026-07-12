@@ -138,93 +138,7 @@ nav.rovatok button.pp::before{content:none}
 }
 .kereso input:focus{width:210px;border-color:var(--parazs);background:#fff}
 
-/* ---------- Élő hírcsík ---------- */
-.hircsik{
-  background:var(--parazs);color:#fff;overflow:hidden;position:relative;
-  display:flex;align-items:center;
-}
-.vb-panel{
-  background:var(--ej);border-bottom:3px solid var(--nap);
-}
-.vb-panel-in{
-  max-width:var(--maxw);margin:0 auto;padding:0 20px;
-  display:flex;align-items:stretch;gap:0;min-height:86px;position:relative;
-}
-.vb-logo{
-  flex-shrink:0;display:flex;flex-direction:column;justify-content:center;gap:2px;
-  font-family:'Archivo',sans-serif;font-weight:900;font-stretch:80%;
-  color:#8a93a3;font-size:11px;line-height:1;letter-spacing:.14em;text-transform:uppercase;
-  padding-right:20px;border-right:1px solid #1c2534;
-}
-.vb-logo b{color:#fff;font-size:23px;letter-spacing:-.02em}
-.vb-logo b i{font-style:normal;color:var(--nap)}
-.vb-gombok{display:flex;align-items:center;flex-shrink:0;padding-left:16px;border-left:1px solid #1c2534}
-.vb-gomb{
-  display:flex;align-items:center;gap:7px;background:transparent;color:#aab2c0;
-  font-family:'Archivo',sans-serif;font-weight:800;font-size:11px;letter-spacing:.06em;
-  text-transform:uppercase;padding:8px 12px;border:1px solid #2a3444;border-radius:99px;
-  white-space:nowrap;cursor:pointer;transition:all .15s;
-}
-.vb-gomb:hover{color:#fff;border-color:var(--nap)}
-.vb-gomb.aktiv{color:var(--ej);background:var(--nap);border-color:var(--nap)}
-.vb-panel-fej,.vb-panel-doboz,.vb-alcim{display:none}
-.vb-kartyak{
-  display:flex;gap:0;overflow-x:auto;scrollbar-width:none;
-  flex:1;min-width:0;padding:12px 6px;
-}
-.vb-kartyak::-webkit-scrollbar{display:none}
-.vb-kartya{
-  flex:0 0 auto;width:172px;padding:6px 16px;color:#dfe4ec;position:relative;
-}
-.vb-kartya + .vb-kartya{border-left:1px solid #1c2534}
-.vb-kartya.jatszando .kor{color:var(--ej);background:var(--nap);padding:1px 6px;border-radius:2px}
-.vb-kartya .kor{
-  font-family:'JetBrains Mono',ui-monospace,monospace;font-size:8.5px;letter-spacing:.07em;
-  text-transform:uppercase;color:#8a93a3;margin-bottom:5px;display:inline-block;font-weight:700;
-}
-.vb-sor{display:flex;align-items:center;gap:7px;font-weight:700;font-size:12.5px;padding:2px 0}
-.vb-sor .zaszlo{font-size:14px;flex-shrink:0;width:18px;text-align:center}
-.vb-sor .csapat{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1;color:#eef1f6}
-.vb-sor .gol{font-family:'Archivo',sans-serif;font-weight:900;font-size:14px;flex-shrink:0;color:var(--nap)}
-.vb-sor.nyertes .csapat{color:#fff;font-weight:800}
-.vb-kartya .helyszin{
-  font-size:9px;color:#6d7789;margin-top:5px;display:block;white-space:nowrap;
-  overflow:hidden;text-overflow:ellipsis;font-weight:600;letter-spacing:.03em;
-}
-@media (max-width:900px){
-  .vb-logo b{font-size:18px}
-}
-@media (max-width:640px){
-  .vb-panel-in{flex-wrap:wrap;padding:12px 16px;min-height:0}
-  .vb-logo{border-right:none}
-  .vb-gombok{margin-left:auto;border-left:none;padding-left:0}
-  .vb-kartyak{width:100%;order:3;padding:8px 0 2px}
-  .vb-kartya:first-child{padding-left:0}
-}
-.hircsik .cimke{
-  flex-shrink:0;background:var(--ej);
-  font-family:'Archivo',sans-serif;font-weight:800;font-size:11px;letter-spacing:.12em;
-  text-transform:uppercase;padding:7px 14px 7px 20px;
-  display:flex;align-items:center;gap:7px;position:relative;z-index:2;
-  clip-path:polygon(0 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
-  padding-right:24px;
-}
-.hircsik .pont{width:7px;height:7px;border-radius:50%;background:var(--nap);animation:villog 1.4s ease infinite}
-@keyframes villog{0%,100%{opacity:1}50%{opacity:.25}}
-.csik-palya{flex:1;overflow:hidden}
-.csik-tartalom{
-  display:inline-flex;gap:0;white-space:nowrap;
-  animation:csuszik 90s linear infinite;
-  font-size:13px;font-weight:500;padding:7px 0;
-}
-.csik-palya:hover .csik-tartalom{animation-play-state:paused}
-.csik-tartalom a{padding:0 26px;position:relative;opacity:.95}
-.csik-tartalom a:hover{text-decoration:underline}
-.csik-tartalom a::after{content:'●';position:absolute;right:-6px;font-size:7px;opacity:.5;top:4px}
-@keyframes csuszik{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-@media (prefers-reduced-motion: reduce){
-  .csik-tartalom{animation:none}
-  .hircsik .pont{animation:none}
+
 }
 
 /* ---------- Fő rács ---------- */
@@ -1029,20 +943,7 @@ footer{background:var(--ej);color:#8f98a8;margin-top:40px}
   </nav>
 </header>
 
-<div class="hircsik" id="hircsik" hidden>
-  <div class="cimke"><span class="pont"></span>Élő</div>
-  <div class="csik-palya"><div class="csik-tartalom" id="hircsik-tartalom"></div></div>
-</div>
 
-<section class="vb-panel" id="vb-panel" hidden>
-  <div class="vb-panel-in">
-    <div class="vb-logo">Labdarúgó<b>VB <i>2026</i></b></div>
-    <div class="vb-kartyak" id="vb-kartyak"></div>
-    <div class="vb-gombok">
-      <button class="vb-gomb" id="vb-valto" onclick="vbTovabbiMutat()">Következő meccsek</button>
-    </div>
-  </div>
-</section>
 
 <main>
   <div id="tartalom">
@@ -1353,11 +1254,52 @@ function hirGyorsitotarBetolt(){
   }catch(e){ return null; }
 }
 
+/* Szerveroldali hírközpont: ha elérhető az /api/hirek (Vercel), onnan jön MINDEN –
+   egyetlen kérés, nincs proxy-bizonytalanság, és a nap témáját a szerver választja
+   központilag, így minden látogatónál ugyanaz, és frissítéskor sem cserélődik. */
+let szerverTemak = null;
+async function szerverrolBetolt(){
+  try{
+    const ctrl = new AbortController();
+    const t = setTimeout(() => ctrl.abort(), 12000);
+    const v = await fetch('/api/hirek', { signal: ctrl.signal });
+    clearTimeout(t);
+    if (!v.ok) return false;
+    const adat = await v.json();
+    if (!adat || !Array.isArray(adat.hirek) || !adat.hirek.length) return false;
+    const aktivNevek = new Set(FORRASOK.filter(f => !BEALLITASOK.forrasokKi.includes(f.nev)).map(f => f.nev));
+    osszesHir = adat.hirek
+      .filter(h => aktivNevek.has(h.forras))
+      .map(h => {
+        const uj = { ...h, datum: new Date(h.datum) };
+        uj.rovat = rovatBesorol(uj);
+        return uj;
+      });
+    szerverTemak = adat.temak || null;
+    return osszesHir.length > 0;
+  }catch(e){ return false; }
+}
+
 async function mindenHirBetolt(){
   const gomb = document.getElementById('frissit-gomb');
   gomb.classList.add('forog');
   hibasForrasok = [];
   hirBetoltesKesz = false;
+
+  // 1. út: központi szerveres betöltés (egy kérés, stabil téma)
+  if (await szerverrolBetolt()){
+    hirGyorsitotarMent(osszesHir);
+    gyorsitotarKorabol = null;
+    gomb.classList.remove('forog');
+    hirBetoltesKesz = true;
+    document.getElementById('frissitve').textContent =
+      'Frissítve: ' + new Date().toLocaleTimeString('hu-HU',{hour:'2-digit',minute:'2-digit'});
+    rajzol();
+    return;
+  }
+
+  // 2. út (tartalék): forrásonkénti betöltés a böngészőből, mint eddig
+  szerverTemak = null;
   const gyujto = [];
 
   const osszesit = () => {
@@ -1372,7 +1314,7 @@ async function mindenHirBetolt(){
     hirek.sort((a,b) => b.datum - a.datum);
     osszesHir = hirek;
     gyorsitotarKorabol = null;
-    if (osszesHir.length){ rajzol(); hircsikFrissit(); } // már az első beérkező forrásnál megjelenik az oldal
+    if (osszesHir.length)rajzol(); // már az első beérkező forrásnál megjelenik az oldal
   };
 
   const aktivForrasok = FORRASOK.filter(f => !BEALLITASOK.forrasokKi.includes(f.nev));
@@ -1400,20 +1342,9 @@ async function mindenHirBetolt(){
   document.getElementById('frissitve').textContent =
     'Frissítve: ' + new Date().toLocaleTimeString('hu-HU',{hour:'2-digit',minute:'2-digit'});
   rajzol();
-  hircsikFrissit();
 }
 
-/* ---------- Élő hírcsík: a legfrissebb címek folyamatosan futó sávja ---------- */
-function hircsikFrissit(){
-  const sav = document.getElementById('hircsik');
-  const cel = document.getElementById('hircsik-tartalom');
-  if (!sav || !cel) return;
-  if (!osszesHir.length){ sav.hidden = true; return; }
-  const elemek = osszesHir.slice(0, 12).map(h =>
-    `<a ${dc(h)} href="${biztonsagos(h.link)}" target="_blank" rel="noopener">${biztonsagos(h.cim)}</a>`).join('');
-  cel.innerHTML = elemek + elemek; // duplázva, hogy a -50%-os animáció folytonos legyen
-  sav.hidden = false;
-}
+
 
 /* ---------- Videó- és blogsáv: külön adatkészletek, nem keverednek a hírekbe ---------- */
 let osszesVideo = [];
@@ -1467,92 +1398,7 @@ async function noilegSavFrissit(){
   lista.innerHTML = osszesNoileg.slice(0, 8).map(mediaKartyaHTML).join('');
 }
 
-/* ---------- VB 2026: valódi mérkőzésadatok egy ingyenes, kulcs nélküli, nyílt adatbázisból ----------
-   Forrás: openfootball/worldcup.json (GitHub) – közvetlenül lekérhető, nincs szükség CORS-proxyra,
-   mert a GitHub Raw kiszolgáló engedélyezi a böngészős lekérést (CORS). Naponta frissül. */
-let vbMeccsek = [];
-async function vbAdatBetolt(){
-  try{
-    const valasz = await fetch('https://raw.githubusercontent.com/openfootball/worldcup.json/master/2026/worldcup.json', { cache:'no-store' });
-    if (!valasz.ok) return;
-    const adat = await valasz.json();
-    vbMeccsek = Array.isArray(adat.matches) ? adat.matches : [];
-  }catch(e){ /* a VB-panel egyszerűen rejtve marad, ha nem elérhető */ }
-}
-const VB_ZASZLOK = {
-  'Argentina':'🇦🇷','Brazil':'🇧🇷','Norway':'🇳🇴','Mexico':'🇲🇽','England':'🏴󠁧󠁢󠁥󠁮󠁧󠁿',
-  'Portugal':'🇵🇹','Spain':'🇪🇸','USA':'🇺🇸','United States':'🇺🇸','Belgium':'🇧🇪',
-  'France':'🇫🇷','Germany':'🇩🇪','Netherlands':'🇳🇱','Italy':'🇮🇹','Croatia':'🇭🇷',
-  'Uruguay':'🇺🇾','Colombia':'🇨🇴','Japan':'🇯🇵','South Korea':'🇰🇷','Korea Republic':'🇰🇷',
-  'Morocco':'🇲🇦','Senegal':'🇸🇳','Ghana':'🇬🇭','Canada':'🇨🇦','Switzerland':'🇨🇭',
-  'Poland':'🇵🇱','Denmark':'🇩🇰','Sweden':'🇸🇪','Austria':'🇦🇹','Ecuador':'🇪🇨',
-  'Chile':'🇨🇱','Peru':'🇵🇪','Australia':'🇦🇺','Iran':'🇮🇷','Saudi Arabia':'🇸🇦',
-  'Qatar':'🇶🇦','Tunisia':'🇹🇳','Serbia':'🇷🇸','Wales':'🏴󠁧󠁢󠁷󠁬󠁳󠁿','Scotland':'🏴󠁧󠁢󠁳󠁣󠁴󠁿',
-  'Ukraine':'🇺🇦','Nigeria':'🇳🇬','Egypt':'🇪🇬','Algeria':'🇩🇿','Romania':'🇷🇴',
-  'Hungary':'🇭🇺','Czech Republic':'🇨🇿','Turkey':'🇹🇷','Greece':'🇬🇷','Ireland':'🇮🇪',
-  'New Zealand':'🇳🇿','Panama':'🇵🇦','Jamaica':'🇯🇲','Costa Rica':'🇨🇷','South Africa':'🇿🇦'
-};
-function vbCsapatNev(kod){
-  // a még el nem dőlt ági párosításoknál (pl. "W74", "3A/B/C/D/F") egyelőre magát a kódot mutatjuk
-  if (/^W\d+$/.test(kod)) return 'A ' + kod.slice(1) + '. mérkőzés győztese';
-  if (/^L\d+$/.test(kod)) return 'A ' + kod.slice(1) + '. mérkőzés vesztese';
-  if (/^\d[A-Z]$/.test(kod)) return kod[0] + '. helyezett (' + kod[1] + ' csoport)';
-  if (/\//.test(kod)) return 'Legjobb 3. helyezettek egyike';
-  return kod;
-}
-function vbZaszloHTML(kod){
-  const emoji = VB_ZASZLOK[kod];
-  return emoji ? `<span class="zaszlo">${emoji}</span>` : '';
-}
-function vbKartyaHTML(m){
-  const jatszott = m.score && m.score.ft;
-  const ma = m.date === new Date().toISOString().slice(0, 10);
-  const ny1 = jatszott && m.score.ft[0] > m.score.ft[1];
-  const ny2 = jatszott && m.score.ft[1] > m.score.ft[0];
-  const kor = ma ? 'MA · ' + biztonsagos(m.round) : biztonsagos(m.round) + (m.group ? ' · ' + biztonsagos(m.group) : '');
-  return `<div class="vb-kartya ${ma ? 'jatszando' : ''}">
-    <span class="kor">${kor}</span>
-    <div class="vb-sor ${ny1?'nyertes':''}">${vbZaszloHTML(m.team1)}<span class="csapat">${biztonsagos(vbCsapatNev(m.team1))}</span>${jatszott ? `<span class="gol">${m.score.ft[0]}</span>` : ''}</div>
-    <div class="vb-sor ${ny2?'nyertes':''}">${vbZaszloHTML(m.team2)}<span class="csapat">${biztonsagos(vbCsapatNev(m.team2))}</span>${jatszott ? `<span class="gol">${m.score.ft[1]}</span>` : ''}</div>
-    <span class="helyszin">${jatszott ? 'Végeredmény' : (m.time || '') } · ${biztonsagos(m.ground || '')}</span>
-  </div>`;
-}
-let vbTeljesNezet = false;
-function vbTovabbiMutat(){
-  vbTeljesNezet = !vbTeljesNezet;
-  const g = document.getElementById('vb-valto');
-  if (g){
-    g.classList.toggle('aktiv', vbTeljesNezet);
-    g.textContent = vbTeljesNezet ? 'Mai program' : 'Következő meccsek';
-  }
-  vbPanelFrissit();
-}
-function vbPanelFrissit(){
-  const panel = document.getElementById('vb-panel');
-  const kartyak = document.getElementById('vb-kartyak');
-  if (!panel || !vbMeccsek.length) { if (panel) panel.hidden = true; return; }
 
-  const maISO = new Date().toISOString().slice(0, 10);
-  let mutatando;
-
-  if (vbTeljesNezet){
-    // "Meccsek, adatok" gomb: a következő mérkőzések a naptár szerint, dátumtól függetlenül
-    mutatando = vbMeccsek.filter(m => m.date >= maISO).slice(0, 12);
-    if (!mutatando.length) mutatando = vbMeccsek.slice(-12);
-  } else {
-    const maiMeccsek = vbMeccsek.filter(m => m.date === maISO);
-    mutatando = maiMeccsek;
-    if (!mutatando.length){
-      // ha ma nincs meccs, a legutóbbi eredményeket mutatjuk
-      const jatszottak = vbMeccsek.filter(m => m.score && m.score.ft).sort((a, b) => b.date.localeCompare(a.date));
-      mutatando = jatszottak.slice(0, 8);
-    }
-  }
-  if (!mutatando.length){ panel.hidden = true; return; }
-
-  panel.hidden = false;
-  kartyak.innerHTML = mutatando.map(vbKartyaHTML).join('');
-}
 
 /* ---------- A nap témája: melyik hírt vette át a legtöbb portál? ---------- */
 /* tematikus rovatba sorolás az RSS-kategóriák és a cím alapján */
@@ -1619,8 +1465,10 @@ function temaStemek(h){
 function napTemaja(hirek, minForras, oraAblak){
   minForras = minForras || MIN_FORRAS_TEMA;
   oraAblak = oraAblak || 48;
-  // csak a megadott időablakon belüli hírek számítanak
-  const friss = hirek.filter(h => Date.now() - h.datum.getTime() < oraAblak*3600*1000).slice(0, 130);
+  // csak a megadott időablakon belüli hírek számítanak – a sporthírek egyáltalán nem
+  // lehetnek "a nap témája" (a nemzetközi sporteredményeket sok portál átveszi, és
+  // korábban ezek kiszorították a valódi közéleti témákat)
+  const friss = hirek.filter(h => h.rovat !== 'sport' && Date.now() - h.datum.getTime() < oraAblak*3600*1000).slice(0, 130);
   if (friss.length < 4) return null;
   const szoKeszlet = friss.map(h => new Set(temaStemek(h)));
 
@@ -1723,6 +1571,17 @@ function temaMent(nev, adat){
   try{ localStorage.setItem(temaTarKulcs(nev), JSON.stringify(adat)); }catch(e){ /* nincs elérhető tároló */ }
 }
 function napTemajaStabil(jelolt, nev, minForras, oraAblak){
+  // ha a szerveres hírközpont adott központi témát, azt használjuk – ez minden
+  // látogatónál ugyanaz, és a szerver gyorsítótára tartja stabilan
+  if (szerverTemak && szerverTemak[nev]){
+    const st = szerverTemak[nev];
+    const linkTerkep = new Map(jelolt.map(h => [h.link, h]));
+    const fo = linkTerkep.get(st.horgonyLink);
+    if (fo){
+      const tobbi = st.linkek.map(l => linkTerkep.get(l)).filter(h => h && h !== fo).slice(0, 5);
+      return { fo, tobbi, forrasDb: st.forrasDb || (1 + tobbi.length) };
+    }
+  }
   minForras = minForras || MIN_FORRAS_TEMA;
   const most = Date.now();
   const mentett = temaBetolt(nev);
@@ -2351,7 +2210,7 @@ function rajzol(){
   if (aktivRovat === 'mind' && !aktivForras && !keresoSzo){
     tema = (BEALLITASOK.kiemeltTema && BEALLITASOK.kiemeltTema.aktiv && BEALLITASOK.kiemeltTema.cim)
       ? temaRogzitettbol(BEALLITASOK.kiemeltTema, hirek)
-      : napTemajaStabil(hirek.filter(h => h.region === 'magyar'), 'magyar', 3);
+      : napTemajaStabil(hirek.filter(h => h.region === 'magyar' && h.rovat !== 'sport'), 'magyar', 3);
   }
   const temaLinkek = tema ? new Set([tema.fo.link, ...tema.tobbi.map(h => h.link)]) : new Set();
   const keszlet = hirek.filter(h => !temaLinkek.has(h.link));
@@ -2364,7 +2223,7 @@ function rajzol(){
   // az erdélyi portálok közös felkapott témája – a saját sávjába kerül, máshol nem ismétlődik
   let temaErdely = null;
   if (aktivRovat === 'mind' && !aktivForras && !keresoSzo){
-    const erdelyJelolt = marad.filter(h => h.region === 'erdely');
+    const erdelyJelolt = marad.filter(h => h.region === 'erdely' && h.rovat !== 'sport');
     temaErdely = napTemajaStabil(erdelyJelolt, 'erdely', 2, 72);
     if (!temaErdely && erdelyJelolt.length){
       // nincs olyan téma, amiről legalább 2 forrás írt – ilyenkor is mutassunk valamit,
@@ -2536,14 +2395,12 @@ betoltBeallitasok().then(() => {
   videoSavFrissit();
   blogSavFrissit();
   noilegSavFrissit();
-  vbAdatBetolt().then(vbPanelFrissit);
 });
 setInterval(() => {
   betoltBeallitasok().then(mindenHirBetolt);
   videoSavFrissit();
   blogSavFrissit();
   noilegSavFrissit();
-  vbAdatBetolt().then(vbPanelFrissit);
 }, 5 * 60 * 1000); // 5 percenként automatikus frissítés
 </script>
 </body>
