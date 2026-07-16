@@ -24,6 +24,20 @@ const SPORT_KULCSOK = ['sport','foci','labdarúg','bajnoks','liga','olimpia','me
   'forma-1',' f1','kézilabda','kosárlabda','vízilabda','úszás','tenisz','edző','gól','válogatott',
   'fradi','ferencváros','atlétika','hoki','jégkorong','döntő','negyeddöntő','elődöntő','mundial','messi'];
 
+/* puha / bulvár / érdekesség-hírek – ezeket sok portál átveszi (ügynökségi anyagok),
+   ezért forrásszám alapján tévesen "felkapottnak" tűnnek; erős pontlevonást kapnak */
+const PUHA_KULCSOK = ['kölyök','állatkert','cuki','aranyos','sztár','pletyka','esküvő','vált el',
+  'válik','terhes','szülinap','ünnepelte','híresség','celeb','reality','panda','oroszlánkölyök',
+  'kutyakölyök','cicák','kismacska','dinoszaurusz','őslény','régészek','asztronó','üstökös',
+  'meteor','fosszíli','kutatók felfedez','rekordot döntött','horoszkóp','kvíz','videón',
+  'elképesztő','hihetetlen','döbbenetes','megható'];
+
+/* fontos közéleti témák – előnyt kapnak, mint a kliensoldali pontozásban */
+const KIEMELT_KULCSOK = ['kormány','miniszterelnök','kormányfő','parlament','országgyűlés',
+  'alaptörvény','alkotmány','választás','törvényjavaslat','államfő','köztársasági elnök',
+  'ellenzék','koalíció','kormányváltás','tüntetés','sztrájk','válság','háború','robbanás',
+  'merénylet','baleset','katasztrófa','halálos'];
+
 const STOP = new Set(['hogy','nem','egy','meg','már','csak','most','után','ellen','miatt','lehet','lesz',
   'volt','van','vannak','ezt','azt','aki','ami','amely','mert','vagy','még','sem','mint','között','alatt',
   'óta','szerint','majd','így','úgy','minden','több','lett','kell','kellett','mondta','mondja','közölte',
@@ -83,6 +97,8 @@ async function forrasLeker(forras){
 
 /* ---- témafelismerés (a kliensoldali algoritmus szerveroldali párja) ---- */
 function sportos(h){ const sz = (h.cim + ' ' + h.kategoriak + ' ' + h.lead).toLowerCase(); return SPORT_KULCSOK.some(k => sz.includes(k)); }
+function puha(h){ const sz = (h.cim + ' ' + h.lead).toLowerCase(); return PUHA_KULCSOK.some(k => sz.includes(k)); }
+function kiemelt(h){ const sz = (h.cim + ' ' + h.lead).toLowerCase(); return KIEMELT_KULCSOK.some(k => sz.includes(k)); }
 function stemek(szoveg){
   return new Set((szoveg.toLowerCase().match(/[a-záéíóöőúüű]{4,}/g) || [])
     .filter(sz => !STOP.has(sz)).map(sz => sz.slice(0, 7)));
@@ -109,7 +125,8 @@ function temaValaszt(hirek, minForras, oraAblak){
       }
     }
     if (!masok.size) continue;
-    const pont = masok.size * 10 + talalat + (friss[i].kep ? 1 : 0);
+    const pont = masok.size * 10 + talalat + (friss[i].kep ? 1 : 0)
+      - (puha(friss[i]) ? 12 : 0) + (kiemelt(friss[i]) ? 13 : 0);
     // determinisztikus: pontegyenlőségnél a link ábécésorrendje dönt, így ugyanabból
     // az adatból MINDIG ugyanaz a téma jön ki, minden látogatónál, minden lekérésnél
     if (pont > legjobb || (pont === legjobb && horgony >= 0 && friss[i].link < friss[horgony].link)){
