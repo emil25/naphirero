@@ -44,10 +44,32 @@ const STOP = new Set(['hogy','nem','egy','meg','már','csak','most','után','ell
   'írta','írja','jelentette','ilyen','olyan','egyik','másik','való','előtt','videó','video','fotó','fotók',
   'galéria','friss','percről','percre','című','megye','megyei','megyében','ezért','azért','pedig','illetve']);
 
+const ENTITAS_TERKEP = {
+  amp:'&', lt:'<', gt:'>', quot:'"', apos:"'", nbsp:' ',
+  aacute:'á', eacute:'é', iacute:'í', oacute:'ó', ouml:'ö', odblac:'ő', Odblac:'Ő',
+  uacute:'ú', uuml:'ü', udblac:'ű', Aacute:'Á', Eacute:'É', Iacute:'Í', Oacute:'Ó',
+  Ouml:'Ö', Uacute:'Ú', Uuml:'Ü', hellip:'…', mdash:'—', ndash:'–', lsquo:'‘', rsquo:'’',
+  ldquo:'“', rdquo:'”', laquo:'«', raquo:'»', copy:'©', bull:'•'
+};
+function entitasFeloldas(s){
+  const egyszer = t => t.replace(/&(#x?[0-9a-fA-F]+|[a-zA-Z]+);/g, (egesz, kod) => {
+    if (kod[0] === '#'){
+      const kodpont = kod[1] === 'x' || kod[1] === 'X' ? parseInt(kod.slice(2), 16) : parseInt(kod.slice(1), 10);
+      return Number.isFinite(kodpont) ? String.fromCodePoint(kodpont) : egesz;
+    }
+    return ENTITAS_TERKEP[kod] || egesz;
+  });
+  // kétszer futtatjuk, mert néhány forrás dupla-kódolja az entitásokat
+  // (pl. "&amp;ouml;" → első körben "&ouml;", második körben "ö")
+  return egyszer(egyszer(s));
+}
 function tisztit(s){
-  return (s || '').replace(/<!\[CDATA\[|\]\]>/g, '').replace(/<[^>]+>/g, ' ')
-    .replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"')
-    .replace(/&#0?39;|&apos;/g,"'").replace(/&nbsp;/g,' ').replace(/\s+/g,' ').trim();
+  // FONTOS a sorrend: sok forrás a leírást entitásként küldi (&lt;p&gt;...&lt;/p&gt;,
+  // és az ékezetes betűket is &ouml;, &eacute; stb. formában), ezért ELŐSZÖR fel kell
+  // oldani MINDEN entitást, és csak UTÁNA szabad a címkéket levágni – fordított
+  // sorrendben a becsomagolt címkék és a rossz ékezetek nyersen megjelentek volna.
+  return entitasFeloldas((s || '').replace(/<!\[CDATA\[|\]\]>/g, ''))
+    .replace(/<[^>]+>/g, ' ').replace(/\s+/g,' ').trim();
 }
 
 function mezo(item, nev){
@@ -69,7 +91,16 @@ function feedFeldolgoz(xml, forras){
     let m = item.match(/<enclosure[^>]+url=["']([^"']+\.(?:jpe?g|png|webp)[^"']*)["']/i)
       || item.match(/<media:(?:content|thumbnail)[^>]+url=["']([^"']+)["']/i)
       || item.match(/<img[^>]+src=["']([^"']+)["']/i);
-    if (m) kep = m[1];
+    if (!m){
+      // sok forrásnál a leírás/tartalom mezőben a <img> tag HTML-entitásként van
+      // elrejtve (pl. "&lt;img src=..."), ezért egy feloldott másolaton is megkeressük –
+      // enélkül a kártyák nagy része kép nélkül, csak szövegesen jelent meg
+      const nyers = mezo(item, 'content:encoded') || mezo(item, 'description') || mezo(item, 'summary') || '';
+      const feloldva = nyers.replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"').replace(/&#0?39;|&apos;/g,"'").replace(/&amp;/g,'&');
+      const m2 = feloldva.match(/<img[^>]+src=["']([^"'\s]+)["']/i);
+      if (m2) m = m2;
+    }
+    if (m) kep = m[1].replace(/&amp;/g, '&');
     const kategoriak = (item.match(/<category[^>]*>[\s\S]*?<\/category>/gi) || [])
       .map(c => tisztit(c)).join(' ');
     return { cim, link, datum: datum.toISOString(), lead, kep, forras: forras.nev, region: forras.region, kategoriak };
