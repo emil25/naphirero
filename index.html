@@ -69,11 +69,11 @@ nav.rovatok{position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.1
   border-top:1px solid var(--line);border-bottom:1px solid var(--line);
 }
 .fejlec-banner-hely{flex:1;display:flex;justify-content:center;align-items:center;min-width:0;padding:0 24px}
-.sablon-valto{display:flex;gap:4px;background:var(--paper-warm);border-radius:99px;padding:3px;flex-shrink:0}
-.sv-gomb{width:34px;height:34px;border-radius:50%;font-size:16px;background:transparent;transition:all .15s;display:flex;align-items:center;justify-content:center}
+.sablon-valto{display:flex;gap:3px;background:var(--paper-warm);border:1px solid var(--line);padding:3px;flex-shrink:0}
+.sv-gomb{width:auto;height:31px;padding:0 10px;border-radius:2px;font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;background:transparent;transition:all .15s;display:flex;align-items:center;justify-content:center}
 .sv-gomb:hover{background:#e8e4d8}
-.sv-gomb.aktiv{background:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.2)}
-@media (max-width:900px){.sablon-valto{display:none}}
+.sv-gomb.aktiv{background:var(--ink);color:#fff;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+@media (max-width:640px){.sablon-valto{order:4;margin:0 0 10px auto}.sv-gomb{height:28px;padding:0 7px;font-size:9px}}
 .fejlec-hirdetes{display:block;line-height:0}
 .fejlec-hirdetes img{display:block;width:auto;max-width:100%;height:auto;max-height:58px}
 @media (max-width:1050px){.fejlec-banner-hely{display:none}}
@@ -954,6 +954,16 @@ body{-webkit-font-smoothing:antialiased;overflow-x:hidden}
 :root{--t-vonal:#e4e4e4;--t-szurke:#5c5c5c}
 body.modern{background:#fff}
 body.modern main{max-width:1240px;padding-top:14px}
+body.modern .topbar{background:#f1f1ee;color:#565656;border-bottom:1px solid #deded9}
+body.modern .topbar .frissit-btn{color:#333;border-color:#c7c7c1}
+body.modern header.fo{border-bottom:0;background:#fff}
+body.modern nav.rovatok{background:#fff;border-top:1px solid #111;border-bottom:3px solid #111;box-shadow:none}
+body.modern nav.rovatok button{color:#242424;border-right:1px solid #e4e4e4}
+body.modern nav.rovatok button:hover,body.modern nav.rovatok button.aktiv{color:#fff;background:#111}
+body.modern nav.rovatok button.pp{color:#e1482f}
+body.modern .kereso input{border-radius:0;background:#fff;border-color:#aaa}
+body.modern .sablon-valto{background:#fff;border-color:#bbb}
+body.modern .sv-gomb.aktiv{background:#ff5a3c}
 
 .m-tema-sav{margin:0 calc(50% - 50vw) 0;background:#0d0d0f;padding:18px 0 24px}
 .m-tema-in{max-width:1240px;margin:0 auto;padding:0 20px}
@@ -1155,6 +1165,10 @@ footer{background:var(--ej);color:#8f98a8;margin-top:40px}
     <div class="kereso">
       <input type="search" id="kereso-mezo" placeholder="Keresés…" aria-label="Keresés a hírekben">
     </div>
+    <div class="sablon-valto" aria-label="Oldaldizájn kiválasztása">
+      <button class="sv-gomb" type="button" data-sablon="klasszikus" onclick="valtSablon('klasszikus')" title="Klasszikus NapHíre dizájn">Klasszikus</button>
+      <button class="sv-gomb" type="button" data-sablon="modern" onclick="valtSablon('modern')" title="Új Horizont dizájn">Horizont</button>
+    </div>
   </div>
   <nav class="rovatok" id="rovat-sav">
     <div class="rovatok-in">
@@ -1267,7 +1281,11 @@ const STRATEGIAK = [
 
 let osszesHir = [];
 let aktivRovat = 'mind';
-const AKTIV_SABLON = 'klasszikus'; // a design-váltó eltávolítva, csak a klasszikus nézet fut
+let AKTIV_SABLON = (() => {
+  try { return localStorage.getItem('naphire_design') === 'modern' ? 'modern' : 'klasszikus'; }
+  catch(e) { return 'klasszikus'; }
+})();
+document.body.classList.toggle('modern', AKTIV_SABLON === 'modern');
 let aktivForras = null;
 let keresoSzo = '';
 let hibasForrasok = [];
@@ -2435,7 +2453,26 @@ function modernFooldalHTML(tema, temaErdely, vezeto, mozaik12, erdelyiek, magyar
 
   return temaSav + `<div style="max-width:1240px;margin:0 auto;padding:0 20px 40px">
     ${felso}
+    ${temaErdely ? erdelyTemaHTML(temaErdely) : ''}
     ${szekciok}
+  </div>`;
+}
+
+function modernRovatHTML(cim, fejOsztaly, vezeto, tovabbi){
+  const oszlop1 = tovabbi.slice(0, 3).map(mMiniHTML).join('');
+  const oszlop2 = tovabbi.slice(3, 6).map(mMiniHTML).join('');
+  const racs = tovabbi.slice(6, 30);
+  return `<div style="max-width:1240px;margin:0 auto;padding:0 20px 40px">
+    <div class="m-szekcio-fej ${fejOsztaly}"><span class="jelzo"></span><h2>${biztonsagos(cim)}</h2><span class="vonal"></span></div>
+    <div class="m-felso">
+      <div><a class="m-hero" ${dc(vezeto)} href="${biztonsagos(vezeto.link)}" target="_blank" rel="noopener">
+        <div class="m-kep-doboz">${vezeto.kep ? `<img src="${biztonsagos(vezeto.kep)}" alt="" onerror="this.parentElement.remove()">` : ''}</div>
+        <h1>${mCimke(vezeto)}${biztonsagos(vezeto.cim)}</h1><p>${biztonsagos(vezeto.lead)}</p>
+      </a></div>
+      <div class="m-oszlop">${oszlop1}</div>
+      <div class="m-oszlop">${oszlop2}</div>
+    </div>
+    <div class="m-grid">${racs.map(mKartyaHTML).join('')}</div>
   </div>`;
 }
 
@@ -2594,6 +2631,11 @@ function rajzol(){
 
   if (foNezet && AKTIV_SABLON === 'modern'){
     cel.innerHTML = hibaHTML + modernFooldalHTML(tema, temaErdely, vezeto, mozaik12, erdelyiek, magyarok, gazdasagiak, sportosok, kulturasok);
+  } else if (AKTIV_SABLON === 'modern'){
+    const modernCimek = { erdely:'Erdély', magyar:'Magyarország', gazdasag:'Gazdaság', sport:'Sport', kultura:'Kultúra' };
+    const modernCim = aktivForras || (keresoSzo ? `Találatok: ${keresoSzo}` : (modernCimek[aktivRovat] || 'Hírek'));
+    const modernFej = aktivRovat === 'erdely' ? 'f-erdely' : aktivRovat === 'gazdasag' ? 'f-gazdasag' : aktivRovat === 'sport' ? 'f-sport' : aktivRovat === 'kultura' ? 'f-kultura' : 'f-magyar';
+    cel.innerHTML = hibaHTML + modernRovatHTML(modernCim, modernFej, vezeto, [...mozaik12, ...marad]);
   } else if (foNezet){
     cel.innerHTML = hibaHTML + napTemajaHTML(tema) + `
       <div class="foblokk">
@@ -2632,6 +2674,20 @@ function rajzol(){
 }
 
 /* ---------- Vezérlés ---------- */
+function sablonGombokFrissit(){
+  document.querySelectorAll('.sv-gomb').forEach(b => {
+    const aktiv = b.dataset.sablon === AKTIV_SABLON;
+    b.classList.toggle('aktiv', aktiv);
+    b.setAttribute('aria-pressed', aktiv ? 'true' : 'false');
+  });
+}
+function valtSablon(nev){
+  AKTIV_SABLON = nev === 'modern' ? 'modern' : 'klasszikus';
+  document.body.classList.toggle('modern', AKTIV_SABLON === 'modern');
+  try { localStorage.setItem('naphire_design', AKTIV_SABLON); } catch(e) {}
+  sablonGombokFrissit();
+  rajzol();
+}
 function valtRovat(r){
   if (location.hash.includes('cikk=')) location.hash = ''; // cikknézetből vissza a listára
   aktivRovat = r;
@@ -2679,6 +2735,7 @@ document.getElementById('frissit-gomb').addEventListener('click', () => betoltBe
 document.getElementById('mai-datum').textContent =
   new Date().toLocaleDateString('hu-HU',{year:'numeric',month:'long',day:'numeric',weekday:'long'});
 document.getElementById('ev').textContent = new Date().getFullYear();
+sablonGombokFrissit();
 
 betoltBeallitasok().then(() => {
   renderForrasaink();
