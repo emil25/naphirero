@@ -1689,7 +1689,9 @@ function temaStemek(h){
 
 function napTemaja(hirek, minForras, oraAblak){
   minForras = minForras || MIN_FORRAS_TEMA;
-  oraAblak = oraAblak || 48;
+  // A napi téma az elmúlt 30 órából dolgozik, így az éjfél körül megjelent
+  // fontos cikkek még bekerülnek, de többnapos témák már nem.
+  oraAblak = oraAblak || 30;
   // csak a megadott időablakon belüli hírek számítanak
   const friss = hirek.filter(h => Date.now() - h.datum.getTime() < oraAblak*3600*1000).slice(0, 130);
   if (friss.length < 4) return null;
@@ -1734,7 +1736,8 @@ function napTemaja(hirek, minForras, oraAblak){
   const csoport = friss.filter((h, j) =>
     j === horgony || (kozosDb(szoKeszlet[horgony], szoKeszlet[j]) >= 3 && kozosDb(kulcsszavak, szoKeszlet[j]) >= 2));
   const forrasDb = new Set(csoport.map(h => h.forras)).size;
-  const kuszob = kiemeltKozeleti(friss[horgony]) ? Math.max(2, minForras - 1) : minForras;
+  // Csak akkor lehet nap témája, ha legalább a kért számú külön portál írta meg.
+  const kuszob = minForras;
   if (forrasDb < kuszob) return null;
 
   csoport.sort((a,b) => b.datum - a.datum);
@@ -1782,6 +1785,7 @@ const MIN_FORRAS_TEMA = 3; // ennyi FÜGGETLEN forrásnak kell írnia róla, hog
 function temaTarKulcs(nev){ return 'naphire_tema_v2_' + nev; }
 const TEMA_MEMORIA = {}; // munkamenet-szintű gyorstár – akkor is stabilan tart, ha a localStorage
                           // nem elérhető (pl. néhány böngésző file://-ként megnyitott lapnál blokkolja)
+function temaNap(){ const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
 function temaBetolt(nev){
   if (TEMA_MEMORIA[nev]) return TEMA_MEMORIA[nev];
   try{
@@ -1799,7 +1803,7 @@ function napTemajaStabil(jelolt, nev, minForras, oraAblak){
   const most = Date.now();
   const mentett = temaBetolt(nev);
   const friss = napTemaja(jelolt, minForras, oraAblak); // az aktuálisan legfelkapottabb jelölt
-  if (mentett && (most - mentett.mentveKor) < TEMA_FRISSITES_ORA * 3600 * 1000){
+  if (mentett && mentett.nap === temaNap() && (most - mentett.mentveKor) < TEMA_FRISSITES_ORA * 3600 * 1000){
     const kulcsszavak = new Set(mentett.kulcsszavak);
     const horgonyHir = jelolt.find(h => h.link === mentett.horgonyLink);
     const horgonySzavak = horgonyHir ? new Set(temaStemek(horgonyHir)) : kulcsszavak;
@@ -1821,7 +1825,7 @@ function napTemajaStabil(jelolt, nev, minForras, oraAblak){
     }
     // a régi téma elapadt vagy lejárt az érvényessége – új témát választunk
   }
-  if (friss) temaMent(nev, { horgonyLink: friss.fo.link, kulcsszavak: friss.kulcsszavak, pont: friss.pont, mentveKor: most });
+  if (friss) temaMent(nev, { horgonyLink: friss.fo.link, kulcsszavak: friss.kulcsszavak, pont: friss.pont, mentveKor: most, nap: temaNap() });
   return friss;
 }
 
@@ -2487,7 +2491,7 @@ function rajzol(){
   let temaErdely = null;
   if (aktivRovat === 'mind' && !aktivForras && !keresoSzo){
     const erdelyJelolt = marad.filter(h => h.region === 'erdely');
-    temaErdely = napTemajaStabil(erdelyJelolt, 'erdely', 2, 72);
+    temaErdely = napTemajaStabil(erdelyJelolt, 'erdely', 3, 30);
     if (!temaErdely && erdelyJelolt.length){
       // nincs olyan téma, amiről legalább 2 forrás írt – ilyenkor is mutassunk valamit,
       // a hero-sávhoz hasonlóan: a legfrissebb, képes erdélyi hír legyen a "nap témája" –
