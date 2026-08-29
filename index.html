@@ -1069,6 +1069,73 @@ body.modern .sv-gomb.aktiv{background:#ff5a3c}
   .m-kartya:first-child{border-top:none!important}
 }
 
+/* ---------- Horizont: teljesen eltérő, magazinos vizuális réteg ----------
+   A klasszikus nézet sötét-kék hírrácsától független paletta, ritmus és
+   komponensforma. A kapcsoló ezt a réteget aktiválja, nem csak színeket cserél. */
+body.modern{background:#f4efe8;color:#182333;font-family:'Inter',Arial,sans-serif}
+body.modern .topbar{background:#182333;color:#f7f1e8;border-bottom:0}
+body.modern .topbar-in{max-width:1320px}
+body.modern .topbar .frissit-btn{border-color:#536171;color:#f7f1e8}
+body.modern header.fo{background:#f4efe8;border-bottom:1px solid #182333}
+body.modern .fejlec-in{max-width:1320px;min-height:94px}
+body.modern .logo-fo{font-family:'Archivo',sans-serif;font-weight:900;letter-spacing:-.055em;color:#182333}
+body.modern .logo-fo .hire{color:#ef5b3c}
+body.modern .logo-fo .ro{color:#f0a51c}
+body.modern .szlogen{color:#687384}
+body.modern .nap-ikon{background:#ef5b3c;border-radius:50%;padding:7px}
+body.modern .nap-ikon svg{display:block}
+body.modern nav.rovatok{background:#ef5b3c;border:0;box-shadow:none}
+body.modern nav.rovatok .rovatok-in{max-width:1320px}
+body.modern nav.rovatok button{color:#fff;border-right:1px solid rgba(255,255,255,.22);font-size:12px;letter-spacing:.045em}
+body.modern nav.rovatok button:hover{background:#182333;color:#fff}
+body.modern nav.rovatok button.aktiv{background:#182333;color:#fff}
+body.modern nav.rovatok button.pp{color:#182333;margin-left:auto;font-weight:900}
+body.modern .kereso input{background:#fff;border:2px solid #182333;border-radius:0;color:#182333}
+body.modern .sablon-valto{background:#182333;border-color:#182333;padding:4px}
+body.modern .sv-gomb{color:#fff;border-color:transparent;background:transparent}
+body.modern .sv-gomb.aktiv{background:#f0a51c;color:#182333}
+body.modern main{max-width:none;padding:0 0 42px}
+body.modern .hiba-sav{margin-bottom:0;background:#fff2dc;border-bottom:1px solid #edc98d}
+body.modern .hiba-sav-in{max-width:1320px;color:#8a5b1b}
+body.modern .m-tema-sav{background:#182333;padding:30px 0 36px;border-bottom:7px solid #f0a51c;position:relative;overflow:hidden}
+body.modern .m-tema-sav:after{content:'01';position:absolute;right:5%;top:-30px;color:rgba(255,255,255,.05);font:900 220px/1 'Archivo',sans-serif;pointer-events:none}
+body.modern .m-tema-in{max-width:1320px;position:relative;z-index:1}
+body.modern .m-tema-fej{color:#f0a51c;font-size:12px;letter-spacing:.16em}
+body.modern .m-tema-fej .pötty{background:#f0a51c;border-radius:0;width:10px;height:10px}
+body.modern .m-tema-racs{grid-template-columns:1.5fr 1fr;gap:42px;align-items:end}
+body.modern .m-tema-kep{aspect-ratio:16/9;border:1px solid rgba(255,255,255,.24)}
+body.modern .m-tema-h1{font-family:'Archivo',sans-serif;font-weight:800;font-size:clamp(25px,3.1vw,44px);line-height:1.03;letter-spacing:-.04em}
+body.modern .m-tema-lead{color:#c5ccd5;font-size:14px;line-height:1.55;max-width:560px}
+body.modern .m-tema-forr{color:#f0a51c}
+body.modern .m-felso{max-width:1320px;margin:28px auto 0;padding:0 20px;border:0;grid-template-columns:1.65fr 1fr 1fr;gap:18px}
+body.modern .m-felso>div{padding:0;border:0!important}
+body.modern .m-felso>div:first-child{background:#fff;padding:0 0 20px}
+body.modern .m-felso>div:nth-child(2),body.modern .m-felso>div:nth-child(3){background:#182333;padding:16px 18px}
+body.modern .m-hero .m-kep-doboz{aspect-ratio:16/10;margin-bottom:17px;background:#d8d0c5}
+body.modern .m-hero h1{font-family:'Archivo',sans-serif;font-weight:900;color:#182333;font-size:clamp(28px,3vw,43px);line-height:.99;letter-spacing:-.055em;padding:0 22px}
+body.modern .m-hero h1 .m-cimke{display:none}
+body.modern .m-hero p{color:#687384;padding:0 22px;font-size:14px;line-height:1.5}
+body.modern .m-mini{padding:0 0 17px;margin-bottom:17px;border-bottom:1px solid #465363}
+body.modern .m-mini:last-child{border-bottom:0;margin-bottom:0;padding-bottom:0}
+body.modern .m-mini .m-kep{aspect-ratio:16/10;margin-bottom:10px;background:#324052}
+body.modern .m-mini h3{font-family:'Archivo',sans-serif;color:#fff;font-weight:700;font-size:17px;line-height:1.12;letter-spacing:-.02em}
+body.modern .m-mini .m-meta{color:#f0a51c;font-size:10px;text-transform:uppercase;letter-spacing:.08em}
+body.modern .m-szekcio{max-width:1280px;margin:34px auto 0;background:#fff;border:0;border-top:7px solid #182333;padding:0 24px 24px}
+body.modern .m-szekcio-fej{margin:0 -24px 4px;padding:16px 24px 14px;border:0;background:#fff;gap:11px}
+body.modern .m-szekcio-fej h2{font-family:'Archivo',sans-serif;font-size:25px;font-weight:900;letter-spacing:-.045em;color:#182333;text-transform:uppercase}
+body.modern .m-szekcio-fej .jelzo{width:12px;height:12px;border-radius:0}
+body.modern .m-grid{grid-template-columns:repeat(4,1fr);gap:0}
+body.modern .m-kartya{padding:14px 16px;border-top:1px solid #e2ddd5!important}
+body.modern .m-kartya:nth-child(4n+1){padding-left:0}
+body.modern .m-kartya:nth-child(4n){padding-right:0}
+body.modern .m-kartya+.m-kartya{border-left:1px solid #e2ddd5}
+body.modern .m-kartya .m-kep{aspect-ratio:16/10;background:#e4ded5;margin-bottom:11px}
+body.modern .m-kartya h3{font-family:'Archivo',sans-serif;color:#182333;font-weight:750;font-size:17px;line-height:1.13;letter-spacing:-.025em}
+body.modern .m-kartya .m-meta{color:#7a8491;text-transform:uppercase;letter-spacing:.07em;font-size:10px}
+body.modern footer{background:#182333}
+@media(max-width:1000px){body.modern .m-tema-racs{grid-template-columns:1fr;gap:20px}body.modern .m-felso{grid-template-columns:1fr 1fr}body.modern .m-felso>div:first-child{grid-column:1/-1}body.modern .m-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){body.modern .m-felso{grid-template-columns:1fr;padding:0 16px}body.modern .m-felso>div:first-child{grid-column:auto}body.modern .m-szekcio{margin-left:16px;margin-right:16px;padding:0 16px 18px}body.modern .m-szekcio-fej{margin-left:-16px;margin-right:-16px;padding-left:16px;padding-right:16px}body.modern .m-grid{grid-template-columns:1fr}body.modern .m-kartya,body.modern .m-kartya:nth-child(4n+1),body.modern .m-kartya:nth-child(4n){padding-left:0;padding-right:0;border-left:0!important}body.modern nav.rovatok button.pp{margin-left:0}}
+
 /* ---------- Állapotok ---------- */
 .betoltes{padding:60px 0;text-align:center;color:var(--ink-faint)}
 .betoltes .napocska{
@@ -1241,15 +1308,15 @@ footer{background:var(--ej);color:#8f98a8;margin-top:40px}
    A "szin" a forrás pöttyének színe a cikknézet füleinél. */
 const FORRASOK = [
   // Erdély – forrásonként több lehetséges RSS-cím, az első működőt használja
-  { nev:'Maszol',     urls:['https://maszol.ro/rss','https://maszol.ro/rss.xml','https://maszol.ro/feed'], region:'erdely', iranyzat:'centrista', szin:'#1e9be0' },
+  { nev:'Maszol',     urls:['https://maszol.ro/rss','https://maszol.ro/rss.xml','https://maszol.ro/feed','https://maszol.ro/rss/'], region:'erdely', iranyzat:'centrista', szin:'#1e9be0' },
   { nev:'Krónika',    urls:['https://kronikaonline.ro/rss/kronika_hirek.xml','https://kronikaonline.ro/rss'], region:'erdely', iranyzat:'kormany', szin:'#f2a007' },
-  { nev:'Székelyhon', urls:['https://szekelyhon.ro/rss/szekelyhon_hirek.xml','https://szekelyhon.ro/rss'], region:'erdely', iranyzat:'kormany', szin:'#2f7fd6' },
-  { nev:'Transtelex', urls:['https://transtelex.ro/rss'], region:'erdely', iranyzat:'kritikus', szin:'#e0315f' },
+  { nev:'Székelyhon', urls:['https://szekelyhon.ro/rss/szekelyhon_hirek.xml','https://szekelyhon.ro/rss','https://szekelyhon.ro/feed/'], region:'erdely', iranyzat:'kormany', szin:'#2f7fd6' },
+  { nev:'Transtelex', urls:['https://transtelex.ro/rss','https://transtelex.ro/feed','https://transtelex.ro/rss/'], region:'erdely', iranyzat:'kritikus', szin:'#e0315f' },
   { nev:'3Szék',      urls:['https://www.3szek.ro/rss','https://www.3szek.ro/rss.xml','https://3szek.ro/rss'], region:'erdely', iranyzat:'centrista', szin:'#1f8fd1' },
   { nev:'Hargita Népe', urls:['https://hargitanepe.ro/feed/','https://hargitanepe.ro/feed','https://hargitanepe.ro/rss'], region:'erdely', iranyzat:'centrista', szin:'#2f7fd6' },
   // Magyarország
-  { nev:'Telex',      urls:['https://telex.hu/rss'], region:'magyar', iranyzat:'kritikus', szin:'#0b7261' },
-  { nev:'HVG',        urls:['https://hvg.hu/rss'], region:'magyar', iranyzat:'kritikus', szin:'#d43d17' },
+  { nev:'Telex',      urls:['https://telex.hu/rss','https://telex.hu/rss/'], region:'magyar', iranyzat:'kritikus', szin:'#0b7261' },
+  { nev:'HVG',        urls:['https://hvg.hu/rss','https://hvg.hu/rss/rss.hvg/hirek','https://hvg.hu/rss/rss.hvg/szemle'], region:'magyar', iranyzat:'kritikus', szin:'#d43d17' },
   { nev:'24.hu',      urls:['https://24.hu/feed/'], region:'magyar', iranyzat:'centrista', szin:'#1e56c8' },
   { nev:'Index',      urls:['https://index.hu/24ora/rss/'], region:'magyar', iranyzat:'centrista', szin:'#e8b207' },
   { nev:'444',        urls:['https://444.hu/feed'], region:'magyar', iranyzat:'kritikus', szin:'#111111' },
@@ -1271,12 +1338,14 @@ const NOILEG_FORRAS = [
 /* Letöltési stratégiák – sorban próbálja őket, amíg az egyik nem válaszol.
    Az rss2json kész JSON-t ad vissza, a többi CORS-proxyn át hozza a nyers XML-t. */
 const STRATEGIAK = [
-  u => ({ url: `/rss?url=${encodeURIComponent(u)}`, tipus:'text' }), // szerveroldali funkció (Cloudflare Pages) – ha be van állítva, ez a legmegbízhatóbb
-  u => ({ url: u, tipus:'text' }),  // közvetlen próba – sok RSS-nél ez is működik, és ingyenes/korlátlan
+  u => ({ url: `/rss?url=${encodeURIComponent(u)}`, tipus:'text' }), // saját Vercel-közvetítő
   u => ({ url:`https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(u)}`, tipus:'text' }),
   u => ({ url:`https://api.allorigins.win/raw?url=${encodeURIComponent(u)}`, tipus:'text' }),
+  u => ({ url:`https://corsproxy.io/?url=${encodeURIComponent(u)}`, tipus:'text' }),
+  u => ({ url:`https://cors.isomorphic-git.org/${u}`, tipus:'text' }),
   u => ({ url:`https://api.allorigins.win/get?url=${encodeURIComponent(u)}`, tipus:'json' }),
-  u => ({ url:`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(u)}`, tipus:'rss2json' }), // erősen korlátozott, ezért utolsó próba
+  u => ({ url: u, tipus:'text' }),  // közvetlen próba – ha a forrás engedi a böngészőből
+  u => ({ url:`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(u)}`, tipus:'rss2json' }),
 ];
 
 let osszesHir = [];
@@ -2749,4 +2818,3 @@ setInterval(() => {
 </script>
 </body>
 </html>
-
