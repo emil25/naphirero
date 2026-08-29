@@ -1393,6 +1393,20 @@ body:not(.studio):not(.brief) .studio-kereso-sav{display:none}
 @media (max-width:900px){.brief .fejlec-in{padding:12px 16px}.b-shell{padding-left:16px;padding-right:16px}.b-kiemeltek{grid-template-columns:1fr}.b-rovid-racs{grid-template-columns:repeat(2,1fr);gap:0 20px}.b-regio-racs{grid-template-columns:1fr}.b-deck h1{font-size:52px}}
 @media (max-width:600px){.brief .fejlec-in{gap:8px}.brief .fejlec-banner-hely{min-width:105px;max-width:130px}.brief .fejlec-hirdetes img{max-height:42px}.brief .studio-kereso-in{padding:0 16px;display:block;padding-top:7px;padding-bottom:9px}.brief .studio-kereso-cimke{display:block;margin-bottom:3px}.b-deck{align-items:start;flex-direction:column;padding-top:27px}.b-deck-meta{align-self:stretch}.b-tema-vezeto{grid-template-columns:1fr}.b-tema-kep{min-height:165px;max-height:165px}.b-tema-szoveg{min-height:230px;padding:19px 17px}.b-tema-szoveg h2{font-size:26px}.b-tema-kapcsolt a{grid-template-columns:1fr}.b-tema-kapcsolt small{white-space:normal}.b-rovid-racs{grid-template-columns:1fr}.b-blokk-fej h2{font-size:22px}.b-blokk-fej span{font-size:7px}}
 
+/* ---------- NAGYPORTÁL – erős címlap a választható nézethez ---------- */
+body.brief{--p-ink:#111820;--p-muted:#66717a;--p-line:#d9dee1;--p-red:#d52f25;--p-blue:#18598b;background:#fff;color:var(--p-ink)}
+body.brief .p-shell{max-width:1360px;margin:0 auto;padding:0 24px 70px}
+.p-elo-fej{display:flex;align-items:center;gap:13px;padding:13px 0 11px;border-bottom:1px solid var(--p-line);font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.09em;text-transform:uppercase;color:var(--p-muted)}
+.p-elo-fej span{color:var(--p-red);font-weight:800}.p-elo-fej i{height:14px;width:1px;background:var(--p-line)}.p-elo-fej em{font-style:normal;margin-left:auto;color:#8a949a}
+.p-nyito{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(300px,.78fr);gap:0;margin-top:22px;border-top:7px solid var(--p-ink);border-bottom:1px solid var(--p-ink)}
+.p-hero{display:grid;grid-template-columns:1.22fr 1fr;min-height:445px;background:var(--p-ink);color:#fff}.p-hero-kep{overflow:hidden;background:#263543}.p-hero-kep img{width:100%;height:100%;object-fit:cover;transition:transform .5s}.p-hero:hover img{transform:scale(1.035)}.p-hero-szoveg{display:flex;flex-direction:column;justify-content:center;padding:35px 30px}.p-hero-szoveg>span{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;color:#ff8378;text-transform:uppercase}.p-hero h1{font-family:'Archivo',sans-serif;font-size:clamp(30px,3.5vw,52px);font-weight:900;line-height:.99;letter-spacing:-.055em;margin:16px 0 14px}.p-hero p{color:#c8d1d7;font-size:14px;line-height:1.5;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.p-legfrissebb{background:#f1f3f2}.p-legfrissebb-fej{display:flex;align-items:baseline;justify-content:space-between;padding:22px 21px 16px;border-bottom:4px solid var(--p-red)}.p-legfrissebb-fej h2,.p-rovat-fej h2{font-family:'Archivo',sans-serif;font-size:21px;font-weight:900;letter-spacing:-.03em}.p-legfrissebb-fej span,.p-rovat-fej>span{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--p-muted);text-transform:uppercase}.p-sor{display:grid;grid-template-columns:32px 1fr;gap:11px;padding:14px 18px;border-bottom:1px solid var(--p-line);transition:background .15s}.p-sor:hover{background:#fff}.p-sor-szam{font-family:'Archivo',sans-serif;font-weight:900;font-size:19px;color:var(--p-red);line-height:1}.p-sor strong{display:block;font-family:'Source Serif 4',Georgia,serif;font-size:15px;line-height:1.18}.p-sor small{display:block;margin-top:6px;color:#829098;font-family:'JetBrains Mono',monospace;font-size:8px;text-transform:uppercase}
+.p-kiemelt-sor{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;padding:23px 0 32px;border-bottom:1px solid var(--p-line)}.p-card{display:flex;flex-direction:column;min-width:0}.p-card-kep{aspect-ratio:16/9;overflow:hidden;background:#e9eceb}.p-card-kep img{width:100%;height:100%;object-fit:cover;transition:transform .4s}.p-card:hover img{transform:scale(1.04)}.p-card-szoveg{padding-top:10px}.p-card h3{font-family:'Source Serif 4',Georgia,serif;font-size:21px;line-height:1.14;margin-top:7px}.p-card:hover h3{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}.p-card p{color:var(--p-muted);font-size:12px;margin-top:7px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.p-rovat{margin-top:43px}.p-rovat-fej{display:flex;align-items:baseline;justify-content:space-between;padding:0 0 12px;border-bottom:5px solid var(--p-ink)}.p-rovat-fej h2{display:flex;align-items:center;gap:10px;font-size:27px}.p-rovat-fej h2 i{display:inline-block;width:10px;height:25px}.p-rovat-racs{display:grid;grid-template-columns:1.05fr 1fr;gap:28px;padding-top:18px}.p-rovat-racs>.p-card h3{font-size:27px}.p-rovat-lista{border-top:1px solid var(--p-line)}.p-rovat-lista .p-sor{padding-left:0;padding-right:0}.p-minden{margin-top:48px}.p-minden-racs{display:grid;grid-template-columns:repeat(2,1fr);column-gap:38px}.p-minden-racs .p-sor{padding-left:0;padding-right:0}
+body.brief .s-big-banner{margin-top:34px}
+@media (max-width:900px){body.brief .p-shell{padding-left:16px;padding-right:16px}.p-nyito{grid-template-columns:1fr}.p-legfrissebb{border-top:1px solid var(--p-ink)}.p-kiemelt-sor{grid-template-columns:repeat(2,1fr)}.p-rovat-racs{grid-template-columns:1fr}.p-rovat-racs>.p-card h3{font-size:24px}}
+@media (max-width:600px){.p-elo-fej{gap:8px;font-size:7px;flex-wrap:wrap}.p-elo-fej em{width:100%;margin-left:0}.p-hero{grid-template-columns:1fr;min-height:0}.p-hero-kep{aspect-ratio:16/10;min-height:210px}.p-hero-szoveg{padding:25px 20px 29px}.p-hero h1{font-size:34px}.p-kiemelt-sor{grid-template-columns:1fr;gap:24px}.p-card h3{font-size:22px}.p-rovat-fej h2{font-size:23px}.p-minden-racs{grid-template-columns:1fr}}
+
 /* ---------- Állapotok ---------- */
 .betoltes{padding:60px 0;text-align:center;color:var(--ink-faint)}
 .betoltes .napocska{
@@ -2908,16 +2922,25 @@ function briefTemaHTML(tema, index){
 }
 function briefFooldalHTML(hirek){
   const temak = briefTemak(hirek);
+  const fo = temak[0]?.fo || hirek.find(h => h.kep) || hirek[0];
   const temaLinkek = new Set(temak.flatMap(t => [t.fo.link, ...(t.tobbi||[]).map(h=>h.link)]));
-  const rovid = hirek.filter(h => !temaLinkek.has(h.link)).slice(0, 30);
-  const erdely = hirek.filter(h => h.region === 'erdely' && !temaLinkek.has(h.link)).slice(0, 8);
-  const magyar = hirek.filter(h => h.region === 'magyar' && !temaLinkek.has(h.link)).slice(0, 8);
-  return `<div class="b-shell">
-    <div class="b-deck"><div><span>NapHíre / Napi brief</span><h1>A mai nap lényege</h1></div><div class="b-deck-meta"><b>${hirek.length}</b> friss cikk <i></i><b>${FORRASOK.filter(f=>!BEALLITASOK.forrasokKi.includes(f.nev)).length}</b> forrás</div></div>
-    <div class="b-kiemeltek">${temak.map((t,i)=>briefTemaHTML(t,i+1)).join('')}</div>
+  const masod = temak.slice(1,4).map(t => t.fo).filter(Boolean);
+  const friss = hirek.filter(h => h !== fo).slice(0, 10);
+  const marad = hirek.filter(h => !temaLinkek.has(h.link) && h !== fo);
+  const erdely = marad.filter(h => h.region === 'erdely').slice(0, 6);
+  const magyar = marad.filter(h => h.region === 'magyar').slice(0, 6);
+  const tovabbi = marad.filter(h => !erdely.includes(h) && !magyar.includes(h)).slice(0, 24);
+  const nagy = h => `<a class="p-card" ${dc(h)} href="${biztonsagos(h.link)}" target="_blank" rel="noopener"><div class="p-card-kep">${h.kep ? `<img src="${biztonsagos(h.kep)}" alt="" loading="lazy" onerror="this.remove()">` : ''}</div><div class="p-card-szoveg">${sMetaHTML(h)}<h3>${biztonsagos(h.cim)}</h3><p>${biztonsagos(h.lead || '')}</p></div></a>`;
+  const sor = (h,i) => `<a class="p-sor" ${dc(h)} href="${biztonsagos(h.link)}" target="_blank" rel="noopener"><span class="p-sor-szam">${String(i+1).padStart(2,'0')}</span><span><strong>${biztonsagos(h.cim)}</strong><small>${biztonsagos(h.forras)} · ${idoOta(h.datum)}</small></span></a>`;
+  const rovat = (cim, lista, szin) => lista.length ? `<section class="p-rovat"><div class="p-rovat-fej"><h2><i style="background:${szin}"></i>${cim}</h2><span>${lista.length} kiemelt hír</span></div><div class="p-rovat-racs"><div>${nagy(lista[0])}</div><div class="p-rovat-lista">${lista.slice(1,6).map((h,i)=>sor(h,i)).join('')}</div></div></section>` : '';
+  return `<div class="p-shell">
+    <div class="p-elo-fej"><span>NAP HÍREI</span><b>${hirek.length} friss cikk</b><i></i><b>${FORRASOK.filter(f=>!BEALLITASOK.forrasokKi.includes(f.nev)).length} forrás</b><em>Frissítve: ${new Date().toLocaleTimeString('hu-HU',{hour:'2-digit',minute:'2-digit'})}</em></div>
+    <section class="p-nyito"><a class="p-hero" ${dc(fo)} href="${biztonsagos(fo.link)}" target="_blank" rel="noopener"><div class="p-hero-kep">${fo.kep ? `<img src="${biztonsagos(fo.kep)}" alt="" onerror="this.remove()">` : ''}</div><div class="p-hero-szoveg"><span>VEZETŐ HÍR · ${biztonsagos(fo.forras)}</span><h1>${biztonsagos(fo.cim)}</h1><p>${biztonsagos(fo.lead || '')}</p></div></a><aside class="p-legfrissebb"><div class="p-legfrissebb-fej"><h2>LEGFRISSEBB</h2><span>Percről percre</span></div>${friss.map((h,i)=>sor(h,i)).join('')}</aside></section>
+    <section class="p-kiemelt-sor">${masod.map(nagy).join('')}</section>
     ${studioBigBannerHTML()}
-    <section class="b-rovid"><div class="b-blokk-fej"><h2>Röviden, ami még számít</h2><span>30 friss szemle</span></div><div class="b-rovid-racs">${rovid.map((h,i)=>sListaHTML(h,i+1)).join('')}</div></section>
-    <section class="b-regiok"><div class="b-blokk-fej"><h2>A régió hírei</h2><span>Forrásonként összevetve</span></div><div class="b-regio-racs"><div><h3><i></i>Erdély ma</h3>${erdely.map((h,i)=>sListaHTML(h,i+1)).join('')}</div><div><h3><i></i>Magyarország ma</h3>${magyar.map((h,i)=>sListaHTML(h,i+1)).join('')}</div></div></section>
+    ${rovat('Erdély', erdely, '#1d7a4f')}
+    ${rovat('Magyarország', magyar, '#c0392b')}
+    <section class="p-minden"><div class="p-rovat-fej"><h2><i style="background:#124d83"></i>FRISS HÍREK</h2><span>A teljes hírfolyam</span></div><div class="p-minden-racs">${tovabbi.map((h,i)=>sor(h,i)).join('')}</div></section>
   </div>`;
 }
 function briefListaOldalHTML(hirek){
