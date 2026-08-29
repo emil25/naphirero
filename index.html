@@ -1376,6 +1376,23 @@ body.studio .s-hero-fedveny p{color:#b9c6cf}
   body.studio .s-hero-fedveny p{font-size:12px}
 }
 
+/* ---------- NAPI BRIEF – tematikus, szerkesztőségi címlap ---------- */
+body.brief{--b-ink:#121416;--b-paper:#f5f2ec;--b-red:#d72820;--b-blue:#124d83;--b-line:#d5d0c6;background:var(--b-paper);color:var(--b-ink)}
+body.brief .topbar{background:var(--b-ink);color:#bfc4c7}
+body.brief header.fo{background:var(--b-paper);border-bottom:4px solid var(--b-ink)}
+body.brief .fejlec-in{max-width:1360px;min-height:86px;padding:13px 24px;flex-wrap:nowrap}
+body.brief .logo{padding:0;gap:10px}.brief .logo-fo{font-family:'Archivo',sans-serif;font-size:34px;font-stretch:77%;font-weight:900;letter-spacing:-.06em}.brief .logo .nap{color:var(--b-ink)}.brief .logo .hire,.brief .logo .ro{color:var(--b-red)}.brief .logo .szlogen{font-size:9px;letter-spacing:.1em;color:#72797c}
+body.brief .fejlec-banner-hely{order:0;display:flex;flex:0 1 360px;width:min(30vw,360px);min-width:160px;padding:0;justify-content:center}.brief .fejlec-hirdetes{width:100%;padding-top:11px}.brief .fejlec-hirdetes img{width:100%;height:auto;max-height:64px;object-fit:cover}.brief .fejlec-hirdetes .hirdetes-cimke{top:0;right:0;color:#72797c;font-family:'JetBrains Mono',monospace;font-size:7px}
+body.brief .design-valto{border-color:var(--b-ink);color:var(--b-ink)}.brief .design-valto:hover{background:var(--b-ink);color:#fff}
+body.brief nav.rovatok{background:var(--b-ink);box-shadow:none;border:0}.brief nav.rovatok button{padding:14px 15px;font-size:11px;color:#cbd0d1;border-right:1px solid #303336}.brief nav.rovatok button:hover,.brief nav.rovatok button.aktiv{background:#2a2c2e;color:#fff}.brief nav.rovatok button::after{height:4px;background:var(--b-red)}.brief nav.rovatok button.pp{color:#f0bb32}
+body.brief .studio-kereso-sav{display:block;background:#fff;border-bottom:1px solid var(--b-line)}.brief .studio-kereso-in{max-width:1360px;margin:0 auto;padding:0 24px;display:flex;align-items:center;gap:18px;min-height:51px}.brief .studio-kereso-cimke{font-family:'JetBrains Mono',monospace;color:#71787b;font-size:8px;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}.brief .studio-kereso-in .kereso{flex:1;padding:6px 0}.brief .studio-kereso-in .kereso input,.brief .studio-kereso-in .kereso input:focus{width:100%;height:34px;border:0;border-bottom:2px solid var(--b-ink);border-radius:0;background:transparent;font-size:13px}
+body:not(.studio):not(.brief) .studio-kereso-sav{display:none}
+.b-shell{max-width:1360px;margin:0 auto;padding:0 24px 72px}.b-deck{display:flex;align-items:end;justify-content:space-between;gap:24px;padding:39px 0 23px;border-bottom:7px solid var(--b-ink)}.b-deck span{color:var(--b-red);font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}.b-deck h1{margin-top:7px;font-family:'Archivo',sans-serif;font-size:clamp(38px,5.5vw,76px);font-stretch:75%;font-weight:900;line-height:.87;letter-spacing:-.065em}.b-deck-meta{display:flex;align-items:baseline;gap:7px;color:#72797c;font-family:'JetBrains Mono',monospace;font-size:9px;text-transform:uppercase;white-space:nowrap}.b-deck-meta b{color:var(--b-ink);font-family:'Archivo',sans-serif;font-size:26px;font-weight:900}
+.b-kiemeltek{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;margin-top:27px;background:var(--b-line);border:1px solid var(--b-line)}.b-tema{background:#fff;min-width:0}.b-tema-fej{display:flex;align-items:center;gap:9px;padding:12px 16px;border-bottom:1px solid var(--b-line);font-family:'JetBrains Mono',monospace;font-size:9px;text-transform:uppercase}.b-tema-fej>span{color:var(--b-red);font-family:'Archivo',sans-serif;font-size:21px;font-weight:900}.b-tema-fej strong{color:#4a5155;font-size:8px}.b-tema-fej i{height:1px;flex:1;background:var(--b-line)}.b-tema-fej em{color:#898f91;font-style:normal;font-size:8px}.b-tema-vezeto{display:grid;grid-template-columns:1fr 1fr;min-height:260px}.b-tema-kep{background:#dfe1dd;min-height:260px;overflow:hidden}.b-tema-kep img{width:100%;height:100%;object-fit:cover;transition:transform .4s}.b-tema-vezeto:hover .b-tema-kep img{transform:scale(1.04)}.b-tema-szoveg{display:flex;flex-direction:column;padding:23px 21px;background:#fff}.b-tema-szoveg h2{margin-top:11px;font-family:'Archivo',sans-serif;font-size:25px;font-weight:900;line-height:.98;letter-spacing:-.04em}.b-tema-szoveg p{margin-top:11px;color:#687277;font-size:12px;line-height:1.45}.b-tema-szoveg>span{margin-top:auto;padding-top:15px;color:var(--b-red);font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;text-transform:uppercase}.b-tema-kapcsolt{border-top:1px solid var(--b-line)}.b-tema-kapcsolt a{display:grid;grid-template-columns:1fr auto;gap:12px;padding:12px 16px;border-bottom:1px solid var(--b-line)}.b-tema-kapcsolt a:hover strong{color:var(--b-red)}.b-tema-kapcsolt strong{font-family:'Source Serif 4',Georgia,serif;font-size:14px;line-height:1.15}.b-tema-kapcsolt small{color:#7a8387;font-family:'JetBrains Mono',monospace;font-size:8px;text-transform:uppercase;white-space:nowrap}
+.b-rovid,.b-regiok{margin-top:46px}.b-blokk-fej{display:flex;align-items:baseline;justify-content:space-between;padding:13px 0;border-top:6px solid var(--b-ink);border-bottom:1px solid var(--b-line)}.b-blokk-fej h2{font-family:'Archivo',sans-serif;font-size:25px;font-weight:900;letter-spacing:-.04em}.b-blokk-fej span{color:#7a8387;font-family:'JetBrains Mono',monospace;font-size:8px;text-transform:uppercase}.b-rovid-racs{display:grid;grid-template-columns:repeat(3,1fr);gap:0 28px}.b-rovid-racs .s-lista{border-bottom:1px solid var(--b-line);padding:15px 0}.b-rovid-racs .s-lista strong{font-family:'Source Serif 4',Georgia,serif;font-size:15px;line-height:1.16}.b-rovid-racs .s-sorszam{color:var(--b-red);font-size:17px}.b-rovid-racs .s-meta b{color:var(--b-blue)}.b-regio-racs{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--b-line);border:1px solid var(--b-line)}.b-regio-racs>div{background:#fff;padding:0 18px 12px}.b-regio-racs>div+div{background:#f0eee8}.b-regio-racs h3{display:flex;align-items:center;gap:8px;padding:16px 0 10px;border-bottom:2px solid var(--b-ink);font-family:'Archivo',sans-serif;font-size:19px;font-weight:900}.b-regio-racs h3 i{width:9px;height:9px;background:var(--b-red)}.b-regio-racs>div+div h3 i{background:var(--b-blue)}.b-regio-racs .s-lista{padding:13px 0;border-bottom:1px solid var(--b-line)}.b-regio-racs .s-lista strong{font-family:'Source Serif 4',Georgia,serif;font-size:14px;line-height:1.16}
+@media (max-width:900px){.brief .fejlec-in{padding:12px 16px}.b-shell{padding-left:16px;padding-right:16px}.b-kiemeltek{grid-template-columns:1fr}.b-rovid-racs{grid-template-columns:repeat(2,1fr);gap:0 20px}.b-regio-racs{grid-template-columns:1fr}.b-deck h1{font-size:52px}}
+@media (max-width:600px){.brief .fejlec-in{gap:8px}.brief .fejlec-banner-hely{min-width:105px;max-width:130px}.brief .fejlec-hirdetes img{max-height:42px}.brief .studio-kereso-in{padding:0 16px;display:block;padding-top:7px;padding-bottom:9px}.brief .studio-kereso-cimke{display:block;margin-bottom:3px}.b-deck{align-items:start;flex-direction:column;padding-top:27px}.b-deck-meta{align-self:stretch}.b-tema-vezeto{grid-template-columns:1fr}.b-tema-kep{min-height:165px;max-height:165px}.b-tema-szoveg{min-height:230px;padding:19px 17px}.b-tema-szoveg h2{font-size:26px}.b-tema-kapcsolt a{grid-template-columns:1fr}.b-tema-kapcsolt small{white-space:normal}.b-rovid-racs{grid-template-columns:1fr}.b-blokk-fej h2{font-size:22px}.b-blokk-fej span{font-size:7px}}
+
 /* ---------- Állapotok ---------- */
 .betoltes{padding:60px 0;text-align:center;color:var(--ink-faint)}
 .betoltes .napocska{
@@ -1597,7 +1614,7 @@ const STRATEGIAK = [
 
 let osszesHir = [];
 let aktivRovat = 'mind';
-let aktivSablon = localStorage.getItem('naphire_sablon') || 'studio';
+let aktivSablon = localStorage.getItem('naphire_sablon_v4') || 'brief';
 let aktivForras = null;
 let keresoSzo = '';
 let hibasForrasok = [];
@@ -2860,6 +2877,54 @@ function studioListaOldalHTML(hirek){
     <div class="s-archiv-grid">${tobbi.map(h=>sKartyaHTML(h,false)).join('')}</div>
   </div>`;
 }
+function briefTemak(hirek){
+  let pool = hirek.filter(h => !puhaHir(h)).slice(0, 140);
+  const temak = [];
+  for (let i=0; i<4 && pool.length; i++){
+    let tema = napTemaja(pool, 2, 72);
+    if (!tema){
+      const fo = pool.find(h => h.kep) || pool[0];
+      if (!fo) break;
+      const mag = new Set(temaStemek(fo));
+      const kapcsol = pool.filter(h => h !== fo && kozosDb(mag, new Set(temaStemek(h))) >= 1).slice(0, 4);
+      tema = { fo, tobbi: kapcsol, forrasDb: new Set([fo, ...kapcsol].map(h=>h.forras)).size, egyedi:true };
+    }
+    temak.push(tema);
+    const links = new Set([tema.fo.link, ...tema.tobbi.map(h=>h.link)]);
+    pool = pool.filter(h => !links.has(h.link));
+  }
+  return temak;
+}
+function briefTemaHTML(tema, index){
+  const kapcsoltak = (tema.tobbi || []).slice(0, 4);
+  return `<article class="b-tema">
+    <div class="b-tema-fej"><span>${String(index).padStart(2,'0')}</span><strong>${tema.forrasDb || 1} forrás</strong><i></i><em>${tema.egyedi?'Szerkesztőségi jelölt':'Közös téma'}</em></div>
+    <a class="b-tema-vezeto" ${dc(tema.fo)} href="${biztonsagos(tema.fo.link)}" target="_blank" rel="noopener">
+      <div class="b-tema-kep">${tema.fo.kep ? `<img src="${biztonsagos(tema.fo.kep)}" alt="" loading="lazy" onerror="this.remove()">` : ''}</div>
+      <div class="b-tema-szoveg">${sMetaHTML(tema.fo)}<h2>${biztonsagos(tema.fo.cim)}</h2><p>${biztonsagos(tema.fo.lead || '')}</p><span>Teljes ügy →</span></div>
+    </a>
+    ${kapcsoltak.length ? `<div class="b-tema-kapcsolt">${kapcsoltak.map(h => `<a ${dc(h)} href="${biztonsagos(h.link)}" target="_blank" rel="noopener"><strong>${biztonsagos(h.cim)}</strong><small>${biztonsagos(h.forras)} · ${idoOta(h.datum)}</small></a>`).join('')}</div>` : ''}
+  </article>`;
+}
+function briefFooldalHTML(hirek){
+  const temak = briefTemak(hirek);
+  const temaLinkek = new Set(temak.flatMap(t => [t.fo.link, ...(t.tobbi||[]).map(h=>h.link)]));
+  const rovid = hirek.filter(h => !temaLinkek.has(h.link)).slice(0, 30);
+  const erdely = hirek.filter(h => h.region === 'erdely' && !temaLinkek.has(h.link)).slice(0, 8);
+  const magyar = hirek.filter(h => h.region === 'magyar' && !temaLinkek.has(h.link)).slice(0, 8);
+  return `<div class="b-shell">
+    <div class="b-deck"><div><span>NapHíre / Napi brief</span><h1>A mai nap lényege</h1></div><div class="b-deck-meta"><b>${hirek.length}</b> friss cikk <i></i><b>${FORRASOK.filter(f=>!BEALLITASOK.forrasokKi.includes(f.nev)).length}</b> forrás</div></div>
+    <div class="b-kiemeltek">${temak.map((t,i)=>briefTemaHTML(t,i+1)).join('')}</div>
+    ${studioBigBannerHTML()}
+    <section class="b-rovid"><div class="b-blokk-fej"><h2>Röviden, ami még számít</h2><span>30 friss szemle</span></div><div class="b-rovid-racs">${rovid.map((h,i)=>sListaHTML(h,i+1)).join('')}</div></section>
+    <section class="b-regiok"><div class="b-blokk-fej"><h2>A régió hírei</h2><span>Forrásonként összevetve</span></div><div class="b-regio-racs"><div><h3><i></i>Erdély ma</h3>${erdely.map((h,i)=>sListaHTML(h,i+1)).join('')}</div><div><h3><i></i>Magyarország ma</h3>${magyar.map((h,i)=>sListaHTML(h,i+1)).join('')}</div></div></section>
+  </div>`;
+}
+function briefListaOldalHTML(hirek){
+  const cimMap = {erdely:'Erdély',magyar:'Magyarország',gazdasag:'Gazdaság',sport:'Sport',kultura:'Kultúra'};
+  const cim = keresoSzo ? `Találatok: „${biztonsagos(keresoSzo)}”` : aktivForras || cimMap[aktivRovat] || 'Hírek';
+  return `<div class="b-shell b-lista-oldal"><div class="b-deck"><div><span>NapHíre / Rovat</span><h1>${cim}</h1></div><div class="b-deck-meta"><b>${hirek.length}</b> találat</div></div><div class="b-rovid-racs">${hirek.slice(0,40).map((h,i)=>sListaHTML(h,i+1)).join('')}</div></div>`;
+}
 function studioPercHTML(hirek){
   return `<div class="s-shell s-perc">
     <div class="s-archiv-fej"><span>Élő hírfolyam</span><h1>Percről percre</h1><p>Automatikusan frissül ötpercenként</p></div>
@@ -3015,10 +3080,14 @@ function rajzol(){
       ${bannerHTML('oldalsav', 'Hirdetési hely<br>300×250', true)}
     </aside>`;
 
-  if (foNezet && aktivSablon === 'studio'){
+  if (foNezet && aktivSablon === 'brief'){
+    cel.innerHTML = hibaHTML + briefFooldalHTML(hirek);
+  } else if (foNezet && aktivSablon === 'studio'){
     cel.innerHTML = hibaHTML + studioFooldalHTML(tema, vezeto, mozaik12, erdelyiek, magyarok, gazdasagiak, sportosok, kulturasok);
   } else if (foNezet && aktivSablon === 'modern'){
     cel.innerHTML = hibaHTML + modernFooldalHTML(tema, temaErdely, vezeto, mozaik12, erdelyiek, magyarok, gazdasagiak, sportosok, kulturasok);
+  } else if (aktivSablon === 'brief'){
+    cel.innerHTML = hibaHTML + briefListaOldalHTML(hirek);
   } else if (aktivSablon === 'studio'){
     cel.innerHTML = hibaHTML + studioListaOldalHTML(hirek);
   } else if (foNezet){
@@ -3074,20 +3143,24 @@ function valtRovat(r){
 }
 function frissitSablonGomb(){
   const szoveg = document.getElementById('design-valto-szoveg');
-  if (szoveg) szoveg.textContent = aktivSablon === 'studio' ? 'Klasszikus nézet' : 'Új magazin nézet';
+  if (szoveg) szoveg.textContent = aktivSablon === 'brief' ? 'Studio nézet' : aktivSablon === 'studio' ? 'Napi brief' : 'Napi brief';
+  const kovetkezo = aktivSablon === 'brief' ? 'studio' : aktivSablon === 'studio' ? 'modern' : 'brief';
+  const gomb = document.getElementById('design-valto');
+  if (gomb) gomb.title = 'Váltás erre: ' + (kovetkezo === 'brief' ? 'Napi brief' : kovetkezo === 'studio' ? 'Studio nézet' : 'Klasszikus nézet');
+  document.body.classList.toggle('brief', aktivSablon === 'brief');
   document.body.classList.toggle('studio', aktivSablon === 'studio');
   document.body.classList.toggle('modern', aktivSablon === 'modern');
   const kereso = document.querySelector('.fejlec-in .kereso, .studio-kereso-in .kereso');
   const studioKereso = document.querySelector('.studio-kereso-in');
   const fejlec = document.querySelector('.fejlec-in');
   if (kereso && studioKereso && fejlec){
-    if (aktivSablon === 'studio') studioKereso.appendChild(kereso);
+    if (aktivSablon !== 'modern') studioKereso.appendChild(kereso);
     else fejlec.appendChild(kereso);
   }
 }
 function valtSablon(){
-  aktivSablon = aktivSablon === 'studio' ? 'modern' : 'studio';
-  localStorage.setItem('naphire_sablon', aktivSablon);
+  aktivSablon = aktivSablon === 'brief' ? 'studio' : aktivSablon === 'studio' ? 'modern' : 'brief';
+  localStorage.setItem('naphire_sablon_v4', aktivSablon);
   frissitSablonGomb();
   rajzol();
 }
