@@ -1407,6 +1407,31 @@ body.brief .s-big-banner{margin-top:34px}
 @media (max-width:900px){body.brief .p-shell{padding-left:16px;padding-right:16px}.p-nyito{grid-template-columns:1fr}.p-hero{grid-template-columns:1fr}.p-hero-kep{aspect-ratio:16/9;min-height:240px}.p-legfrissebb{border-top:1px solid var(--p-ink)}.p-kiemelt-sor{grid-template-columns:repeat(2,1fr)}.p-rovat-racs{grid-template-columns:1fr}.p-rovat-racs>.p-card h3{font-size:24px}}
 @media (max-width:600px){.p-elo-fej{gap:8px;font-size:7px;flex-wrap:wrap}.p-elo-fej em{width:100%;margin-left:0}.p-hero{grid-template-columns:1fr;min-height:0}.p-hero-kep{aspect-ratio:16/10;min-height:210px}.p-hero-szoveg{padding:25px 20px 29px}.p-hero h1{font-size:34px}.p-kiemelt-sor{grid-template-columns:1fr;gap:24px}.p-card h3{font-size:22px}.p-rovat-fej h2{font-size:23px}.p-minden-racs{grid-template-columns:1fr}}
 
+/* ---------- ATLAS – teljesen új, címlap-központú portál ---------- */
+body.atlas{--x-ink:#17202a;--x-paper:#f7f8f9;--x-blue:#1556a1;--x-red:#d54334;--x-line:#d8dee3;background:var(--x-paper);color:var(--x-ink)}
+body.atlas .topbar{background:#fff;color:#64717d;border-bottom:1px solid var(--x-line)}
+body.atlas .topbar-in{max-width:1440px;padding:7px 28px}
+body.atlas .topbar .frissit-btn{border:0;border-left:1px solid var(--x-line);border-radius:0;color:var(--x-blue)}
+body.atlas header.fo{background:#fff;border-bottom:1px solid var(--x-line)}
+body.atlas .fejlec-in{max-width:1440px;min-height:108px;padding:20px 28px;gap:22px}
+body.atlas .logo{padding:0;gap:12px}.atlas .logo-fo{font-family:'Archivo',sans-serif;font-size:40px;font-weight:900;letter-spacing:-.065em}.atlas .logo .nap{color:var(--x-ink)}.atlas .logo .hire,.atlas .logo .ro{color:var(--x-blue)}.atlas .logo .szlogen{color:#6d7880;font-size:9px;letter-spacing:.14em}
+body.atlas .fejlec-banner-hely{order:4;display:flex;justify-content:flex-end;padding:0;flex:1}.atlas .fejlec-hirdetes img{max-height:60px}
+body.atlas .design-valto{border-color:var(--x-ink);color:var(--x-ink);padding:10px 13px}.atlas .design-valto:hover{background:var(--x-blue);border-color:var(--x-blue);color:#fff}
+body.atlas .kereso{padding:0}.atlas .kereso input{width:190px;border:1px solid var(--x-line);border-radius:4px;background:#f4f6f8;padding:10px 13px}.atlas .kereso input:focus{width:230px;border-color:var(--x-blue);background:#fff}
+body.atlas .studio-kereso-sav{display:none}
+body.atlas nav.rovatok{background:var(--x-ink);border:0;box-shadow:none}body.atlas .rovatok-in{max-width:1440px;padding:0 28px}body.atlas nav.rovatok button{font-family:'Inter',sans-serif;font-size:12px;font-weight:800;letter-spacing:.04em;color:#cbd3da;padding:14px 18px;border-right:1px solid rgba(255,255,255,.12)}body.atlas nav.rovatok button:hover,body.atlas nav.rovatok button.aktiv{background:#243340;color:#fff}body.atlas nav.rovatok button::after{height:4px;background:var(--x-blue)}body.atlas nav.rovatok button.pp{color:#ffb648}
+body.atlas .hircsik{background:var(--x-blue)}body.atlas .hircsik .cimke{background:#0d3971}body.atlas .hircsik .pont{background:#ffcf54}
+body.atlas main{max-width:1440px;padding:0 28px 70px}body.atlas footer{background:var(--x-ink)}
+body.atlas .x-shell{max-width:1384px;margin:0 auto}.x-kicker{display:flex;gap:18px;align-items:center;padding:16px 0 12px;border-bottom:1px solid var(--x-line);font-size:10px;font-weight:700;color:#74808a;text-transform:uppercase;letter-spacing:.12em}.x-kicker-brand{color:var(--x-blue);font-weight:900}.x-kicker-stat{margin-left:auto;color:#87929a}
+.x-front{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(320px,.82fr);gap:24px;margin-top:25px}.x-hero{display:grid;grid-template-columns:1.12fr .88fr;min-height:468px;background:var(--x-ink);color:#fff}.x-hero-kep{overflow:hidden;background:#2b3c4c}.x-hero-kep img{width:100%;height:100%;object-fit:cover;transition:transform .5s}.x-hero:hover img{transform:scale(1.04)}.x-hero-szoveg{display:flex;flex-direction:column;justify-content:center;padding:34px 30px}.x-hero-szoveg span{font-size:9px;font-weight:800;letter-spacing:.12em;color:#77b1ec;text-transform:uppercase}.x-hero h1{font-family:'Archivo',sans-serif;font-size:clamp(32px,3.6vw,55px);font-weight:900;line-height:.99;letter-spacing:-.06em;margin:18px 0 14px}.x-hero p{color:#c9d3db;font-size:14px;line-height:1.5;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}.x-hero em{margin-top:22px;padding-top:12px;border-top:1px solid rgba(255,255,255,.25);font-size:10px;font-style:normal;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#fff}
+.x-popular{background:#fff;border:1px solid var(--x-line)}.x-popular-fej{padding:22px 20px 16px;border-bottom:5px solid var(--x-red)}.x-popular-fej h2{font-family:'Archivo',sans-serif;font-size:23px;font-weight:900;letter-spacing:-.04em}.x-popular-fej span{display:block;margin-top:5px;color:#87929a;font-size:10px;text-transform:uppercase;letter-spacing:.09em}.x-lista{display:grid;grid-template-columns:30px 1fr;gap:11px;padding:15px 18px;border-bottom:1px solid var(--x-line);transition:background .15s}.x-lista:hover{background:#f2f5f7}.x-lista>b{font-family:'Archivo',sans-serif;font-size:19px;color:var(--x-red);line-height:1}.x-lista strong{display:block;font-family:'Source Serif 4',Georgia,serif;font-size:15px;line-height:1.18}.x-lista small{display:block;margin-top:6px;color:#86929a;font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+.x-live{display:flex;align-items:stretch;margin-top:24px;border-top:4px solid var(--x-ink);border-bottom:1px solid var(--x-line);background:#fff}.x-live-label{display:flex;align-items:center;gap:9px;padding:15px 18px;font-size:10px;font-weight:900;letter-spacing:.1em;white-space:nowrap}.x-live-label i{display:block;width:8px;height:8px;border-radius:50%;background:var(--x-red)}.x-live-items{display:flex;overflow:hidden}.x-live-items a{min-width:210px;padding:13px 17px;border-left:1px solid var(--x-line)}.x-live-items small{display:block;color:var(--x-red);font-size:9px;font-weight:800}.x-live-items strong{display:block;margin-top:5px;font-family:'Source Serif 4',Georgia,serif;font-size:14px;line-height:1.15}
+.x-kiemeltek{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;padding:27px 0 36px;border-bottom:1px solid var(--x-line)}.x-kartya{display:flex;flex-direction:column;min-width:0}.x-kartya-kep{aspect-ratio:16/10;overflow:hidden;background:#e5eaed}.x-kartya-kep img{width:100%;height:100%;object-fit:cover;transition:transform .4s}.x-kartya:hover img{transform:scale(1.04)}.x-kartya-meta{margin-top:10px;color:var(--x-blue);font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.07em}.x-kartya h3{font-family:'Source Serif 4',Georgia,serif;font-size:21px;line-height:1.13;margin-top:6px}.x-kartya:hover h3{text-decoration:underline;text-underline-offset:3px}
+.x-rovat{margin-top:47px}.x-rovat>header,.x-minden>header{display:flex;align-items:baseline;justify-content:space-between;padding-bottom:12px;border-bottom:5px solid var(--x-ink)}.x-rovat h2,.x-minden h2{display:flex;align-items:center;gap:10px;font-family:'Archivo',sans-serif;font-size:29px;font-weight:900;letter-spacing:-.05em}.x-rovat h2 i{width:11px;height:26px}.x-rovat>header a{color:var(--x-blue);font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.08em}.x-rovat-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:28px;padding-top:18px}.x-rovat-grid>.x-kartya h3{font-size:29px}.x-rovat-grid>div+div{border-top:1px solid var(--x-line)}.x-rovat-grid>div+div .x-lista{padding-left:0;padding-right:0}.x-minden{margin-top:49px}.x-minden h2 i{width:11px;height:26px;background:var(--x-blue)}.x-minden>header span{color:#87929a;font-size:10px;text-transform:uppercase;letter-spacing:.08em}.x-minden>div{display:grid;grid-template-columns:repeat(2,1fr);column-gap:36px}.x-minden>div .x-lista{padding-left:0;padding-right:0}
+.x-archiv-fej{padding:35px 0 22px;border-bottom:5px solid var(--x-ink)}.x-archiv-fej span{font-size:10px;font-weight:800;letter-spacing:.1em;color:var(--x-blue)}.x-archiv-fej h1{font-family:'Archivo',sans-serif;font-size:48px;letter-spacing:-.05em;margin-top:8px}.x-archiv-fej p{color:#78848d}.x-archiv-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0 28px}.x-archiv-grid>div{border-bottom:1px solid var(--x-line)}.x-archiv-hero{margin-top:22px}
+@media (max-width:1000px){body.atlas .fejlec-in{padding-left:18px;padding-right:18px}.atlas .fejlec-banner-hely{display:none}body.atlas .rovatok-in{padding:0 12px}.x-shell{padding:0}.x-front{grid-template-columns:1fr}.x-hero{grid-template-columns:1.2fr .8fr}.x-kiemeltek{grid-template-columns:repeat(2,1fr)}.x-rovat-grid{grid-template-columns:1fr}}
+@media (max-width:600px){body.atlas .fejlec-in{min-height:76px;padding:13px 16px}.atlas .logo-fo{font-size:31px}.atlas .logo .szlogen{font-size:7px}.atlas .design-valto{padding:8px;font-size:9px}.atlas .design-valto-ikon{font-size:13px}.atlas .kereso{display:none}body.atlas main{padding-left:16px;padding-right:16px}.x-kicker{font-size:8px;gap:9px;flex-wrap:wrap}.x-kicker-stat{margin-left:0}.x-hero{grid-template-columns:1fr}.x-hero-kep{aspect-ratio:16/10;min-height:210px}.x-hero-szoveg{padding:25px 20px 30px}.x-hero h1{font-size:36px}.x-live{display:block}.x-live-label{padding:12px 15px}.x-live-items{overflow-x:auto}.x-live-items a{min-width:220px}.x-kiemeltek{grid-template-columns:1fr;gap:25px}.x-rovat h2,.x-minden h2{font-size:24px}.x-rovat-grid>.x-kartya h3{font-size:25px}.x-minden>div{grid-template-columns:1fr}.x-archiv-fej h1{font-size:38px}}
+
 /* ---------- Állapotok ---------- */
 .betoltes{padding:60px 0;text-align:center;color:var(--ink-faint)}
 .betoltes .napocska{
@@ -1628,7 +1653,7 @@ const STRATEGIAK = [
 
 let osszesHir = [];
 let aktivRovat = 'mind';
-let aktivSablon = localStorage.getItem('naphire_sablon_v4') || 'brief';
+let aktivSablon = localStorage.getItem('naphire_sablon_v5') || 'atlas';
 let aktivForras = null;
 let keresoSzo = '';
 let hibasForrasok = [];
@@ -2948,6 +2973,33 @@ function briefListaOldalHTML(hirek){
   const cim = keresoSzo ? `Találatok: „${biztonsagos(keresoSzo)}”` : aktivForras || cimMap[aktivRovat] || 'Hírek';
   return `<div class="b-shell b-lista-oldal"><div class="b-deck"><div><span>NapHíre / Rovat</span><h1>${cim}</h1></div><div class="b-deck-meta"><b>${hirek.length}</b> találat</div></div><div class="b-rovid-racs">${hirek.slice(0,40).map((h,i)=>sListaHTML(h,i+1)).join('')}</div></div>`;
 }
+function atlasFooldalHTML(hirek){
+  const fo = hirek.find(h => h.kep) || hirek[0];
+  const marad = hirek.filter(h => h !== fo);
+  const friss = marad.slice(0, 7);
+  const kiemeltek = marad.slice(7, 11);
+  const erdely = marad.filter(h => h.region === 'erdely').slice(0, 7);
+  const magyar = marad.filter(h => h.region === 'magyar').slice(0, 7);
+  const extra = marad.filter(h => !erdely.includes(h) && !magyar.includes(h)).slice(0, 18);
+  const kartya = h => `<a class="x-kartya" ${dc(h)} href="${biztonsagos(h.link)}" target="_blank" rel="noopener"><div class="x-kartya-kep">${h.kep ? `<img src="${biztonsagos(h.kep)}" alt="" loading="lazy" onerror="this.remove()">` : ''}</div><div class="x-kartya-meta">${biztonsagos(h.forras)} · ${idoOta(h.datum)}</div><h3>${biztonsagos(h.cim)}</h3></a>`;
+  const lista = (h,i) => `<a class="x-lista" ${dc(h)} href="${biztonsagos(h.link)}" target="_blank" rel="noopener"><b>${String(i+1).padStart(2,'0')}</b><span><strong>${biztonsagos(h.cim)}</strong><small>${biztonsagos(h.forras)} · ${idoOta(h.datum)}</small></span></a>`;
+  const rovat = (cim, listaAdat, szin) => listaAdat.length ? `<section class="x-rovat"><header><h2><i style="background:${szin}"></i>${cim}</h2><a href="#" onclick="event.preventDefault(); valtRovat('${cim==='Erdély'?'erdely':'magyar'}')">Összes ${cim.toLowerCase()} →</a></header><div class="x-rovat-grid"><div>${kartya(listaAdat[0])}</div><div>${listaAdat.slice(1).map((h,i)=>lista(h,i)).join('')}</div></div></section>` : '';
+  return `<div class="x-shell">
+    <div class="x-kicker"><span class="x-kicker-brand">NAPHÍRE.RO</span><span>${new Date().toLocaleDateString('hu-HU',{weekday:'long',month:'long',day:'numeric'})}</span><span class="x-kicker-stat">${hirek.length} cikk · ${FORRASOK.filter(f=>!BEALLITASOK.forrasokKi.includes(f.nev)).length} forrás</span></div>
+    <section class="x-front"><a class="x-hero" ${dc(fo)} href="${biztonsagos(fo.link)}" target="_blank" rel="noopener"><div class="x-hero-kep">${fo.kep ? `<img src="${biztonsagos(fo.kep)}" alt="" onerror="this.remove()">` : ''}</div><div class="x-hero-szoveg"><span>KIEMELT HÍR · ${biztonsagos(fo.forras)}</span><h1>${biztonsagos(fo.cim)}</h1><p>${biztonsagos(fo.lead || '')}</p><em>Részletek és háttér &nbsp;↗</em></div></a><aside class="x-popular"><div class="x-popular-fej"><h2>MOST OLVASSÁK</h2><span>Friss válogatás</span></div>${friss.map((h,i)=>lista(h,i)).join('')}</aside></section>
+    <section class="x-live"><div class="x-live-label"><i></i>LEGFRISSEBB</div><div class="x-live-items">${kiemeltek.map((h,i)=>`<a ${dc(h)} href="${biztonsagos(h.link)}" target="_blank" rel="noopener"><small>${oraPerc(h.datum)}</small><strong>${biztonsagos(h.cim)}</strong></a>`).join('')}</div></section>
+    <section class="x-kiemeltek">${marad.slice(0,4).map(kartya).join('')}</section>
+    ${studioBigBannerHTML()}
+    ${rovat('Erdély', erdely, '#168a63')}
+    ${rovat('Magyarország', magyar, '#c94838')}
+    <section class="x-minden"><header><h2><i></i>TOVÁBBI HÍREK</h2><span>A teljes szemle</span></header><div>${extra.map((h,i)=>lista(h,i)).join('')}</div></section>
+  </div>`;
+}
+function atlasListaOldalHTML(hirek){
+  const cimMap = {erdely:'Erdély',magyar:'Magyarország',gazdasag:'Gazdaság',sport:'Sport',kultura:'Kultúra'};
+  const cim = keresoSzo ? `Találatok: „${biztonsagos(keresoSzo)}”` : aktivForras || cimMap[aktivRovat] || 'Hírek';
+  return `<div class="x-shell x-archiv"><div class="x-archiv-fej"><span>NAPHÍRE.RO / ROVAT</span><h1>${cim}</h1><p>${hirek.length} friss cikk egy helyen</p></div><div class="x-archiv-grid">${hirek.slice(0,40).map((h,i)=>`<div>${i===0 ? `<a class="x-hero x-archiv-hero" ${dc(h)} href="${biztonsagos(h.link)}" target="_blank" rel="noopener"><div class="x-hero-kep">${h.kep?`<img src="${biztonsagos(h.kep)}" alt="">`:''}</div><div class="x-hero-szoveg"><span>${biztonsagos(h.forras)}</span><h1>${biztonsagos(h.cim)}</h1><p>${biztonsagos(h.lead||'')}</p></div></a>` : lista(h,i)}</div>`).join('')}</div></div>`;
+}
 function studioPercHTML(hirek){
   return `<div class="s-shell s-perc">
     <div class="s-archiv-fej"><span>Élő hírfolyam</span><h1>Percről percre</h1><p>Automatikusan frissül ötpercenként</p></div>
@@ -3103,12 +3155,16 @@ function rajzol(){
       ${bannerHTML('oldalsav', 'Hirdetési hely<br>300×250', true)}
     </aside>`;
 
-  if (foNezet && aktivSablon === 'brief'){
+  if (foNezet && aktivSablon === 'atlas'){
+    cel.innerHTML = hibaHTML + atlasFooldalHTML(hirek);
+  } else if (foNezet && aktivSablon === 'brief'){
     cel.innerHTML = hibaHTML + briefFooldalHTML(hirek);
   } else if (foNezet && aktivSablon === 'studio'){
     cel.innerHTML = hibaHTML + studioFooldalHTML(tema, vezeto, mozaik12, erdelyiek, magyarok, gazdasagiak, sportosok, kulturasok);
   } else if (foNezet && aktivSablon === 'modern'){
     cel.innerHTML = hibaHTML + modernFooldalHTML(tema, temaErdely, vezeto, mozaik12, erdelyiek, magyarok, gazdasagiak, sportosok, kulturasok);
+  } else if (aktivSablon === 'atlas'){
+    cel.innerHTML = hibaHTML + atlasListaOldalHTML(hirek);
   } else if (aktivSablon === 'brief'){
     cel.innerHTML = hibaHTML + briefListaOldalHTML(hirek);
   } else if (aktivSablon === 'studio'){
@@ -3166,10 +3222,11 @@ function valtRovat(r){
 }
 function frissitSablonGomb(){
   const szoveg = document.getElementById('design-valto-szoveg');
-  if (szoveg) szoveg.textContent = aktivSablon === 'brief' ? 'Studio nézet' : aktivSablon === 'studio' ? 'Napi brief' : 'Napi brief';
-  const kovetkezo = aktivSablon === 'brief' ? 'studio' : aktivSablon === 'studio' ? 'modern' : 'brief';
+  if (szoveg) szoveg.textContent = aktivSablon === 'atlas' ? 'Másik nézet' : aktivSablon === 'brief' ? 'Nagyportál' : aktivSablon === 'studio' ? 'Napi brief' : 'Nagyportál';
+  const kovetkezo = aktivSablon === 'atlas' ? 'brief' : aktivSablon === 'brief' ? 'studio' : aktivSablon === 'studio' ? 'modern' : 'atlas';
   const gomb = document.getElementById('design-valto');
-  if (gomb) gomb.title = 'Váltás erre: ' + (kovetkezo === 'brief' ? 'Napi brief' : kovetkezo === 'studio' ? 'Studio nézet' : 'Klasszikus nézet');
+  if (gomb) gomb.title = 'Váltás erre: ' + (kovetkezo === 'atlas' ? 'Új nagyportál' : kovetkezo === 'brief' ? 'Napi brief' : kovetkezo === 'studio' ? 'Studio nézet' : 'Klasszikus nézet');
+  document.body.classList.toggle('atlas', aktivSablon === 'atlas');
   document.body.classList.toggle('brief', aktivSablon === 'brief');
   document.body.classList.toggle('studio', aktivSablon === 'studio');
   document.body.classList.toggle('modern', aktivSablon === 'modern');
@@ -3177,13 +3234,13 @@ function frissitSablonGomb(){
   const studioKereso = document.querySelector('.studio-kereso-in');
   const fejlec = document.querySelector('.fejlec-in');
   if (kereso && studioKereso && fejlec){
-    if (aktivSablon !== 'modern') studioKereso.appendChild(kereso);
+    if (aktivSablon === 'studio' || aktivSablon === 'brief') studioKereso.appendChild(kereso);
     else fejlec.appendChild(kereso);
   }
 }
 function valtSablon(){
-  aktivSablon = aktivSablon === 'brief' ? 'studio' : aktivSablon === 'studio' ? 'modern' : 'brief';
-  localStorage.setItem('naphire_sablon_v4', aktivSablon);
+  aktivSablon = aktivSablon === 'atlas' ? 'brief' : aktivSablon === 'brief' ? 'studio' : aktivSablon === 'studio' ? 'modern' : 'atlas';
+  localStorage.setItem('naphire_sablon_v5', aktivSablon);
   frissitSablonGomb();
   rajzol();
 }
