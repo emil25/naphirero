@@ -1432,6 +1432,11 @@ body.atlas .x-shell{max-width:1384px;margin:0 auto}.x-kicker{display:flex;gap:18
 @media (max-width:1000px){body.atlas .fejlec-in{padding-left:18px;padding-right:18px}body.atlas .fejlec-banner-hely{display:none}body.atlas .rovatok-in{padding:0 12px}.x-shell{padding:0}.x-front{grid-template-columns:1fr}.x-hero{grid-template-columns:1.2fr .8fr}.x-kiemeltek{grid-template-columns:repeat(2,1fr)}.x-rovat-grid{grid-template-columns:1fr}}
 @media (max-width:600px){body.atlas .fejlec-in{min-height:76px;padding:13px 16px}.atlas .logo-fo{font-size:31px}.atlas .logo .szlogen{font-size:7px}.atlas .design-valto{padding:8px;font-size:9px}.atlas .design-valto-ikon{font-size:13px}.atlas .kereso{display:none}body.atlas main{padding-left:16px;padding-right:16px}.x-kicker{font-size:8px;gap:9px;flex-wrap:wrap}.x-kicker-stat{margin-left:0}.x-hero{grid-template-columns:1fr}.x-hero-kep{aspect-ratio:16/10;min-height:210px}.x-hero-szoveg{padding:25px 20px 30px}.x-hero h1{font-size:36px}.x-live{display:block}.x-live-label{padding:12px 15px}.x-live-items{overflow-x:auto}.x-live-items a{min-width:220px}.x-kiemeltek{grid-template-columns:1fr;gap:25px}.x-rovat h2,.x-minden h2{font-size:24px}.x-rovat-grid>.x-kartya h3{font-size:25px}.x-minden>div{grid-template-columns:1fr}.x-archiv-fej h1{font-size:38px}}
 
+/* ---------- Sűrű címlap-rács ---------- */
+body.atlas .x-hero{min-height:360px}body.atlas .x-hero h1{font-size:clamp(28px,3.1vw,46px)}body.atlas .x-front-kartyak{display:grid;grid-template-columns:repeat(2,1fr);gap:0 18px;background:#fff;border:1px solid var(--x-line);padding:0 16px}body.atlas .x-front-kartyak .x-kartya{padding:17px 0 19px;border-bottom:1px solid var(--x-line)}body.atlas .x-front-kartyak .x-kartya h3{font-size:19px}
+@media (max-width:900px){body.atlas .x-hero{grid-template-columns:1fr;min-height:0}body.atlas .x-hero-kep{aspect-ratio:16/9;min-height:235px}}
+@media (max-width:600px){body.atlas .x-front-kartyak{grid-template-columns:1fr;padding:0 14px}}
+
 /* ---------- Állapotok ---------- */
 .betoltes{padding:60px 0;text-align:center;color:var(--ink-faint)}
 .betoltes .napocska{
@@ -2976,8 +2981,8 @@ function briefListaOldalHTML(hirek){
 function atlasFooldalHTML(hirek){
   const fo = hirek.find(h => h.kep) || hirek[0];
   const marad = hirek.filter(h => h !== fo);
-  const friss = marad.slice(0, 7);
-  const kiemeltek = marad.slice(7, 11);
+  const topKartyak = marad.slice(0, 6);
+  const friss = marad.slice(6, 12);
   const erdely = marad.filter(h => h.region === 'erdely').slice(0, 7);
   const magyar = marad.filter(h => h.region === 'magyar').slice(0, 7);
   const extra = marad.filter(h => !erdely.includes(h) && !magyar.includes(h)).slice(0, 18);
@@ -2986,9 +2991,8 @@ function atlasFooldalHTML(hirek){
   const rovat = (cim, listaAdat, szin) => listaAdat.length ? `<section class="x-rovat"><header><h2><i style="background:${szin}"></i>${cim}</h2><a href="#" onclick="event.preventDefault(); valtRovat('${cim==='Erdély'?'erdely':'magyar'}')">Összes ${cim.toLowerCase()} →</a></header><div class="x-rovat-grid"><div>${kartya(listaAdat[0])}</div><div>${listaAdat.slice(1).map((h,i)=>lista(h,i)).join('')}</div></div></section>` : '';
   return `<div class="x-shell">
     <div class="x-kicker"><span class="x-kicker-brand">NAPHÍRE.RO</span><span>${new Date().toLocaleDateString('hu-HU',{weekday:'long',month:'long',day:'numeric'})}</span><span class="x-kicker-stat">${hirek.length} cikk · ${FORRASOK.filter(f=>!BEALLITASOK.forrasokKi.includes(f.nev)).length} forrás</span></div>
-    <section class="x-front"><a class="x-hero" ${dc(fo)} href="${biztonsagos(fo.link)}" target="_blank" rel="noopener"><div class="x-hero-kep">${fo.kep ? `<img src="${biztonsagos(fo.kep)}" alt="" onerror="this.remove()">` : ''}</div><div class="x-hero-szoveg"><span>KIEMELT HÍR · ${biztonsagos(fo.forras)}</span><h1>${biztonsagos(fo.cim)}</h1><p>${biztonsagos(fo.lead || '')}</p><em>Részletek és háttér &nbsp;↗</em></div></a><aside class="x-popular"><div class="x-popular-fej"><h2>MOST OLVASSÁK</h2><span>Friss válogatás</span></div>${friss.map((h,i)=>lista(h,i)).join('')}</aside></section>
-    <section class="x-live"><div class="x-live-label"><i></i>LEGFRISSEBB</div><div class="x-live-items">${kiemeltek.map((h,i)=>`<a ${dc(h)} href="${biztonsagos(h.link)}" target="_blank" rel="noopener"><small>${oraPerc(h.datum)}</small><strong>${biztonsagos(h.cim)}</strong></a>`).join('')}</div></section>
-    <section class="x-kiemeltek">${marad.slice(0,4).map(kartya).join('')}</section>
+    <section class="x-front"><a class="x-hero" ${dc(fo)} href="${biztonsagos(fo.link)}" target="_blank" rel="noopener"><div class="x-hero-kep">${fo.kep ? `<img src="${biztonsagos(fo.kep)}" alt="" onerror="this.remove()">` : ''}</div><div class="x-hero-szoveg"><span>KIEMELT HÍR · ${biztonsagos(fo.forras)}</span><h1>${biztonsagos(fo.cim)}</h1><p>${biztonsagos(fo.lead || '')}</p><em>Részletek és háttér &nbsp;↗</em></div></a><div class="x-front-kartyak">${topKartyak.map(kartya).join('')}</div></section>
+    <section class="x-live"><div class="x-live-label"><i></i>LEGFRISSEBB</div><div class="x-live-items">${friss.map((h,i)=>`<a ${dc(h)} href="${biztonsagos(h.link)}" target="_blank" rel="noopener"><small>${oraPerc(h.datum)}</small><strong>${biztonsagos(h.cim)}</strong></a>`).join('')}</div></section>
     ${studioBigBannerHTML()}
     ${rovat('Erdély', erdely, '#168a63')}
     ${rovat('Magyarország', magyar, '#c94838')}
