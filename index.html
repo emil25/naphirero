@@ -1805,10 +1805,9 @@ function napTemajaStabil(jelolt, nev, minForras, oraAblak){
     const horgonySzavak = horgonyHir ? new Set(temaStemek(horgonyHir)) : kulcsszavak;
     const talalatok = jelolt.filter(h => kozosDb(horgonySzavak, new Set(temaStemek(h))) >= 3 && kozosDb(kulcsszavak, new Set(temaStemek(h))) >= 2);
     const forrasDb = new Set(talalatok.map(h => h.forras)).size;
-    // ha időközben egy EGYÉRTELMŰEN erősebb téma jött (magasabb pontszámú – ez figyelembe veszi
-    // a forrásszámot ÉS azt is, ha közéleti súlyú, puha hírrel szemben), nem várjuk ki a 12 órát
-    const erosebbJott = friss && friss.pont > (mentett.pont || 0) + 3;
-    if (talalatok.length && forrasDb >= minForras && !erosebbJott){
+    // A kiválasztott téma maradjon stabil az érvényességi idő végéig;
+    // egy új RSS-frissítés önmagában nem cserélheti le.
+    if (talalatok.length && forrasDb >= minForras){
       talalatok.sort((a, b) => b.datum - a.datum);
       const fo = talalatok.find(h => h.link === mentett.horgonyLink)
         || talalatok.find(h => h.kep) || talalatok[0];
@@ -1820,7 +1819,7 @@ function napTemajaStabil(jelolt, nev, minForras, oraAblak){
       }).slice(0, 5);
       return { fo, tobbi, forrasDb, kulcsszavak: mentett.kulcsszavak };
     }
-    // a régi téma elapadt vagy erősebb jött – váltunk
+    // a régi téma elapadt vagy lejárt az érvényessége – új témát választunk
   }
   if (friss) temaMent(nev, { horgonyLink: friss.fo.link, kulcsszavak: friss.kulcsszavak, pont: friss.pont, mentveKor: most });
   return friss;
