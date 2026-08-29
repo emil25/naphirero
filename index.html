@@ -1334,6 +1334,48 @@ body.studio .lablec-in{max-width:1380px}
   .s-perc-lista strong{font-size:16px}
 }
 
+/* Studio finomhangolás: a fejlécben csak kompakt banner, a nagy kreatív külön sávban */
+body.studio .fejlec-in{flex-wrap:nowrap;align-items:center}
+body.studio .fejlec-banner-hely{order:0;flex:0 1 420px;width:min(34vw,420px);padding:0;min-width:180px}
+body.studio .fejlec-hirdetes{width:100%;padding-top:12px}
+body.studio .fejlec-hirdetes img{max-height:72px;object-fit:cover}
+body.studio .fejlec-hirdetes .hirdetes-cimke{font-size:7px}
+.s-big-banner{margin:40px 0 12px;padding:12px 0 26px;border-top:1px solid var(--s-vonal);border-bottom:1px solid var(--s-vonal)}
+.s-big-banner>span{display:block;margin-bottom:10px;color:#6b777e;font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.s-big-banner a{display:block;max-width:1000px;margin:0 auto;line-height:0}
+.s-big-banner img{width:100%;height:auto;box-shadow:0 12px 24px rgba(7,27,46,.1)}
+.s-osszkep{display:flex;align-items:center;gap:22px;padding:14px 0;border-bottom:1px solid var(--s-vonal)}
+.s-osszkep-label{margin-right:auto;color:#6b777e;font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.s-osszkep-stat{display:flex;align-items:baseline;gap:5px;color:#6b777e;font-family:'JetBrains Mono',monospace;font-size:8px;text-transform:uppercase;letter-spacing:.06em}
+.s-osszkep-stat b{color:var(--s-ej);font-family:'Archivo',sans-serif;font-size:22px;font-stretch:75%;font-weight:900;line-height:1}
+.s-osszkep-time{padding-left:20px;border-left:1px solid var(--s-vonal);color:#8b969b;font-family:'JetBrains Mono',monospace;font-size:8px;text-transform:uppercase}
+body.studio .s-hero{grid-template-columns:minmax(0,1.7fr) minmax(320px,.7fr);min-height:470px}
+body.studio .s-hero-fo{display:grid;grid-template-columns:minmax(280px,.9fr) minmax(0,1.1fr);min-height:470px}
+body.studio .s-hero-kep{grid-column:2;grid-row:1;position:relative;inset:auto;min-height:470px}
+body.studio .s-hero-kep::after{background:linear-gradient(90deg,rgba(5,18,31,.15),transparent 35%)}
+body.studio .s-hero-fedveny{grid-column:1;grid-row:1;position:relative;inset:auto;bottom:auto;display:flex;flex-direction:column;justify-content:end;padding:42px 34px;background:var(--s-ej)}
+body.studio .s-hero-fedveny h1{font-size:clamp(31px,3.5vw,54px)}
+body.studio .s-hero-fedveny p{color:#b9c6cf}
+
+@media (max-width:720px){
+  body.studio .fejlec-in{flex-wrap:nowrap;gap:9px}
+  body.studio .fejlec-banner-hely{flex:1 1 auto;width:auto;min-width:105px;max-width:145px}
+  body.studio .fejlec-hirdetes{padding-top:10px}
+  body.studio .fejlec-hirdetes img{max-height:46px}
+  .s-osszkep{gap:11px;flex-wrap:wrap;padding:12px 0}
+  .s-osszkep-label{flex-basis:100%;margin:0}
+  .s-osszkep-stat{font-size:7px}
+  .s-osszkep-stat b{font-size:20px}
+  .s-osszkep-time{margin-left:auto;padding-left:11px;font-size:7px}
+  .s-big-banner{margin:28px 0 8px;padding-bottom:18px}
+  body.studio .s-hero{grid-template-columns:1fr;min-height:0}
+  body.studio .s-hero-fo{grid-template-columns:1fr;grid-template-rows:auto 185px;min-height:0}
+  body.studio .s-hero-fedveny{grid-column:1;grid-row:1;padding:26px 21px 28px}
+  body.studio .s-hero-fedveny h1{font-size:31px}
+  body.studio .s-hero-kep{grid-column:1;grid-row:2;min-height:185px}
+  body.studio .s-hero-fedveny p{font-size:12px}
+}
+
 /* ---------- Állapotok ---------- */
 .betoltes{padding:60px 0;text-align:center;color:var(--ink-faint)}
 .betoltes .napocska{
@@ -2761,6 +2803,11 @@ function sListaHTML(h, sorszam){
     <span><strong>${biztonsagos(h.cim)}</strong>${sMetaHTML(h)}</span>
   </a>`;
 }
+function studioBigBannerHTML(){
+  const b = BEALLITASOK.banners && BEALLITASOK.banners.fejlec;
+  if (!b || !b.kep) return '';
+  return `<div class="s-big-banner"><span>Partneri kiemelés</span><a href="${biztonsagos(b.link || '#')}" target="_blank" rel="noopener"><img src="${biztonsagos(b.kep)}" alt="Partneri kiemelés" loading="lazy"></a></div>`;
+}
 function sKartyaHTML(h, nagy){
   return `<a class="s-kartya${nagy?' nagy':''}" ${dc(h)} href="${biztonsagos(h.link)}" target="_blank" rel="noopener">
     ${sKepHTML(h)}
@@ -2799,8 +2846,8 @@ function studioFooldalHTML(tema, vezeto, mozaik12, erdelyiek, magyarok, gazdasag
   const temaRovatok = `<section class="s-tematikus"><div class="s-blokk-cim"><span>Témák</span><b>Gazdaság · Sport · Kultúra</b></div><div class="s-tema-grid">
     ${[['Gazdaság',gazdasagiak,'G'],['Sport',sportosok,'S'],['Kultúra',kulturasok,'K']].map(([cim,lista,jel]) => lista.length ? `<div class="s-tema-oszlop"><div class="s-tema-oszlop-fej"><i>${jel}</i><h2>${cim}</h2></div>${lista.slice(0,4).map((h,i)=>sListaHTML(h,i+1)).join('')}</div>` : '').join('')}
   </div></section>`;
-  const osszkep = `<section class="s-osszkep"><div><span>NapHíre összkép</span><h2>Minden fontos erdélyi és magyarországi hír egy helyen.</h2></div><div class="s-osszkep-stat"><b>${osszesHir.length}</b><span>friss cikk</span></div><div class="s-osszkep-stat"><b>${FORRASOK.filter(f => !BEALLITASOK.forrasokKi.includes(f.nev)).length}</b><span>aktív forrás</span></div></section>`;
-  return `<div class="s-shell">${hirszalag}${osszkep}${temaHTML}${hero}${gyors}${bannerHTML('tartalom','Hirdetési hely · 728×90',false)}${sRovatHTML('Erdély','E',erdelyiek,false)}${sRovatHTML('Magyarország','M',magyarok,true)}${temaRovatok}</div>`;
+  const osszkep = `<section class="s-osszkep"><span class="s-osszkep-label">NapHíre / élő összesítés</span><span class="s-osszkep-stat"><b>${osszesHir.length}</b> friss cikk</span><span class="s-osszkep-stat"><b>${FORRASOK.filter(f => !BEALLITASOK.forrasokKi.includes(f.nev)).length}</b> aktív forrás</span><span class="s-osszkep-time">Frissül automatikusan</span></section>`;
+  return `<div class="s-shell">${hirszalag}${osszkep}${temaHTML}${hero}${studioBigBannerHTML()}${gyors}${sRovatHTML('Erdély','E',erdelyiek,false)}${sRovatHTML('Magyarország','M',magyarok,true)}${temaRovatok}</div>`;
 }
 function studioListaOldalHTML(hirek){
   const cimMap = {erdely:'Erdély',magyar:'Magyarország',gazdasag:'Gazdaság',sport:'Sport',kultura:'Kultúra'};
