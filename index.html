@@ -1778,7 +1778,8 @@ const TEMA_FRISSITES_ORA = 12;
 const MIN_FORRAS_TEMA = 3; // ennyi FÜGGETLEN forrásnak kell írnia róla, hogy „a nap témája" lehessen –
                             // ez zárja ki, hogy egy csak 2 portál által, visszatérően emlegetett
                             // apróbb (pl. sport-) hír beragadjon a helyére
-function temaTarKulcs(nev){ return 'naphire_tema_' + nev; }
+// A témacsoport szabályai változtak: régi, túl tág böngésző-cache ne keverjen más híreket az új témába.
+function temaTarKulcs(nev){ return 'naphire_tema_v2_' + nev; }
 const TEMA_MEMORIA = {}; // munkamenet-szintű gyorstár – akkor is stabilan tart, ha a localStorage
                           // nem elérhető (pl. néhány böngésző file://-ként megnyitott lapnál blokkolja)
 function temaBetolt(nev){
@@ -2492,7 +2493,11 @@ function rajzol(){
       // de kerüljük a bulváros/kuriózum jellegű híreket, ha van rendes alternatíva
       const jokKepekkel = erdelyJelolt.filter(h => h.kep);
       const fo = jokKepekkel.find(h => !puhaHir(h)) || jokKepekkel[0] || erdelyJelolt[0];
-      const tobbi = erdelyJelolt.filter(h => h !== fo).slice(0, 4);
+      const foSzavak = temaStemek(fo);
+      const tobbi = erdelyJelolt
+        .filter(h => h !== fo && kozosDb(foSzavak, temaStemek(h)) >= 2)
+        .sort((a,b) => b.datum - a.datum)
+        .slice(0, 4);
       temaErdely = { fo, tobbi, forrasDb: 1, egyedi: true };
     }
 
@@ -2663,6 +2668,5 @@ setInterval(() => {
 </script>
 </body>
 </html>
-
 
 
