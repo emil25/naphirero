@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>NapHíre.ro – Erdélyi és magyarországi hírek egy helyen</title>
 <meta name="description" content="Friss erdélyi és magyarországi hírek percről percre. Politika, gazdaság, kultúra, sport – minden, ami számít.">
-<meta name="theme-color" content="#101722">
+<meta name="theme-color" content="#071b2e">
 <meta name="robots" content="index,follow,max-image-preview:large">
 <link rel="canonical" href="https://naphirero.vercel.app/">
 <meta property="og:type" content="website">
@@ -1097,6 +1097,218 @@ body.modern .m-kartya h3{font-size:15.5px;line-height:1.26}
   .m-kartya:first-child{border-top:none!important}
 }
 
+/* =========================================================
+   STUDIO – teljesen új, prémium magazin arculat
+   ========================================================= */
+.design-valto{display:inline-flex;align-items:center;gap:8px;padding:9px 12px;border:1px solid #d9dde2;color:#303946;font-size:11px;font-weight:800;letter-spacing:.035em;text-transform:uppercase;white-space:nowrap;transition:.2s}
+.design-valto:hover{background:#11161f;color:#fff;border-color:#11161f}
+.design-valto-ikon{font-size:15px;line-height:1}
+body.studio{
+  --s-ej:#071b2e;--s-ej2:#0b2944;--s-korall:#ff4e3d;--s-cián:#20c7e9;
+  --s-krem:#f2f0ea;--s-vonal:#c9cec9;--s-szoveg:#102234;
+  background:var(--s-krem);color:var(--s-szoveg);
+}
+body.studio .topbar{background:var(--s-ej);color:#b9c7d2;border-bottom:1px solid rgba(255,255,255,.13)}
+body.studio .topbar-in{max-width:1380px;padding:7px 28px}
+body.studio .topbar .frissit-btn{border:0;border-left:1px solid rgba(255,255,255,.18);border-radius:0;padding-left:15px;color:#fff}
+body.studio header.fo{background:var(--s-krem);border:0}
+body.studio .fejlec-in{max-width:1380px;min-height:102px;padding:18px 28px}
+body.studio .logo{padding:0;gap:13px}
+body.studio .logo .nap-ikon{width:40px;height:40px;filter:saturate(1.35)}
+body.studio .logo-fo{font-family:'Archivo',sans-serif;font-weight:900;font-stretch:78%;font-size:42px;letter-spacing:-.065em}
+body.studio .logo .nap{color:var(--s-ej)}
+body.studio .logo .hire,body.studio .logo .ro{color:var(--s-korall)}
+body.studio .logo .szlogen{font-family:'JetBrains Mono',monospace;color:#66717a;font-size:9px;letter-spacing:.08em;text-transform:uppercase}
+body.studio .kereso{margin-left:auto;padding:0}
+body.studio .kereso input{width:200px;height:40px;border:0;border-bottom:2px solid var(--s-ej);border-radius:0;background:transparent;padding:9px 3px;font-size:12px}
+body.studio .kereso input:focus{width:240px;border-color:var(--s-korall);background:transparent}
+body.studio .design-valto{border-color:var(--s-ej);color:var(--s-ej)}
+body.studio .design-valto:hover{background:var(--s-ej);color:#fff}
+body.studio nav.rovatok{background:var(--s-ej);border:0;box-shadow:none}
+body.studio .rovatok-in{max-width:1380px;padding:0 18px}
+body.studio nav.rovatok button{border:0;padding:15px 17px;color:#c8d4de;font-family:'Archivo',sans-serif;font-stretch:85%;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
+body.studio nav.rovatok button:hover,body.studio nav.rovatok button.aktiv{background:var(--s-ej2);color:#fff}
+body.studio nav.rovatok button::after{height:4px;background:var(--s-korall)}
+body.studio nav.rovatok button.pp{color:var(--s-cián)}
+body.studio main{max-width:none;margin:0;padding:0}
+.s-shell{max-width:1380px;margin:0 auto;padding:0 28px 72px}
+.s-hirszalag{display:grid;grid-template-columns:86px 1fr;min-height:48px;border-bottom:1px solid var(--s-vonal);overflow:hidden}
+.s-elo{display:flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--s-korall)}
+.s-elo i{width:7px;height:7px;border-radius:50%;background:var(--s-korall);box-shadow:0 0 0 5px rgba(255,78,61,.12);animation:sPulzus 1.6s infinite}
+@keyframes sPulzus{50%{box-shadow:0 0 0 9px rgba(255,78,61,0)}}
+.s-hirszalag-futo{display:flex;align-items:center;overflow:auto;scrollbar-width:none}
+.s-hirszalag-futo::-webkit-scrollbar{display:none}
+.s-hirszalag-futo a{flex:0 0 auto;max-width:460px;padding:0 24px;border-left:1px solid var(--s-vonal);font-family:'Source Serif 4',Georgia,serif;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.s-hirszalag-futo a:hover{color:var(--s-korall)}
+.s-hirszalag-futo time{margin-right:9px;color:#79838b;font-family:'JetBrains Mono',monospace;font-size:9px}
+.s-tema{display:grid;grid-template-columns:auto 1fr auto auto;align-items:center;gap:14px;margin:24px 0 0;padding:12px 16px;background:#dfe5e5;border-left:5px solid var(--s-cián)}
+.s-tema-cimke{font-family:'Archivo',sans-serif;font-size:10px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--s-ej)}
+.s-tema strong{font-family:'Source Serif 4',Georgia,serif;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.s-tema>span:nth-last-of-type(1){font-family:'JetBrains Mono',monospace;font-size:9px;text-transform:uppercase;color:#65747d}
+.s-tema>b{color:var(--s-korall);font-size:19px}
+.s-hero{display:grid;grid-template-columns:minmax(0,1.85fr) minmax(320px,.75fr);margin-top:24px;background:var(--s-ej);min-height:560px}
+.s-hero-fo{position:relative;display:block;min-height:560px;overflow:hidden}
+.s-kep{position:relative;background:#d7d9d6;overflow:hidden}
+.s-kep img{width:100%;height:100%;object-fit:cover;transition:transform .45s ease}
+a:hover>.s-kep img,.s-kartya:hover .s-kep img{transform:scale(1.035)}
+.s-kep-logo{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#7b858b;font-family:'Archivo',sans-serif;font-size:24px;font-weight:900}
+.s-kep-logo b{color:var(--s-korall)}
+.s-hero-kep{position:absolute;inset:0}
+.s-hero-kep::after{content:'';position:absolute;inset:20% 0 0;background:linear-gradient(transparent,rgba(5,18,31,.94))}
+.s-hero-fedveny{position:absolute;z-index:2;left:0;right:0;bottom:0;padding:44px 46px 40px;color:#fff}
+.s-meta{display:flex;align-items:center;gap:8px;color:#77838a;font-family:'JetBrains Mono',monospace;font-size:9px;line-height:1.3;text-transform:uppercase;letter-spacing:.04em}
+.s-meta b{color:var(--s-korall);font-weight:700}
+.s-meta i{display:inline-block;width:12px;height:1px;background:currentColor;opacity:.5}
+.s-meta.vilagos{color:#bac7d0}.s-meta.vilagos b{color:var(--s-cián)}
+.s-hero-fedveny h1{max-width:850px;margin:13px 0 10px;font-family:'Archivo',sans-serif;font-size:clamp(34px,4.1vw,64px);font-stretch:82%;font-weight:900;line-height:.96;letter-spacing:-.045em;text-wrap:balance}
+.s-hero-fedveny p{max-width:720px;color:#d0d8de;font-size:14px;line-height:1.5}
+.s-tovabb{display:inline-flex;align-items:center;gap:10px;margin-top:20px;padding-top:9px;border-top:2px solid var(--s-korall);font-family:'Archivo',sans-serif;font-size:10px;font-weight:900;letter-spacing:.07em;text-transform:uppercase}
+.s-rangsor{padding:32px 28px 28px;background:var(--s-ej);color:#fff;border-left:1px solid rgba(255,255,255,.14)}
+.s-rangsor-fej{display:flex;align-items:end;justify-content:space-between;padding-bottom:19px;border-bottom:4px solid var(--s-korall)}
+.s-rangsor-fej span{font-family:'Archivo',sans-serif;font-size:25px;font-stretch:80%;font-weight:900;letter-spacing:-.04em}
+.s-rangsor-fej small{color:#8da0af;font-family:'JetBrains Mono',monospace;font-size:8px;text-transform:uppercase;letter-spacing:.08em}
+.s-lista{display:grid;grid-template-columns:auto 1fr;gap:14px;padding:18px 0;border-bottom:1px solid var(--s-vonal)}
+.s-lista:hover strong{color:var(--s-korall)}
+.s-lista strong{display:block;font-family:'Source Serif 4',Georgia,serif;font-size:16px;line-height:1.15;transition:.15s}
+.s-lista .s-meta{margin-top:8px}
+.s-sorszam{font-family:'Archivo',sans-serif;font-size:21px;font-stretch:75%;font-weight:900;color:var(--s-korall);line-height:1}
+.s-rangsor .s-lista{border-color:rgba(255,255,255,.13)}
+.s-rangsor .s-lista strong{color:#fff}.s-rangsor .s-lista:hover strong{color:var(--s-cián)}
+.s-rangsor .s-sorszam{color:var(--s-cián)}
+.s-rangsor .s-meta{color:#8295a5}.s-rangsor .s-meta b{color:#a7bac8}
+.s-blokk-cim,.s-rovat-fej{display:flex;align-items:baseline;justify-content:space-between;gap:20px;border-top:5px solid var(--s-ej);padding:13px 0 18px}
+.s-blokk-cim span,.s-rovat-fej h2{font-family:'Archivo',sans-serif;font-size:25px;font-stretch:78%;font-weight:900;letter-spacing:-.04em}
+.s-blokk-cim b{color:#6b767d;font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.s-gyors{margin-top:34px}
+.s-gyors-racs{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--s-vonal);border:1px solid var(--s-vonal)}
+.s-kartya{display:block;background:var(--s-krem);min-width:0}
+.s-kartya .s-kep{aspect-ratio:16/10}
+.s-kartya-test{padding:15px 16px 20px}
+.s-kartya h3{margin-top:9px;font-family:'Source Serif 4',Georgia,serif;font-size:18px;line-height:1.12}
+.s-kartya:hover h3{color:var(--s-korall)}
+.s-kartya p{margin-top:12px;color:#5c6870;font-size:13px;line-height:1.45}
+.s-shell>.banner-hely{margin:38px 0;background:#e6e3dc;border-color:#cfcbc1}
+.s-rovat{margin-top:52px}
+.s-rovat-fej{position:relative;padding-left:58px}
+.s-rovat-fej>span{position:absolute;left:0;top:-5px;width:44px;height:49px;display:flex;align-items:center;justify-content:center;background:var(--s-korall);color:#fff;font-family:'Archivo',sans-serif;font-size:20px;font-weight:900}
+.s-rovat-fej button{color:#53616a;font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.s-rovat-fej button:hover{color:var(--s-korall)}
+.s-rovat-fej button b{font-size:16px;margin-left:8px}
+.s-rovat-racs{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(360px,.8fr);gap:42px}
+.s-rovat .s-kartya.nagy{display:grid;grid-template-columns:1.15fr .85fr;background:transparent;border-bottom:1px solid var(--s-vonal)}
+.s-rovat .s-kartya.nagy .s-kep{aspect-ratio:4/3}
+.s-rovat .s-kartya.nagy .s-kartya-test{padding:4px 0 24px 28px}
+.s-rovat .s-kartya.nagy h3{font-family:'Archivo',sans-serif;font-stretch:82%;font-size:clamp(25px,2.6vw,39px);font-weight:900;line-height:1;letter-spacing:-.04em}
+.s-rovat-lista .s-lista:first-child{padding-top:0}
+.s-rovat.sotet{position:relative;color:#fff;padding:52px 48px;margin-left:-48px;margin-right:-48px;background:var(--s-ej)}
+.s-rovat.sotet .s-rovat-fej{border-color:var(--s-cián)}
+.s-rovat.sotet .s-rovat-fej>span{background:var(--s-cián);color:var(--s-ej)}
+.s-rovat.sotet .s-rovat-fej button{color:#a7b8c5}
+.s-rovat.sotet .s-kartya{background:transparent}
+.s-rovat.sotet .s-kartya h3{color:#fff}.s-rovat.sotet .s-kartya p{color:#b7c4ce}
+.s-rovat.sotet .s-lista{border-color:rgba(255,255,255,.14)}
+.s-rovat.sotet .s-lista strong{color:#fff}.s-rovat.sotet .s-lista:hover strong{color:var(--s-cián)}
+.s-rovat.sotet .s-sorszam{color:var(--s-cián)}
+.s-tematikus{margin-top:52px}
+.s-tema-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:34px}
+.s-tema-oszlop{border-top:1px solid var(--s-vonal)}
+.s-tema-oszlop-fej{display:flex;align-items:center;gap:11px;padding:17px 0 3px}
+.s-tema-oszlop-fej i{width:31px;height:31px;display:flex;align-items:center;justify-content:center;background:var(--s-ej);color:#fff;font-family:'Archivo',sans-serif;font-style:normal;font-weight:900}
+.s-tema-oszlop:nth-child(2) .s-tema-oszlop-fej i{background:var(--s-korall)}
+.s-tema-oszlop:nth-child(3) .s-tema-oszlop-fej i{background:#6d4bc3}
+.s-tema-oszlop-fej h2{font-family:'Archivo',sans-serif;font-stretch:80%;font-size:21px;font-weight:900;letter-spacing:-.03em}
+.s-archiv{padding-top:42px}
+.s-archiv-fej{display:grid;grid-template-columns:1fr auto;align-items:end;margin-bottom:30px;padding-bottom:24px;border-bottom:6px solid var(--s-ej)}
+.s-archiv-fej>span{grid-column:1/3;color:var(--s-korall);font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.s-archiv-fej h1{margin-top:8px;font-family:'Archivo',sans-serif;font-size:clamp(40px,6vw,78px);font-stretch:76%;font-weight:900;line-height:.9;letter-spacing:-.06em}
+.s-archiv-fej p{color:#68747b;font-size:12px}
+.s-archiv>.s-kartya.nagy{display:grid;grid-template-columns:1.25fr .75fr;background:var(--s-ej);color:#fff}
+.s-archiv>.s-kartya.nagy .s-kep{min-height:430px}
+.s-archiv>.s-kartya.nagy .s-kartya-test{display:flex;flex-direction:column;justify-content:end;padding:36px}
+.s-archiv>.s-kartya.nagy h3{font-family:'Archivo',sans-serif;font-size:clamp(28px,3.3vw,48px);font-stretch:80%;font-weight:900;line-height:.98;letter-spacing:-.045em}
+.s-archiv>.s-kartya.nagy p{color:#b8c5ce}
+.s-archiv-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin-top:36px;background:var(--s-vonal);border:1px solid var(--s-vonal)}
+.s-perc{padding-top:42px}
+.s-perc-lista{border-top:1px solid var(--s-vonal)}
+.s-perc-lista>a{display:grid;grid-template-columns:72px 1fr auto;gap:24px;align-items:start;padding:20px 4px;border-bottom:1px solid var(--s-vonal)}
+.s-perc-lista>a:hover strong{color:var(--s-korall)}
+.s-perc-lista time{color:var(--s-korall);font-family:'Archivo',sans-serif;font-size:20px;font-stretch:78%;font-weight:900}
+.s-perc-lista strong{display:block;font-family:'Source Serif 4',Georgia,serif;font-size:19px;line-height:1.15;transition:.15s}
+.s-perc-lista .s-meta{margin-top:7px}
+.s-perc-lista>a>b{color:#819098;font-size:18px}
+body.studio .forrasaink{background:#dfe3e0;border-color:#cbd0cc}
+body.studio .forrasaink-in{max-width:1380px}
+body.studio .forras-pill{background:transparent;border-color:#aeb7b3;border-radius:0}
+body.studio footer{background:#04111d;margin-top:0}
+body.studio .lablec-in{max-width:1380px}
+
+@media (max-width:1050px){
+  body.studio .fejlec-in{min-height:82px}
+  .s-hero{grid-template-columns:1fr;min-height:0}
+  .s-hero-fo{min-height:540px}
+  .s-rangsor{border-left:0;border-top:1px solid rgba(255,255,255,.14)}
+  .s-rangsor .s-lista{grid-template-columns:38px 1fr}
+  .s-gyors-racs{grid-template-columns:repeat(2,1fr)}
+  .s-rovat-racs{grid-template-columns:1fr;gap:26px}
+  .s-tema-grid{grid-template-columns:1fr}
+  .s-archiv-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:720px){
+  body.studio .topbar-in{padding:7px 16px}
+  body.studio .fejlec-in{padding:13px 16px;gap:10px}
+  body.studio .logo-fo{font-size:32px}
+  body.studio .logo .nap-ikon{width:31px;height:31px}
+  body.studio .logo .szlogen{display:none}
+  body.studio .kereso{order:3;width:100%}
+  body.studio .kereso input,body.studio .kereso input:focus{width:100%}
+  body.studio .design-valto{margin-left:auto;padding:8px}
+  body.studio .design-valto #design-valto-szoveg{display:none}
+  body.studio nav.rovatok{overflow:auto}
+  body.studio .rovatok-in{padding:0 4px;width:max-content}
+  body.studio nav.rovatok button{padding:13px 12px;font-size:10px}
+  .s-shell{padding:0 16px 52px}
+  .s-hirszalag{grid-template-columns:65px 1fr}
+  .s-hirszalag-futo a{max-width:310px;padding:0 14px}
+  .s-tema{grid-template-columns:1fr auto;gap:7px 10px;padding:11px 12px}
+  .s-tema strong{grid-column:1/3;grid-row:2;white-space:normal;font-size:14px}
+  .s-tema>span:nth-last-of-type(1){display:none}
+  .s-tema>b{grid-column:2;grid-row:1}
+  .s-hero{margin-left:-16px;margin-right:-16px}
+  .s-hero-fo{min-height:470px}
+  .s-hero-fedveny{padding:34px 22px 26px}
+  .s-hero-fedveny h1{font-size:34px;line-height:1}
+  .s-hero-fedveny p{display:none}
+  .s-rangsor{padding:25px 22px}
+  .s-gyors{margin-top:28px}
+  .s-gyors-racs{grid-template-columns:1fr}
+  .s-kartya{display:grid;grid-template-columns:120px 1fr}
+  .s-kartya .s-kep{height:100%;min-height:125px;aspect-ratio:auto}
+  .s-kartya h3{font-size:16px}
+  .s-rovat{margin-top:40px}
+  .s-rovat .s-kartya.nagy{display:block}
+  .s-rovat .s-kartya.nagy .s-kartya-test{padding:17px 0 22px}
+  .s-rovat .s-kartya.nagy h3{font-size:29px}
+  .s-rovat.sotet{margin-left:-16px;margin-right:-16px;padding:38px 16px}
+  .s-rovat-fej{padding-left:50px}
+  .s-rovat-fej>span{width:38px;height:44px}
+  .s-rovat-fej h2,.s-blokk-cim span{font-size:22px}
+  .s-rovat-fej button{font-size:0}.s-rovat-fej button b{font-size:18px}
+  .s-tematikus{margin-top:40px}
+  .s-archiv{padding-top:28px}
+  .s-archiv-fej{grid-template-columns:1fr}
+  .s-archiv-fej>span{grid-column:auto}
+  .s-archiv-fej p{margin-top:10px}
+  .s-archiv>.s-kartya.nagy{display:block}
+  .s-archiv>.s-kartya.nagy .s-kep{min-height:260px}
+  .s-archiv>.s-kartya.nagy .s-kartya-test{padding:24px}
+  .s-archiv-grid{grid-template-columns:1fr}
+  .s-perc{padding-top:28px}
+  .s-perc-lista>a{grid-template-columns:54px 1fr;gap:12px;padding:17px 0}
+  .s-perc-lista>a>b{display:none}
+  .s-perc-lista time{font-size:16px}
+  .s-perc-lista strong{font-size:16px}
+}
+
 /* ---------- Állapotok ---------- */
 .betoltes{padding:60px 0;text-align:center;color:var(--ink-faint)}
 .betoltes .napocska{
@@ -1202,6 +1414,10 @@ footer{background:var(--ej);color:#8f98a8;margin-top:40px}
     <div class="kereso">
       <input type="search" id="kereso-mezo" placeholder="Keresés…" aria-label="Keresés a hírekben">
     </div>
+    <button type="button" class="design-valto" id="design-valto" aria-label="Portálnézet váltása">
+      <span class="design-valto-ikon" aria-hidden="true">◫</span>
+      <span id="design-valto-szoveg">Klasszikus nézet</span>
+    </button>
   </div>
   <nav class="rovatok" id="rovat-sav">
     <div class="rovatok-in">
@@ -1310,7 +1526,7 @@ const STRATEGIAK = [
 
 let osszesHir = [];
 let aktivRovat = 'mind';
-const AKTIV_SABLON = 'modern';
+let aktivSablon = localStorage.getItem('naphire_sablon') || 'studio';
 let aktivForras = null;
 let keresoSzo = '';
 let hibasForrasok = [];
@@ -2501,6 +2717,81 @@ function modernFooldalHTML(tema, temaErdely, vezeto, mozaik12, erdelyiek, magyar
   </div>`;
 }
 
+/* ---------- Studio sablon: prémium címlap, különálló szerkesztőségi arculattal ---------- */
+function sMetaHTML(h, vilagos){
+  return `<span class="s-meta${vilagos?' vilagos':''}"><b>${biztonsagos(h.forras)}</b><i></i>${idoOta(h.datum)}</span>`;
+}
+function sKepHTML(h, osztaly){
+  return `<div class="s-kep ${osztaly||''}">${h.kep
+    ? `<img src="${biztonsagos(h.kep)}" alt="" loading="lazy" onerror="this.parentElement.classList.add('ures');this.remove()">`
+    : `<span class="s-kep-logo">nap<b>híre</b></span>`}</div>`;
+}
+function sListaHTML(h, sorszam){
+  return `<a class="s-lista" ${dc(h)} href="${biztonsagos(h.link)}" target="_blank" rel="noopener">
+    ${sorszam ? `<span class="s-sorszam">${String(sorszam).padStart(2,'0')}</span>` : ''}
+    <span><strong>${biztonsagos(h.cim)}</strong>${sMetaHTML(h)}</span>
+  </a>`;
+}
+function sKartyaHTML(h, nagy){
+  return `<a class="s-kartya${nagy?' nagy':''}" ${dc(h)} href="${biztonsagos(h.link)}" target="_blank" rel="noopener">
+    ${sKepHTML(h)}
+    <div class="s-kartya-test">${sMetaHTML(h)}<h3>${biztonsagos(h.cim)}</h3>${nagy && h.lead ? `<p>${biztonsagos(h.lead)}</p>` : ''}</div>
+  </a>`;
+}
+function sRovatHTML(cim, jel, cikkek, sotet){
+  if (!cikkek.length) return '';
+  const rovatKulcs = {'Erdély':'erdely','Magyarország':'magyar','Gazdaság':'gazdasag','Sport':'sport','Kultúra':'kultura'}[cim] || 'mind';
+  const fo = cikkek.find(h => h.kep) || cikkek[0];
+  const tobbi = cikkek.filter(h => h !== fo).slice(0, 6);
+  return `<section class="s-rovat${sotet?' sotet':''}">
+    <div class="s-rovat-fej"><span>${jel}</span><h2>${cim}</h2><button type="button" onclick="valtRovat('${rovatKulcs}')">Összes hír <b>→</b></button></div>
+    <div class="s-rovat-racs">
+      ${sKartyaHTML(fo, true)}
+      <div class="s-rovat-lista">${tobbi.map((h,i)=>sListaHTML(h,i+1)).join('')}</div>
+    </div>
+  </section>`;
+}
+function studioFooldalHTML(tema, vezeto, mozaik12, erdelyiek, magyarok, gazdasagiak, sportosok, kulturasok){
+  const friss = osszesHir.slice(0, 6);
+  const rangsor = felkapottTop().filter(h => h !== vezeto).slice(0, 5);
+  const kiserok = mozaik12.filter(h => h !== vezeto).slice(0, 4);
+  const temaHTML = tema ? `<a class="s-tema" ${dc(tema.fo)} href="${biztonsagos(tema.fo.link)}" target="_blank" rel="noopener">
+    <span class="s-tema-cimke">A nap témája</span><strong>${biztonsagos(tema.fo.cim)}</strong><span>${tema.forrasDb} forrásból</span><b>→</b>
+  </a>` : '';
+  const hirszalag = `<div class="s-hirszalag"><span class="s-elo"><i></i>Élő</span><div class="s-hirszalag-futo">${friss.map(h => `<a ${dc(h)} href="${biztonsagos(h.link)}" target="_blank" rel="noopener"><time>${oraPerc(h.datum)}</time>${biztonsagos(h.cim)}</a>`).join('')}</div></div>`;
+  const hero = `<section class="s-hero">
+    <a class="s-hero-fo" ${dc(vezeto)} href="${biztonsagos(vezeto.link)}" target="_blank" rel="noopener">
+      ${sKepHTML(vezeto,'s-hero-kep')}
+      <div class="s-hero-fedveny">${sMetaHTML(vezeto,true)}<h1>${biztonsagos(vezeto.cim)}</h1><p>${biztonsagos(vezeto.lead)}</p><span class="s-tovabb">Elolvasom <b>↗</b></span></div>
+    </a>
+    <aside class="s-rangsor"><div class="s-rangsor-fej"><span>Napirend</span><small>Ami most számít</small></div>${rangsor.map((h,i)=>sListaHTML(h,i+1)).join('')}</aside>
+  </section>`;
+  const gyors = `<section class="s-gyors"><div class="s-blokk-cim"><span>Friss válogatás</span><b>${FORRASOK.filter(f => !BEALLITASOK.forrasokKi.includes(f.nev)).length} aktív forrás</b></div><div class="s-gyors-racs">${kiserok.map(h=>sKartyaHTML(h,false)).join('')}</div></section>`;
+  const temaRovatok = `<section class="s-tematikus"><div class="s-blokk-cim"><span>Témák</span><b>Gazdaság · Sport · Kultúra</b></div><div class="s-tema-grid">
+    ${[['Gazdaság',gazdasagiak,'G'],['Sport',sportosok,'S'],['Kultúra',kulturasok,'K']].map(([cim,lista,jel]) => lista.length ? `<div class="s-tema-oszlop"><div class="s-tema-oszlop-fej"><i>${jel}</i><h2>${cim}</h2></div>${lista.slice(0,4).map((h,i)=>sListaHTML(h,i+1)).join('')}</div>` : '').join('')}
+  </div></section>`;
+  return `<div class="s-shell">${hirszalag}${temaHTML}${hero}${gyors}${bannerHTML('tartalom','Hirdetési hely · 728×90',false)}${sRovatHTML('Erdély','E',erdelyiek,false)}${sRovatHTML('Magyarország','M',magyarok,true)}${temaRovatok}</div>`;
+}
+function studioListaOldalHTML(hirek){
+  const cimMap = {erdely:'Erdély',magyar:'Magyarország',gazdasag:'Gazdaság',sport:'Sport',kultura:'Kultúra'};
+  const oldalCim = keresoSzo ? `Találatok: „${biztonsagos(keresoSzo)}”` : aktivForras || cimMap[aktivRovat] || 'Hírek';
+  const fo = hirek.find(h => h.kep) || hirek[0];
+  const tobbi = hirek.filter(h => h !== fo).slice(0, 24);
+  return `<div class="s-shell s-archiv">
+    <div class="s-archiv-fej"><span>NapHíre / Rovat</span><h1>${oldalCim}</h1><p>${hirek.length} friss hír több ellenőrzött forrásból</p></div>
+    ${sKartyaHTML(fo,true)}
+    <div class="s-archiv-grid">${tobbi.map(h=>sKartyaHTML(h,false)).join('')}</div>
+  </div>`;
+}
+function studioPercHTML(hirek){
+  return `<div class="s-shell s-perc">
+    <div class="s-archiv-fej"><span>Élő hírfolyam</span><h1>Percről percre</h1><p>Automatikusan frissül ötpercenként</p></div>
+    <div class="s-perc-lista">${hirek.slice(0,60).map(h => `<a ${dc(h)} href="${biztonsagos(h.link)}" target="_blank" rel="noopener">
+      <time>${oraPerc(h.datum)}</time><span><strong>${biztonsagos(h.cim)}</strong>${sMetaHTML(h)}</span><b>↗</b>
+    </a>`).join('')}</div>
+  </div>`;
+}
+
 function rajzol(){
   const cel = document.getElementById('tartalom');
   const hirek = szurtHirek();
@@ -2535,7 +2826,7 @@ function rajzol(){
 
   // "Percről percre" nézet: csak időrendi lista
   if (aktivRovat === 'friss'){
-    cel.innerHTML = hibaHTML + `
+    cel.innerHTML = hibaHTML + (aktivSablon === 'studio' ? studioPercHTML(hirek) : `
       <div class="szekcio-cim"><span class="jelzo"></span>Percről percre</div>
       <div class="doboz" style="border:1px solid var(--line)">
         <ul class="friss-lista" style="max-height:none">
@@ -2545,7 +2836,7 @@ function rajzol(){
               <span><span class="cim">${biztonsagos(h.cim)}</span><br><span class="forr">${biztonsagos(h.forras)}</span></span>
             </a></li>`).join('')}
         </ul>
-      </div>`;
+      </div>`);
     return;
   }
 
@@ -2647,8 +2938,12 @@ function rajzol(){
       ${bannerHTML('oldalsav', 'Hirdetési hely<br>300×250', true)}
     </aside>`;
 
-  if (foNezet && AKTIV_SABLON === 'modern'){
+  if (foNezet && aktivSablon === 'studio'){
+    cel.innerHTML = hibaHTML + studioFooldalHTML(tema, vezeto, mozaik12, erdelyiek, magyarok, gazdasagiak, sportosok, kulturasok);
+  } else if (foNezet && aktivSablon === 'modern'){
     cel.innerHTML = hibaHTML + modernFooldalHTML(tema, temaErdely, vezeto, mozaik12, erdelyiek, magyarok, gazdasagiak, sportosok, kulturasok);
+  } else if (aktivSablon === 'studio'){
+    cel.innerHTML = hibaHTML + studioListaOldalHTML(hirek);
   } else if (foNezet){
     cel.innerHTML = hibaHTML + napTemajaHTML(tema) + `
       <div class="foblokk">
@@ -2700,6 +2995,18 @@ function valtRovat(r){
   window.scrollTo({top:0, behavior:'smooth'});
   rajzol();
 }
+function frissitSablonGomb(){
+  const szoveg = document.getElementById('design-valto-szoveg');
+  if (szoveg) szoveg.textContent = aktivSablon === 'studio' ? 'Klasszikus nézet' : 'Új magazin nézet';
+  document.body.classList.toggle('studio', aktivSablon === 'studio');
+  document.body.classList.toggle('modern', aktivSablon === 'modern');
+}
+function valtSablon(){
+  aktivSablon = aktivSablon === 'studio' ? 'modern' : 'studio';
+  localStorage.setItem('naphire_sablon', aktivSablon);
+  frissitSablonGomb();
+  rajzol();
+}
 function valtForras(f){
   aktivForras = (aktivForras === f) ? null : f;
   aktivRovat = 'mind';
@@ -2733,12 +3040,13 @@ document.getElementById('kereso-mezo').addEventListener('input', e => {
   rajzol();
 });
 document.getElementById('frissit-gomb').addEventListener('click', () => betoltBeallitasok().then(mindenHirBetolt));
+document.getElementById('design-valto').addEventListener('click', valtSablon);
 
 /* ---------- Indítás ---------- */
 document.getElementById('mai-datum').textContent =
   new Date().toLocaleDateString('hu-HU',{year:'numeric',month:'long',day:'numeric',weekday:'long'});
 document.getElementById('ev').textContent = new Date().getFullYear();
-if (AKTIV_SABLON === 'modern') document.body.classList.add('modern');
+frissitSablonGomb();
 
 betoltBeallitasok().then(() => {
   renderForrasaink();
