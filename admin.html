@@ -112,7 +112,7 @@ input[type=file]{display:none}
     A naphíre.ro egy statikus fájl, nincs mögötte adatbázis vagy szerver. Ezért az itt beállított
     dolgok (bannerek, kiemelt téma, kikapcsolt források) egy <code>settings.json</code> nevű
     fájlba kerülnek. Állítsd be lent, amit szeretnél, töltsd le a <strong>settings.json</strong>-t,
-    majd FTP-vel/tárhelykezelőn töltsd fel <em>ugyanabba a mappába</em>, ahol a <code>naphire.html</code>
+    majd a tárhelykezelőben töltsd fel <em>ugyanabba a mappába</em>, ahol az <code>index.html</code>
     van (felülírva a régit, ha már létezik). A honlap ezt a fájlt olvassa be induláskor és 5 percenként –
     innentől MINDEN látogatónál érvényes lesz, nem csak a te böngésződben.
     Ha már van korábbi settings.json-od, először töltsd be a "Meglévő settings.json betöltése" gombbal, hogy tovább szerkeszthesd.
@@ -212,12 +212,12 @@ input[type=file]{display:none}
     <button class="gomb-fo" onclick="letoltSettings()">⬇ settings.json letöltése</button>
     <button class="gomb-mas" onclick="jsonElonezetMutat()">👁 JSON előnézet</button>
   </div>
-  <div class="allapot" id="allapot-uzenet">✓ settings.json letöltve – most töltsd fel a szerverre a naphire.html mellé.</div>
+  <div class="allapot" id="allapot-uzenet">✓ settings.json letöltve – most töltsd fel a szerverre az index.html mellé.</div>
   <div class="json-doboz" id="json-doboz" style="display:none"></div>
 </main>
 
 <script>
-/* A naphire.html-lel megegyező forráslista – ha ott bővíted, itt is vezesd át */
+/* Az index.html-lel megegyező forráslista – ha ott bővíted, itt is vezesd át */
 const FORRASOK = [
   { nev:'Maszol', region:'erdely', szin:'#1e9be0' },
   { nev:'Krónika', region:'erdely', szin:'#f2a007' },
@@ -331,3 +331,4 @@ document.getElementById('betolt-fajl').addEventListener('change', e => {
 </script>
 </body>
 </html>
+

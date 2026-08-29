@@ -2,13 +2,25 @@
 <html lang="hu">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval' data: blob:; connect-src *; img-src * data: blob:; style-src * 'unsafe-inline'; font-src * data:;">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>NapHíre.ro – Erdélyi és magyarországi hírek egy helyen</title>
 <meta name="description" content="Friss erdélyi és magyarországi hírek percről percre. Politika, gazdaság, kultúra, sport – minden, ami számít.">
+<meta name="theme-color" content="#101722">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://naphirero.vercel.app/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="hu_HU">
+<meta property="og:site_name" content="NapHíre.ro">
+<meta property="og:title" content="NapHíre.ro – Erdélyi és magyarországi hírek egy helyen">
+<meta property="og:description" content="Friss erdélyi és magyarországi hírek percről percre, több megbízható forrásból.">
+<meta property="og:url" content="https://naphirero.vercel.app/">
+<meta name="twitter:card" content="summary">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,400..900&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"NewsMediaOrganization","name":"NapHíre.ro","url":"https://naphirero.vercel.app/","description":"Erdélyi és magyarországi hírek több forrásból, folyamatosan frissítve.","areaServed":["RO","HU"],"inLanguage":"hu"}
+</script>
 <style>
 :root{
   --ink:#151a21;
@@ -37,6 +49,8 @@ body{
 a{color:inherit;text-decoration:none}
 img{display:block;max-width:100%}
 button{font-family:inherit;cursor:pointer;border:none;background:none}
+.ugras-tartalomra{position:fixed;left:16px;top:12px;z-index:1000;transform:translateY(-150%);background:var(--paper);color:var(--ink);padding:10px 14px;border:2px solid var(--parazs);font-weight:700;transition:transform .15s}
+.ugras-tartalomra:focus{transform:translateY(0)}
 
 /* ---------- Fejléc ---------- */
 .topbar{
@@ -936,6 +950,49 @@ body{-webkit-font-smoothing:antialiased;overflow-x:hidden}
 body.modern{background:#fff}
 body.modern main{max-width:1240px;padding-top:14px}
 
+/* ---------- Szerkesztőségi 2026: önálló, sűrű hírportál-arculat ---------- */
+body.modern .topbar{background:#11161f;color:#aab3c0;border-bottom:1px solid #273141}
+body.modern .topbar-in{min-height:34px}
+body.modern header.fo{border-bottom:0;box-shadow:0 1px 0 #dfe2e4}
+body.modern .fejlec-in{min-height:88px}
+body.modern .logo-fo{font-size:35px;letter-spacing:-.055em}
+body.modern .logo .hire,body.modern .logo .ro{color:#d92d35}
+body.modern .logo .szlogen{color:#6d7480;letter-spacing:.135em}
+body.modern .fejlec-hirdetes{position:relative;padding-top:12px}
+body.modern .fejlec-hirdetes .hirdetes-cimke{position:absolute;right:0;top:0;color:#8a919b;font-family:'Archivo',sans-serif;font-size:8px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;line-height:1}
+body.modern nav.rovatok{background:#fff;border-top:1px solid #e1e4e6;border-bottom:1px solid #e1e4e6;box-shadow:0 2px 9px rgba(14,21,31,.08)}
+body.modern nav.rovatok button{color:#38414c;border-right:0;padding:13px 15px;font-size:12px}
+body.modern nav.rovatok button:hover,body.modern nav.rovatok button.aktiv{color:#11161f;background:#f4f5f4}
+body.modern nav.rovatok button.pp{color:#c52631}
+body.modern nav.rovatok button::after{background:#d92d35;height:3px}
+body.modern .kereso input{background:#f4f5f4;border-color:#e0e3e3}
+body.modern .kereso input:focus{border-color:#d92d35;background:#fff}
+body.modern .m-tema-sav{background:linear-gradient(115deg,#11161f 0%,#19293a 100%);padding:22px 0 27px}
+body.modern .m-tema-fej,body.modern .m-tema-forr{color:#ff8571}
+body.modern .m-felso{border-top-color:#11161f}
+body.modern .m-hero h1{font-size:clamp(24px,2.25vw,31px)}
+body.modern .m-szekcio-fej h2{font-size:18px;letter-spacing:-.025em}
+body.modern .m-kartya h3{font-size:15.5px;line-height:1.26}
+.m-info-sor{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 0;border-bottom:1px solid var(--t-vonal);color:#69727b;font-size:11px;line-height:1.35}
+.m-info-sor strong{color:#1e2730;font-family:'Archivo',sans-serif;font-size:10px;letter-spacing:.075em;text-transform:uppercase}
+.m-info-sor .m-info-pont{width:5px;height:5px;border-radius:50%;background:#d92d35;display:inline-block;margin:0 7px 2px 0}
+.m-hirfolyam{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--t-vonal);padding:0 0 18px}
+.m-rovid{display:block;padding:16px 18px 0;border-left:1px solid var(--t-vonal)}
+.m-rovid:nth-child(3n+1){border-left:none;padding-left:0}
+.m-rovid:nth-child(n+4){border-top:1px solid var(--t-vonal);margin-top:15px}
+.m-rovid h3{font-family:'Source Serif 4',Georgia,serif;font-size:15px;line-height:1.24;color:#161b20}
+.m-rovid:hover h3{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
+.m-rovid .m-meta{display:block;margin-top:6px;color:#8b9298;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.045em}
+@media (max-width:700px){
+  body.modern .fejlec-in{min-height:70px}
+  body.modern .logo-fo{font-size:29px}
+  body.modern .m-tema-sav{padding:17px 0 21px}
+  .m-info-sor{align-items:flex-start;flex-direction:column;gap:4px;padding:10px 0}
+  .m-hirfolyam{grid-template-columns:1fr}
+  .m-rovid,.m-rovid:nth-child(3n+1){border-left:none;padding:13px 0 0}
+  .m-rovid:not(:first-child){border-top:1px solid var(--t-vonal);margin-top:12px}
+}
+
 .m-tema-sav{margin:0 calc(50% - 50vw) 0;background:#0d0d0f;padding:18px 0 24px}
 .m-tema-in{max-width:1240px;margin:0 auto;padding:0 20px}
 .m-tema-fej{
@@ -1102,20 +1159,29 @@ footer{background:var(--ej);color:#8f98a8;margin-top:40px}
   .masodvonal{grid-template-columns:1fr}
   .vezeto .szoveg{padding:18px}
   .lablec-in{grid-template-columns:1fr}
-  .topbar .idojaras{display:none}
+  .topbar .idojaras{display:flex}
+  .topbar #frissitve{display:none}
+  .topbar-in{padding:7px 14px}
+  .topbar .frissit-btn{min-height:30px;padding:4px 10px}
   .hiba-sav-in{white-space:normal;text-overflow:clip}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
 }
 :focus-visible{outline:2px solid var(--parazs);outline-offset:2px}
 </style>
 </head>
 <body>
 
+<a class="ugras-tartalomra" href="#tartalom">Ugrás a hírekhez</a>
+
 <div class="topbar">
   <div class="topbar-in">
     <span class="datum" id="mai-datum"></span>
     <div class="idojaras">
       <span id="frissitve"></span>
-      <button class="frissit-btn" id="frissit-gomb" title="Hírek frissítése">
+      <button type="button" class="frissit-btn" id="frissit-gomb" title="Hírek frissítése" aria-label="Hírek frissítése">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M21 12a9 9 0 1 1-2.64-6.36M21 3v6h-6"/></svg>
         Frissítés
       </button>
@@ -1139,19 +1205,19 @@ footer{background:var(--ej);color:#8f98a8;margin-top:40px}
   </div>
   <nav class="rovatok" id="rovat-sav">
     <div class="rovatok-in">
-      <button data-rovat="mind" class="aktiv">Főoldal</button>
-      <button data-rovat="erdely" class="sz-zold">Erdély</button>
-      <button data-rovat="magyar" class="sz-piros">Magyarország</button>
-      <button data-rovat="gazdasag" class="sz-arany">Gazdaság</button>
-      <button data-rovat="sport" class="sz-kek">Sport</button>
-      <button data-rovat="kultura" class="sz-lila">Kultúra</button>
-      <button data-rovat="friss" class="pp">● Percről percre</button>
+      <button type="button" data-rovat="mind" class="aktiv" aria-current="page">Főoldal</button>
+      <button type="button" data-rovat="erdely" class="sz-zold">Erdély</button>
+      <button type="button" data-rovat="magyar" class="sz-piros">Magyarország</button>
+      <button type="button" data-rovat="gazdasag" class="sz-arany">Gazdaság</button>
+      <button type="button" data-rovat="sport" class="sz-kek">Sport</button>
+      <button type="button" data-rovat="kultura" class="sz-lila">Kultúra</button>
+      <button type="button" data-rovat="friss" class="pp">● Percről percre</button>
     </div>
   </nav>
 </header>
 
 <main>
-  <div id="tartalom">
+  <div id="tartalom" aria-live="polite" aria-busy="true">
     <div class="betoltes">
       <div class="napocska"></div>
       Hírek betöltése Erdélyből és Magyarországról…
@@ -1195,7 +1261,7 @@ footer{background:var(--ej);color:#8f98a8;margin-top:40px}
       </ul>
     </div>
   </div>
-  <div class="lablec-also">© <span id="ev"></span> naphíre.ro · Független, algoritmikus sajtószemle és AI-vezérelt hírplatform · Minden cikk a megjelölt forrás tulajdona · <span style="color:#4a5871">build 2026-07-26 03:35 UTC</span></div>
+  <div class="lablec-also">© <span id="ev"></span> naphíre.ro · Független, automatikus sajtószemle · Minden cikk a megjelölt forrás tulajdona</div>
 </footer>
 
 <script>
@@ -1209,7 +1275,7 @@ footer{background:var(--ej);color:#8f98a8;margin-top:40px}
 const FORRASOK = [
   // Erdély – forrásonként több lehetséges RSS-cím, az első működőt használja
   { nev:'Maszol',     urls:['https://maszol.ro/rss','https://maszol.ro/rss.xml','https://maszol.ro/feed'], region:'erdely', iranyzat:'centrista', szin:'#1e9be0' },
-  { nev:'Krónika',    urls:['https://kronikaonline.ro/rss/kronika_hirek.xml','https://kronikaonline.ro/rss'], region:'erdely', iranyzat:'kormany', szin:'#f2a007' },
+  { nev:'Krónika',    urls:['https://kronika.ro/rss/kronika_hirek.xml','https://kronika.ro/rss'], region:'erdely', iranyzat:'kormany', szin:'#f2a007' },
   { nev:'Székelyhon', urls:['https://szekelyhon.ro/rss/szekelyhon_hirek.xml','https://szekelyhon.ro/rss'], region:'erdely', iranyzat:'kormany', szin:'#2f7fd6' },
   { nev:'Transtelex', urls:['https://transtelex.ro/rss'], region:'erdely', iranyzat:'kritikus', szin:'#e0315f' },
   { nev:'3Szék',      urls:['https://www.3szek.ro/rss','https://www.3szek.ro/rss.xml','https://3szek.ro/rss'], region:'erdely', iranyzat:'centrista', szin:'#1f8fd1' },
@@ -1235,20 +1301,16 @@ const NOILEG_FORRAS = [
   { nev:'Nőileg', urls:['https://noileg.ro/feed/','https://noileg.ro/feed','https://noileg.ro/rss'] },
 ];
 
-/* Letöltési stratégiák – sorban próbálja őket, amíg az egyik nem válaszol.
-   Az rss2json kész JSON-t ad vissza, a többi CORS-proxyn át hozza a nyers XML-t. */
+/* A híreket a saját, gyorsítótárazott szerveroldali végpont tölti le. Így a
+   böngésző nem függ nyilvános CORS-proxyktól, és a forrásoldalak sem kapnak
+   minden egyes olvasótól külön kérést. */
 const STRATEGIAK = [
-  u => ({ url: `/rss?url=${encodeURIComponent(u)}`, tipus:'text' }), // szerveroldali funkció (Cloudflare Pages) – ha be van állítva, ez a legmegbízhatóbb
-  u => ({ url: u, tipus:'text' }),  // közvetlen próba – sok RSS-nél ez is működik, és ingyenes/korlátlan
-  u => ({ url:`https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(u)}`, tipus:'text' }),
-  u => ({ url:`https://api.allorigins.win/raw?url=${encodeURIComponent(u)}`, tipus:'text' }),
-  u => ({ url:`https://api.allorigins.win/get?url=${encodeURIComponent(u)}`, tipus:'json' }),
-  u => ({ url:`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(u)}`, tipus:'rss2json' }), // erősen korlátozott, ezért utolsó próba
+  u => ({ url: `/rss?url=${encodeURIComponent(u)}`, tipus:'text' })
 ];
 
 let osszesHir = [];
 let aktivRovat = 'mind';
-const AKTIV_SABLON = 'klasszikus'; // a design-váltó eltávolítva, csak a klasszikus nézet fut
+const AKTIV_SABLON = 'modern';
 let aktivForras = null;
 let keresoSzo = '';
 let hibasForrasok = [];
@@ -1272,6 +1334,7 @@ function fejlecBannerHTML(){
   const b = BEALLITASOK.banners.fejlec;
   if (!b || !b.kep) return '';
   return `<a class="fejlec-hirdetes" href="${biztonsagos(b.link || '#')}" target="_blank" rel="noopener">
+    <span class="hirdetes-cimke">Hirdetés</span>
     <img src="${biztonsagos(b.kep)}" alt="Hirdetés">
   </a>`;
 }
@@ -1309,7 +1372,10 @@ function oraPerc(datum){
 function szovegTisztit(html){
   const d = document.createElement('div');
   d.innerHTML = html || '';
-  return (d.textContent || '').replace(/\s+/g,' ').trim();
+  return (d.textContent || '')
+    .replace(/\s+/g,' ')
+    .replace(/\s*The post .*? first appeared on .*?\.?$/i, '')
+    .trim();
 }
 function biztonsagos(s){
   return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
@@ -1447,6 +1513,9 @@ function hirGyorsitotarBetolt(){
 async function mindenHirBetolt(){
   const gomb = document.getElementById('frissit-gomb');
   gomb.classList.add('forog');
+  gomb.disabled = true;
+  gomb.setAttribute('aria-busy', 'true');
+  document.getElementById('tartalom').setAttribute('aria-busy', 'true');
   hibasForrasok = [];
   const gyujto = [];
 
@@ -1495,6 +1564,9 @@ async function mindenHirBetolt(){
   }
 
   gomb.classList.remove('forog');
+  gomb.disabled = false;
+  gomb.removeAttribute('aria-busy');
+  document.getElementById('tartalom').setAttribute('aria-busy', 'false');
   document.getElementById('frissitve').textContent =
     'Frissítve: ' + new Date().toLocaleTimeString('hu-HU',{hour:'2-digit',minute:'2-digit'});
   rajzol();
@@ -2363,6 +2435,12 @@ function mMiniHTML(h){
     <span class="m-meta">${biztonsagos(h.forras)} · ${idoOta(h.datum)}</span>
   </a>`;
 }
+function mRovidHTML(h){
+  return `<a class="m-rovid" ${dc(h)} href="${biztonsagos(h.link)}" target="_blank" rel="noopener">
+    <h3>${mCimke(h)}${biztonsagos(h.cim)}</h3>
+    <span class="m-meta">${biztonsagos(h.forras)} · ${idoOta(h.datum)}</span>
+  </a>`;
+}
 function mSzekcioHTML(cim, ikon, fejOsztaly, cikkek){
   if (!cikkek.length) return '';
   return `<section class="m-szekcio">
@@ -2393,6 +2471,7 @@ function modernFooldalHTML(tema, temaErdely, vezeto, mozaik12, erdelyiek, magyar
 
   const oszlop1 = mozaik12.slice(0, 3).map(mMiniHTML).join('');
   const oszlop2 = mozaik12.slice(3, 6).map(mMiniHTML).join('');
+  const rovidHirfolyam = mozaik12.slice(6, 12).map(mRovidHTML).join('');
 
   const felso = `<div class="m-felso">
     <div>${heroHTML}</div>
@@ -2408,8 +2487,16 @@ function modernFooldalHTML(tema, temaErdely, vezeto, mozaik12, erdelyiek, magyar
     ${mSzekcioHTML('Kultúra', '', 'f-kultura', kulturasok)}
   `;
 
+  const infoSor = `<div class="m-info-sor">
+    <strong><span class="m-info-pont"></span>Automatikus sajtószemle</strong>
+    <span>${FORRASOK.filter(f => !BEALLITASOK.forrasokKi.includes(f.nev)).length} aktív hírforrás · minden cikk az eredeti oldalra vezet</span>
+  </div>`;
+
   return temaSav + `<div style="max-width:1240px;margin:0 auto;padding:0 20px 40px">
+    ${infoSor}
     ${felso}
+    ${rovidHirfolyam ? `<div class="m-hirfolyam">${rovidHirfolyam}</div>` : ''}
+    ${bannerHTML('tartalom', 'Hirdetési hely · 728×90', false)}
     ${szekciok}
   </div>`;
 }
@@ -2426,12 +2513,9 @@ function rajzol(){
   }
 
   if (!osszesHir.length){
-    cel.innerHTML = `<div class="hiba-doboz"><strong>Nem sikerült hírt betölteni.</strong>
-      Ha ezt a Claude beépített előnézetében látod, az blokkolja az internetelérést – töltsd le a fájlt,
-      és nyisd meg közvetlenül a böngésződben, vagy töltsd fel egy tárhelyre. Ha ez már egy éles, feltöltött
-      oldalon jelenik meg, akkor az ingyenes RSS-lekérő szolgáltatások épp egyszerre nem elérhetők (ez időnként
-      előfordul, néhány percen belül általában helyreáll) – kattints fent a Frissítés gombra, vagy próbáld újra
-      később.</div>`;
+    cel.innerHTML = `<div class="hiba-doboz" role="alert"><strong>A hírfolyam átmenetileg nem érhető el.</strong>
+      A források kapcsolata megszakadt, de a portál automatikusan újra próbálkozik.
+      <button type="button" onclick="mindenHirBetolt()" style="display:block;margin-top:14px;background:var(--ink);color:#fff;padding:10px 15px;border-radius:3px;font-weight:700">Újrapróbálom</button></div>`;
     return;
   }
 
@@ -2607,8 +2691,12 @@ function valtRovat(r){
   if (location.hash.includes('cikk=')) location.hash = ''; // cikknézetből vissza a listára
   aktivRovat = r;
   aktivForras = null;
-  document.querySelectorAll('#rovat-sav button').forEach(b =>
-    b.classList.toggle('aktiv', b.dataset.rovat === r));
+  document.querySelectorAll('#rovat-sav button').forEach(b => {
+    const aktiv = b.dataset.rovat === r;
+    b.classList.toggle('aktiv', aktiv);
+    if (aktiv) b.setAttribute('aria-current', 'page');
+    else b.removeAttribute('aria-current');
+  });
   window.scrollTo({top:0, behavior:'smooth'});
   rajzol();
 }
@@ -2650,6 +2738,7 @@ document.getElementById('frissit-gomb').addEventListener('click', () => betoltBe
 document.getElementById('mai-datum').textContent =
   new Date().toLocaleDateString('hu-HU',{year:'numeric',month:'long',day:'numeric',weekday:'long'});
 document.getElementById('ev').textContent = new Date().getFullYear();
+if (AKTIV_SABLON === 'modern') document.body.classList.add('modern');
 
 betoltBeallitasok().then(() => {
   renderForrasaink();
@@ -2663,3 +2752,4 @@ setInterval(() => {
 </script>
 </body>
 </html>
+
