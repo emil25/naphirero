@@ -1732,7 +1732,7 @@ function napTemaja(hirek, minForras, oraAblak){
 
   // a témához CSAK az tartozik, ami a magszavakkal legalább 2 ponton egyezik
   const csoport = friss.filter((h, j) =>
-    j === horgony || (kozosDb(szoKeszlet[horgony], szoKeszlet[j]) >= 2 && kozosDb(kulcsszavak, szoKeszlet[j]) >= 2));
+    j === horgony || (kozosDb(szoKeszlet[horgony], szoKeszlet[j]) >= 3 && kozosDb(kulcsszavak, szoKeszlet[j]) >= 2));
   const forrasDb = new Set(csoport.map(h => h.forras)).size;
   const kuszob = kiemeltKozeleti(friss[horgony]) ? Math.max(2, minForras - 1) : minForras;
   if (forrasDb < kuszob) return null;
@@ -1803,7 +1803,7 @@ function napTemajaStabil(jelolt, nev, minForras, oraAblak){
     const kulcsszavak = new Set(mentett.kulcsszavak);
     const horgonyHir = jelolt.find(h => h.link === mentett.horgonyLink);
     const horgonySzavak = horgonyHir ? new Set(temaStemek(horgonyHir)) : kulcsszavak;
-    const talalatok = jelolt.filter(h => kozosDb(horgonySzavak, new Set(temaStemek(h))) >= 2 && kozosDb(kulcsszavak, new Set(temaStemek(h))) >= 2);
+    const talalatok = jelolt.filter(h => kozosDb(horgonySzavak, new Set(temaStemek(h))) >= 3 && kozosDb(kulcsszavak, new Set(temaStemek(h))) >= 2);
     const forrasDb = new Set(talalatok.map(h => h.forras)).size;
     // ha időközben egy EGYÉRTELMŰEN erősebb téma jött (magasabb pontszámú – ez figyelembe veszi
     // a forrásszámot ÉS azt is, ha közéleti súlyú, puha hírrel szemben), nem várjuk ki a 12 órát
@@ -2497,7 +2497,7 @@ function rajzol(){
       const fo = jokKepekkel.find(h => !puhaHir(h)) || jokKepekkel[0] || erdelyJelolt[0];
       const foSzavak = temaStemek(fo);
       const tobbi = erdelyJelolt
-        .filter(h => h !== fo && kozosDb(foSzavak, temaStemek(h)) >= 2)
+        .filter(h => h !== fo && kozosDb(foSzavak, temaStemek(h)) >= 3)
         .sort((a,b) => b.datum - a.datum)
         .slice(0, 4);
       temaErdely = { fo, tobbi, forrasDb: 1, egyedi: true };
