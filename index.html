@@ -1437,6 +1437,12 @@ body.atlas .x-hero{min-height:360px}body.atlas .x-hero h1{font-size:clamp(28px,3
 @media (max-width:900px){body.atlas .x-hero{grid-template-columns:1.12fr .88fr;min-height:270px}body.atlas .x-hero-szoveg{padding:20px 18px}body.atlas .x-hero h1{font-size:22px;line-height:1.02;margin:12px 0 10px}body.atlas .x-hero p{-webkit-line-clamp:2;font-size:12px}body.atlas .x-hero em{margin-top:12px;padding-top:8px}body.atlas .x-hero-kep{min-height:270px}}
 @media (max-width:600px){body.atlas .x-hero{grid-template-columns:1fr;min-height:0}body.atlas .x-hero-kep{aspect-ratio:16/9;min-height:170px;max-height:190px}body.atlas .x-hero-szoveg{padding:20px 17px 24px}body.atlas .x-hero h1{font-size:30px}body.atlas .x-front-kartyak{grid-template-columns:1fr;padding:0 14px}}
 
+/* ---------- NEXUS – teljesen új oldalváz ---------- */
+body.nexus{--n-ink:#20163d;--n-purple:#4a2b90;--n-lime:#d9f36a;--n-paper:#f5f3ef;--n-red:#ef684f;background:var(--n-paper);color:var(--n-ink)}body.nexus> *:not(#nexus-root){display:none!important}body.nexus #nexus-root{display:block;min-height:100vh}body.nexus a{color:inherit}
+.n-page{max-width:1480px;margin:0 auto;background:var(--n-paper)}.n-head{display:flex;align-items:center;justify-content:space-between;gap:28px;padding:24px 42px;background:var(--n-ink);color:#fff}.n-brand{display:flex;align-items:center;gap:14px}.n-mark{display:grid;place-items:center;width:45px;height:45px;background:var(--n-lime);color:var(--n-ink);font-family:'Archivo',sans-serif;font-size:28px;font-weight:900;border-radius:50%}.n-brand strong{display:block;font-family:'Archivo',sans-serif;font-size:31px;letter-spacing:-.07em}.n-brand strong span{color:var(--n-lime)}.n-brand small{display:block;margin-top:2px;color:#c9c0df;font-size:9px;letter-spacing:.14em;text-transform:uppercase}.n-head-meta{display:flex;align-items:center;gap:20px;color:#c9c0df;font-size:10px;text-transform:uppercase;letter-spacing:.09em}.n-head-meta b{color:var(--n-lime)}.n-head-meta input{width:210px;border:1px solid #6c5b92;border-radius:999px;padding:10px 14px;background:transparent;color:#fff;font:inherit}.n-head-meta input::placeholder{color:#c9c0df}.n-nav{display:flex;gap:0;background:#fff;border-bottom:1px solid #d8d2e2;padding:0 42px;overflow-x:auto}.n-nav button{padding:16px 20px;color:#534b68;font-size:11px;font-weight:900;letter-spacing:.11em;white-space:nowrap;border-bottom:4px solid transparent}.n-nav button:hover,.n-nav button.active{color:var(--n-purple);border-color:var(--n-lime)}.n-main{padding:30px 42px 70px}.n-intro{display:flex;align-items:end;justify-content:space-between;gap:20px;padding-bottom:18px;border-bottom:1px solid #d8d2e2}.n-intro span{color:var(--n-purple);font-size:10px;font-weight:900;letter-spacing:.12em}.n-intro h1{max-width:650px;margin-top:9px;font-family:'Archivo',sans-serif;font-size:clamp(34px,4vw,58px);line-height:.96;letter-spacing:-.065em}.n-intro p{max-width:270px;color:#756d83;font-size:12px;line-height:1.45}.n-lead{display:grid;grid-template-columns:1.35fr 1fr;gap:22px;margin-top:25px}.n-lead-main{display:grid;grid-template-columns:1.05fr .95fr;min-height:365px;background:#fff;border:1px solid #ddd8e5}.n-lead-img{overflow:hidden;background:#cfd4c9}.n-lead-img img{width:100%;height:100%;object-fit:cover}.n-lead-copy{display:flex;flex-direction:column;justify-content:center;padding:28px}.n-lead-copy>span{color:var(--n-purple);font-size:9px;font-weight:900;letter-spacing:.1em}.n-lead-copy h2{margin:15px 0 12px;font-family:'Archivo',sans-serif;font-size:clamp(26px,3vw,42px);line-height:1;letter-spacing:-.055em}.n-lead-copy p{color:#756d83;font-size:13px;line-height:1.45}.n-lead-copy>b{margin-top:22px;color:var(--n-purple);font-size:10px;letter-spacing:.1em}.n-lead-side{display:grid;grid-template-columns:1fr 1fr;gap:16px}.n-lead-side .n-card{background:#fff;border:1px solid #ddd8e5}.n-lead-side .n-card-img{aspect-ratio:4/3}.n-lead-side .n-card h3{font-size:16px}.n-card{display:block}.n-card-img{aspect-ratio:16/10;overflow:hidden;background:#dfe2df}.n-card-img img{width:100%;height:100%;object-fit:cover;transition:transform .35s}.n-card:hover .n-card-img img{transform:scale(1.04)}.n-card>span{display:block;margin:10px 14px 0;color:var(--n-purple);font-size:8px;font-weight:900;letter-spacing:.08em;text-transform:uppercase}.n-card h3{margin:5px 14px 15px;font-family:'Source Serif 4',Georgia,serif;font-size:20px;line-height:1.12}.n-ticker{display:flex;align-items:center;gap:13px;margin:24px 0;border-top:4px solid var(--n-ink);border-bottom:1px solid #d8d2e2;padding:12px 0;overflow:hidden}.n-ticker strong{color:var(--n-red);font-size:10px;letter-spacing:.12em}.n-ticker a{min-width:220px;padding-left:13px;border-left:1px solid #d8d2e2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:'Source Serif 4',Georgia,serif;font-size:14px}.n-lane{margin-top:42px}.n-lane-head{display:flex;align-items:baseline;justify-content:space-between;border-bottom:5px solid var(--n-ink);padding-bottom:11px}.n-lane-head h2{display:flex;align-items:center;gap:10px;font-family:'Archivo',sans-serif;font-size:28px;letter-spacing:-.05em}.n-lane-head h2 b{width:10px;height:24px}.n-lane-head a{color:var(--n-purple);font-size:10px;font-weight:900;letter-spacing:.09em;text-transform:uppercase}.n-lane-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;padding-top:18px}.n-all{margin-top:48px}.n-all-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;padding-top:18px}.n-all-grid .n-card h3{font-size:18px;margin-left:0;margin-right:0}.n-all-grid .n-card>span{margin-left:0;margin-right:0}
+@media(max-width:1000px){.n-head,.n-nav{padding-left:20px;padding-right:20px}.n-main{padding-left:20px;padding-right:20px}.n-head-meta span{display:none}.n-lead{grid-template-columns:1fr}.n-lead-main{min-height:320px}.n-lane-grid{grid-template-columns:repeat(2,1fr)}.n-all-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:620px){.n-head{padding:17px 16px;gap:12px}.n-brand strong{font-size:26px}.n-brand small{font-size:7px}.n-mark{width:36px;height:36px;font-size:22px}.n-head-meta{gap:0}.n-head-meta b{display:none}.n-head-meta input{width:125px;padding:8px 10px;font-size:9px}.n-nav{padding:0 8px}.n-nav button{padding:13px 12px;font-size:9px}.n-main{padding:20px 16px 50px}.n-intro{display:block}.n-intro h1{font-size:39px}.n-intro p{margin-top:12px}.n-lead-main{grid-template-columns:1fr;min-height:0}.n-lead-img{aspect-ratio:16/10;min-height:180px}.n-lead-copy{padding:22px 19px 25px}.n-lead-copy h2{font-size:31px}.n-lead-side{gap:12px}.n-lead-side .n-card h3{font-size:15px;margin-left:10px;margin-right:10px}.n-lead-side .n-card>span{margin-left:10px;margin-right:10px;font-size:7px}.n-ticker{display:block}.n-ticker strong{display:block;margin-bottom:9px}.n-ticker a{display:block;padding:7px 0;border-left:0;border-top:1px solid #d8d2e2}.n-lane-head h2{font-size:23px}.n-lane-grid{grid-template-columns:1fr}.n-all-grid{grid-template-columns:repeat(2,1fr);gap:14px}.n-all-grid .n-card h3{font-size:16px}}
+
 /* ---------- Állapotok ---------- */
 .betoltes{padding:60px 0;text-align:center;color:var(--ink-faint)}
 .betoltes .napocska{
@@ -1513,6 +1519,8 @@ footer{background:var(--ej);color:#8f98a8;margin-top:40px}
 </style>
 </head>
 <body>
+
+<div id="nexus-root"></div>
 
 <a class="ugras-tartalomra" href="#tartalom">Ugrás a hírekhez</a>
 
@@ -1658,7 +1666,7 @@ const STRATEGIAK = [
 
 let osszesHir = [];
 let aktivRovat = 'mind';
-let aktivSablon = localStorage.getItem('naphire_sablon_v5') || 'atlas';
+let aktivSablon = localStorage.getItem('naphire_sablon_v6') || 'nexus';
 let aktivForras = null;
 let keresoSzo = '';
 let hibasForrasok = [];
@@ -3004,6 +3012,15 @@ function atlasListaOldalHTML(hirek){
   const cim = keresoSzo ? `Találatok: „${biztonsagos(keresoSzo)}”` : aktivForras || cimMap[aktivRovat] || 'Hírek';
   return `<div class="x-shell x-archiv"><div class="x-archiv-fej"><span>NAPHÍRE.RO / ROVAT</span><h1>${cim}</h1><p>${hirek.length} friss cikk egy helyen</p></div><div class="x-archiv-grid">${hirek.slice(0,40).map((h,i)=>`<div>${i===0 ? `<a class="x-hero x-archiv-hero" ${dc(h)} href="${biztonsagos(h.link)}" target="_blank" rel="noopener"><div class="x-hero-kep">${h.kep?`<img src="${biztonsagos(h.kep)}" alt="">`:''}</div><div class="x-hero-szoveg"><span>${biztonsagos(h.forras)}</span><h1>${biztonsagos(h.cim)}</h1><p>${biztonsagos(h.lead||'')}</p></div></a>` : lista(h,i)}</div>`).join('')}</div></div>`;
 }
+function nexusRender(hirek){
+  const root=document.getElementById('nexus-root'); if(!root) return;
+  const fo=hirek.find(h=>h.kep)||hirek[0];
+  const pool=hirek.filter(h=>h!==fo);
+  const card=h=>`<a class="n-card" ${dc(h)} href="${biztonsagos(h.link)}" target="_blank" rel="noopener"><div class="n-card-img">${h.kep?`<img src="${biztonsagos(h.kep)}" alt="" loading="lazy" onerror="this.remove()">`:''}</div><span>${biztonsagos(h.forras)} · ${idoOta(h.datum)}</span><h3>${biztonsagos(h.cim)}</h3></a>`;
+  const lists=(title,items,accent)=>items.length?`<section class="n-lane"><div class="n-lane-head"><h2><b style="background:${accent}"></b>${title}</h2><a href="#" onclick="event.preventDefault();valtRovat('${title==='Erdély'?'erdely':title==='Magyarország'?'magyar':'gazdasag'}')">Tovább →</a></div><div class="n-lane-grid">${items.slice(0,6).map(card).join('')}</div></section>`:'';
+  const erd=pool.filter(h=>h.region==='erdely'), mag=pool.filter(h=>h.region==='magyar'), egyeb=pool.filter(h=>!erd.includes(h)&&!mag.includes(h));
+  root.innerHTML=`<div class="n-page"><header class="n-head"><div class="n-brand"><span class="n-mark">N</span><div><strong>NAP<span>HÍRE</span></strong><small>A régió első számú hírképe</small></div></div><div class="n-head-meta"><span>${new Date().toLocaleDateString('hu-HU',{weekday:'long',month:'long',day:'numeric'})}</span><b>${hirek.length} friss hír</b><input id="nexus-search" type="search" placeholder="Keresés a hírek között…" oninput="keresoSzo=this.value.trim();nexusRender(szurtHirek())"></div></header><nav class="n-nav"><button class="active" onclick="valtRovat('mind')">CÍMLAP</button><button onclick="valtRovat('erdely')">ERDÉLY</button><button onclick="valtRovat('magyar')">MAGYARORSZÁG</button><button onclick="valtRovat('gazdasag')">GAZDASÁG</button><button onclick="valtRovat('sport')">SPORT</button><button onclick="valtRovat('kultura')">KULTÚRA</button><button onclick="valtRovat('friss')">FRISS</button></nav><main class="n-main"><div class="n-intro"><span>NAP HÍRE · FŐOLDAL</span><h1>A legfontosabb hírek, egyetlen címlapon.</h1><p>Válogatás Erdély és Magyarország megbízható hírforrásaiból.</p></div><section class="n-lead"><a class="n-lead-main" ${dc(fo)} href="${biztonsagos(fo.link)}" target="_blank" rel="noopener"><div class="n-lead-img">${fo.kep?`<img src="${biztonsagos(fo.kep)}" alt="">`:''}</div><div class="n-lead-copy"><span>VEZETŐ TÖRTÉNET · ${biztonsagos(fo.forras)}</span><h2>${biztonsagos(fo.cim)}</h2><p>${biztonsagos(fo.lead||'')}</p><b>ELolvasom →</b></div></a><div class="n-lead-side">${pool.slice(0,4).map(card).join('')}</div></section><section class="n-ticker"><strong>FRISS</strong>${pool.slice(4,10).map(h=>`<a ${dc(h)} href="${biztonsagos(h.link)}" target="_blank" rel="noopener">${biztonsagos(h.cim)}</a>`).join('')}</section>${lists('Erdély',erd,'#18a873')}${lists('Magyarország',mag,'#e55b3c')}${lists('Gazdaság',egyeb.filter(h=>h.rovat==='gazdasag'),'#f2af28')}${lists('Sport',egyeb.filter(h=>h.rovat==='sport'),'#3b72dc')}<section class="n-all"><div class="n-lane-head"><h2><b style="background:#3d2878"></b>MINDEN HÍR</h2><a href="#" onclick="event.preventDefault();valtRovat('friss')">Teljes hírfolyam →</a></div><div class="n-all-grid">${pool.slice(10,34).map(card).join('')}</div></section></main></div>`;
+}
 function studioPercHTML(hirek){
   return `<div class="s-shell s-perc">
     <div class="s-archiv-fej"><span>Élő hírfolyam</span><h1>Percről percre</h1><p>Automatikusan frissül ötpercenként</p></div>
@@ -3016,6 +3033,11 @@ function studioPercHTML(hirek){
 function rajzol(){
   const cel = document.getElementById('tartalom');
   const hirek = szurtHirek();
+
+  if (aktivSablon === 'nexus' && osszesHir.length){
+    nexusRender(hirek);
+    return;
+  }
 
   // ha cikknézet van megnyitva (#cikk=...), azt rajzoljuk újra
   const utvonal = location.hash.match(/cikk=(.+)/);
@@ -3226,10 +3248,11 @@ function valtRovat(r){
 }
 function frissitSablonGomb(){
   const szoveg = document.getElementById('design-valto-szoveg');
-  if (szoveg) szoveg.textContent = aktivSablon === 'atlas' ? 'Másik nézet' : aktivSablon === 'brief' ? 'Nagyportál' : aktivSablon === 'studio' ? 'Napi brief' : 'Nagyportál';
-  const kovetkezo = aktivSablon === 'atlas' ? 'brief' : aktivSablon === 'brief' ? 'studio' : aktivSablon === 'studio' ? 'modern' : 'atlas';
+  if (szoveg) szoveg.textContent = aktivSablon === 'nexus' ? 'Portálváltó' : aktivSablon === 'atlas' ? 'Másik nézet' : aktivSablon === 'brief' ? 'Nagyportál' : aktivSablon === 'studio' ? 'Napi brief' : 'Portálváltó';
+  const kovetkezo = aktivSablon === 'nexus' ? 'atlas' : aktivSablon === 'atlas' ? 'brief' : aktivSablon === 'brief' ? 'studio' : aktivSablon === 'studio' ? 'modern' : 'nexus';
   const gomb = document.getElementById('design-valto');
-  if (gomb) gomb.title = 'Váltás erre: ' + (kovetkezo === 'atlas' ? 'Új nagyportál' : kovetkezo === 'brief' ? 'Napi brief' : kovetkezo === 'studio' ? 'Studio nézet' : 'Klasszikus nézet');
+  if (gomb) gomb.title = 'Váltás erre: ' + (kovetkezo === 'nexus' ? 'Teljesen új portál' : kovetkezo === 'atlas' ? 'Új nagyportál' : kovetkezo === 'brief' ? 'Napi brief' : kovetkezo === 'studio' ? 'Studio nézet' : 'Klasszikus nézet');
+  document.body.classList.toggle('nexus', aktivSablon === 'nexus');
   document.body.classList.toggle('atlas', aktivSablon === 'atlas');
   document.body.classList.toggle('brief', aktivSablon === 'brief');
   document.body.classList.toggle('studio', aktivSablon === 'studio');
@@ -3243,8 +3266,8 @@ function frissitSablonGomb(){
   }
 }
 function valtSablon(){
-  aktivSablon = aktivSablon === 'atlas' ? 'brief' : aktivSablon === 'brief' ? 'studio' : aktivSablon === 'studio' ? 'modern' : 'atlas';
-  localStorage.setItem('naphire_sablon_v5', aktivSablon);
+  aktivSablon = aktivSablon === 'nexus' ? 'atlas' : aktivSablon === 'atlas' ? 'brief' : aktivSablon === 'brief' ? 'studio' : aktivSablon === 'studio' ? 'modern' : 'nexus';
+  localStorage.setItem('naphire_sablon_v6', aktivSablon);
   frissitSablonGomb();
   rajzol();
 }
