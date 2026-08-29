@@ -1200,6 +1200,21 @@ body.modern .pn-zone-kultura{background:#efe5f5;border-top-color:#8957cb}.pn-kul
 @media(max-width:1000px){.pn-zone-body,.pn-gaz-body{grid-template-columns:1fr}.pn-magyar-lista,.pn-sport-lista{grid-template-columns:1fr 1fr}.pn-kult-lista{grid-template-columns:1fr 1fr}}
 @media(max-width:640px){body.modern .pn-zone{padding:0 15px 17px}.pn-zone>header{height:58px}.pn-zone h2{font-size:22px!important}.pn-zone-note,.pn-zone-arrow{display:none}.pn-zone-body,.pn-magyar-lead,.pn-sport-lead,.pn-kult-lead{grid-template-columns:1fr}.pn-zone-lead>.pn-kep,.pn-magyar-lead>.pn-kep,.pn-sport-lead>.pn-kep,.pn-kult-lead>.pn-kep{height:190px;order:0}.pn-mutatok{display:none}.pn-magyar-lista,.pn-sport-lista,.pn-kult-lista{grid-template-columns:1fr}.pn-gaz-lead{padding:15px}.pn-gaz-lead h3{font-size:22px}}
 
+/* A Panoráma saját portál-shellje: a klasszikus fejléc modern nézetben nem látszik */
+#panorama-head{display:none}
+body.modern> .topbar,body.modern> header.fo,body.modern> .media-sav,body.modern> .forrasaink,body.modern> footer{display:none!important}
+body.modern>main{padding:0;max-width:none}
+body.modern #panorama-head{display:block;background:#f4efe8;color:#182333;border-bottom:1px solid #182333}
+body.modern .pn-head-top{max-width:1320px;margin:0 auto;padding:20px;display:flex;align-items:center;gap:22px}
+body.modern .pn-brand{font:900 42px/.85 'Archivo',sans-serif;letter-spacing:-.08em;color:#182333}.pn-brand-nap{color:#ef5b3c}.pn-brand b{color:#f0a51c;font-size:.55em;letter-spacing:-.03em}
+body.modern .pn-edition{font:800 10px 'Archivo',sans-serif;letter-spacing:.12em;color:#8995a4}
+body.modern .pn-head-actions{margin-left:auto;display:flex;align-items:center;gap:14px;color:#687384;font:600 10px 'Inter',sans-serif;text-transform:uppercase;letter-spacing:.05em}
+body.modern .pn-head-actions button{border:1px solid #182333;background:transparent;color:#182333;padding:8px 10px;font:900 9px 'Archivo',sans-serif;text-transform:uppercase;letter-spacing:.05em}
+body.modern .pn-head-actions button:hover{background:#182333;color:#fff}
+body.modern .pn-head-nav{border-top:1px solid #d7d0c7;display:flex;align-items:center;justify-content:space-between;max-width:1320px;margin:0 auto;padding:0 20px}
+body.modern .pn-head-nav>div{display:flex;overflow-x:auto}.pn-head-nav button{border:0;border-right:1px solid #d7d0c7;background:transparent;padding:14px 17px;color:#182333;font:900 10px 'Archivo',sans-serif;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}.pn-head-nav button:first-child{border-left:1px solid #d7d0c7}.pn-head-nav button:hover,.pn-head-nav button.aktiv{background:#ef5b3c;color:#fff}.pn-head-mark{color:#ef5b3c;font:900 11px 'Archivo',sans-serif;letter-spacing:.15em;white-space:nowrap}
+@media(max-width:640px){body.modern .pn-head-top{padding:15px 14px;gap:10px}.pn-brand{font-size:32px!important}.pn-edition{display:none}.pn-head-actions{font-size:9px!important}.pn-head-actions button{padding:7px!important}.pn-head-nav{padding:0!important}.pn-head-nav>div{width:100%}.pn-head-mark{display:none}.pn-head-nav button{padding:12px 13px;font-size:9px}}
+
   /* ---------- Állapotok ---------- */
 .betoltes{padding:60px 0;text-align:center;color:var(--ink-faint)}
 .betoltes .napocska{
@@ -1313,6 +1328,15 @@ footer{background:var(--ej);color:#8f98a8;margin-top:40px}
     </div>
   </nav>
 </header>
+
+<div id="panorama-head" aria-label="Panoráma navigáció">
+  <div class="pn-head-top">
+    <a class="pn-brand" href="#" onclick="valtRovat('mind');return false"><span class="pn-brand-nap">nap</span><span>híre</span><b>.ro</b></a>
+    <span class="pn-edition">ERDÉLY + MAGYARORSZÁG / SAJTÓKÉP</span>
+    <div class="pn-head-actions"><span id="pn-head-date"></span><button type="button" onclick="valtSablon('klasszikus')">Klasszikus nézet</button></div>
+  </div>
+  <div class="pn-head-nav"><div><button class="aktiv" onclick="valtRovat('mind')">Címlap</button><button onclick="valtRovat('erdely')">Erdély</button><button onclick="valtRovat('magyar')">Magyarország</button><button onclick="valtRovat('gazdasag')">Gazdaság</button><button onclick="valtRovat('sport')">Sport</button><button onclick="valtRovat('kultura')">Kultúra</button><button onclick="valtRovat('friss')">Élő folyam</button></div><span class="pn-head-mark">PANORÁMA</span></div>
+</div>
 
 <main>
   <div id="tartalom">
@@ -2940,6 +2964,8 @@ document.getElementById('frissit-gomb').addEventListener('click', () => betoltBe
 /* ---------- Indítás ---------- */
 document.getElementById('mai-datum').textContent =
   new Date().toLocaleDateString('hu-HU',{year:'numeric',month:'long',day:'numeric',weekday:'long'});
+const pnDate = document.getElementById('pn-head-date');
+if (pnDate) pnDate.textContent = new Date().toLocaleDateString('hu-HU',{month:'long',day:'numeric'});
 document.getElementById('ev').textContent = new Date().getFullYear();
 sablonGombokFrissit();
 
