@@ -67,7 +67,7 @@
     const meta = h => `<span class="nh-meta">${forrasIkonHTML(h,'kicsi')}<b>${biztonsagos(h.forras)}</b><span>· ${idoOta(h.datum)}</span></span>`;
     const photo = h => h.kep ? `<span class="nh-photo"><img src="${biztonsagos(h.kep)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.parentElement.hidden=true"></span>` : '<span class="nh-photo nh-photo-fallback"></span>';
     const useful = items.filter(h => !/(mindekozben|celeb|reklam|apple-event|meghivo|eljegyzes|horoszkop|szorakozas|bulvar)/i.test(String(h.link||'')+' '+String(h.cim||'')));
-    const localSources=/székelyhon|szekelyhon|3szék|hargita népe|marosvásárhelyi rádió/i;
+    const localSources=/3szék|hargita népe|marosvásárhelyi rádió/i;
     const localTerms=/erdély|erdely|székely|szekely|kolozsvár|kolozsvar|maros|hargita|kovászna|kovaszna|sepsi|csík|csik|udvarhely|brassó|brasso|partium|nagyvárad|nagyvarad|temesvár|temesvar|retyezát|retyezat|rmdsz|mík?onosz|romániai magyar|romaniai magyar/i;
     const isErdely=h => localSources.test(String(h.forras||'')) || localTerms.test(String(h.cim||'')+' '+String(h.lead||'')+' '+String(h.link||''));
     const isMagyar=h => (h.newsRegion||h.region)==='magyar';
@@ -206,7 +206,7 @@ function nhGroupStories(articles) {
     const featuredLinks=new Set([...document.querySelectorAll('.tema-sav a[href]')].map(a=>a.getAttribute('href')));
     const dailyLinks=window.__nhDailyLinks||new Set();
     const sidebarRanked=ranked.filter(g=>!g.some(h=>featuredLinks.has(h.link)||dailyLinks.has(h.link)));
-    const localSources=/székelyhon|szekelyhon|3szék|hargita népe|marosvásárhelyi rádió/i;
+    const localSources=/3szék|hargita népe|marosvásárhelyi rádió/i;
     const localTerms=/erdély|erdely|székely|szekely|kolozsvár|kolozsvar|maros|hargita|kovászna|kovaszna|sepsi|csík|csik|udvarhely|brassó|brasso|partium|nagyvárad|nagyvarad|temesvár|temesvar|retyezát|retyezat|rmdsz|mík?onosz|romániai magyar|romaniai magyar/i;
     const groupIsErdely=g=>g.some(h=>localSources.test(String(h.forras||''))||localTerms.test(String(h.cim||'')+' '+String(h.lead||'')+' '+String(h.link||'')));
     const groupIsMagyar=g=>g.some(h=>(h.newsRegion||h.region)==='magyar');
