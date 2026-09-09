@@ -70,7 +70,7 @@
       const rest = list.filter(h => h !== lead).slice(0,6);
       return `<section class="nh-region-column nh-region-${key}"><header><span>${key === 'erdely' ? 'HELYBEN FONTOS' : 'ORSZÁGOS ÜGYEK'}</span><h3>${name}</h3></header><a class="nh-story nh-region-lead" ${link(lead)}>${photo(lead)}<span class="nh-copy">${meta(lead)}<h3>${biztonsagos(lead.cim)}</h3></span></a>${rest.length ? `<div class="nh-region-stream">${rest.map(h=>`<a class="nh-story nh-region-row" ${link(h)}>${photo(h)}<span class="nh-copy">${meta(h)}<h3>${biztonsagos(h.cim)}</h3></span></a>`).join('')}</div>` : ''}</section>`;
     };
-    return `<section class="nh-mixed" id="vegyes-hirek"><header class="nh-mixed-head"><div><span class="nh-eyebrow">Mai történetek Erdélyből</span><h2>Mai történetek<span>↗</span></h2></div><span class="nh-mixed-tag">Csak erdélyi hírek</span></header><div class="nh-region-columns">${region('erdely','Erdély')}</div></section>`;
+    return `<section class="nh-mixed" id="vegyes-hirek"><header class="nh-mixed-head"><div><span class="nh-eyebrow">A nap fontos ügyei</span><h2>Mai történetek<span>↗</span></h2></div><span class="nh-mixed-tag">Friss történetek</span></header><div class="nh-region-columns">${region('erdely','A nap fontos ügyei')}</div></section>`;
   };
   if (!document.documentElement.classList.contains('nh-booting')) rajzol();
 })();
