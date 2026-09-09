@@ -2540,7 +2540,8 @@ function temaRogzitettbol(kiemelt, jelolt, regio){
       cim: c.cim || 'Kapcsolódó cikk', lead: c.lead || '', kep: c.kep || '', link: c.link,
       forras: c.forras || 'Forrás', datum: new Date(c.datum || Date.now()), region: regio || 'magyar'
     }));
-  const talalatok = [...new Map([...rssTalalatok, ...kezzelHozzaadott].map(h => [h.link, h])).values()]\n    .sort((a, b) => b.datum - a.datum);
+  const talalatok = [...new Map([...rssTalalatok, ...kezzelHozzaadott].map(h => [h.link, h])).values()]
+    .sort((a, b) => b.datum - a.datum);
   const latott = new Set([fo.forras]);
   const tobbi = talalatok.filter(h => {
     if (latott.has(h.forras)) return false;
