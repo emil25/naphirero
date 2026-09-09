@@ -66,20 +66,30 @@
     const link = h => `${dc(h)} href="${biztonsagos(h.link)}" target="_blank" rel="noopener"`;
     const meta = h => `<span class="nh-meta">${forrasIkonHTML(h,'kicsi')}<b>${biztonsagos(h.forras)}</b><span>· ${idoOta(h.datum)}</span></span>`;
     const photo = h => h.kep ? `<span class="nh-photo"><img src="${biztonsagos(h.kep)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.parentElement.hidden=true"></span>` : '<span class="nh-photo nh-photo-fallback"></span>';
-    const useful = items.filter(h => !/(mindekozben|celeb|reklam|apple-event|meghivo|eljegyzes|horoszkop|szorakozas)/i.test(String(h.link||'')+' '+String(h.cim||'')));
+    const useful = items.filter(h => !/(mindekozben|celeb|reklam|apple-event|meghivo|eljegyzes|horoszkop|szorakozas|bulvar)/i.test(String(h.link||'')+' '+String(h.cim||'')));
+    const erdelySources=/maszol|krónika|kronika|székelyhon|szekelyhon|transtelex|3szék|hargita népe|marosvásárhelyi rádió/i;
+    const isErdely=h => (h.newsRegion||h.region)==='erdely' || erdelySources.test(String(h.forras||''));
+    const isMagyar=h => (h.newsRegion||h.region)==='magyar';
+    const wordCache=new Map(),relatedCache=new Map();
+    const words=h => {if(!wordCache.has(h))wordCache.set(h,new Set(String(h.cim||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').match(/[a-z0-9]{5,}/g)||[]));return wordCache.get(h)};
+    const overlap=(a,b) => {const aw=words(a),bw=words(b);let n=0;aw.forEach(w=>{if(bw.has(w))n++});return n};
+    const sameStory=(a,b) => overlap(a,b)>=2;
+    const relatedSources=h => {if(!relatedCache.has(h))relatedCache.set(h,new Set(useful.filter(x=>Math.abs(new Date(x.datum)-new Date(h.datum))<36*3600000&&sameStory(h,x)).map(x=>x.forras)).size);return relatedCache.get(h)};
+    const score=h => relatedSources(h)*90 + (isErdely(h)?35:0) + (h.kep?8:0) + Math.max(0,36-(Date.now()-new Date(h.datum))/3600000);
+    const ordered=[...useful].sort((a,b)=>score(b)-score(a)||new Date(b.datum)-new Date(a.datum));
     const chosen=[], seen=new Set();
-    const add = test => {
-      const hit=useful.find(h => !seen.has(h.link) && test(h));
-      if(hit){chosen.push(hit);seen.add(hit.link);}
+    const addFrom=(pool,count) => {
+      for(const h of pool){
+        if(chosen.length>=5||count<=0)break;
+        if(seen.has(h.link)||chosen.some(x=>sameStory(x,h)))continue;
+        chosen.push(h);seen.add(h.link);count--;
+      }
     };
-    add(h => (h.newsRegion||h.region)==='erdely');
-    add(h => (h.newsRegion||h.region)==='magyar');
-    add(h => h.rovat==='gazdasag');
-    add(h => h.rovat==='sport');
-    add(h => h.rovat==='kultura' || h.rovat==='vilag');
-    useful.some(h => {if(chosen.length>=5)return true;if(!seen.has(h.link)){chosen.push(h);seen.add(h.link);}return false;});
+    addFrom(ordered.filter(isErdely),3);
+    addFrom(ordered.filter(isMagyar),1);
+    addFrom(ordered,5-chosen.length);
     if(!chosen.length) return '';
-    let lead=chosen.find(h => (h.newsRegion||h.region)==='erdely' && h.kep) || chosen.find(h=>h.kep) || chosen[0];
+    let lead=chosen.filter(isErdely).sort((a,b)=>score(b)-score(a)).find(h=>h.kep) || chosen.find(h=>h.kep) || chosen[0];
     const rest=chosen.filter(h=>h!==lead).slice(0,4);
     window.__nhDailyLinks = new Set(chosen.map(h=>h.link));
     return `<section class="nh-mixed nh-daily-spread" id="vegyes-hirek">
@@ -193,9 +203,20 @@ function nhGroupStories(articles) {
     const host=document.querySelector('.nh-trending-host')||document.querySelector('.foblokk .jobb-sav');
     if(!mosaic||!mainBlock||!host)return;
     const featuredLinks=new Set([...document.querySelectorAll('.tema-sav a[href]')].map(a=>a.getAttribute('href')));
-    const sidebarRanked=ranked.filter(g=>!g.some(h=>featuredLinks.has(h.link)));
+    const dailyLinks=window.__nhDailyLinks||new Set();
+    const sidebarRanked=ranked.filter(g=>!g.some(h=>featuredLinks.has(h.link)||dailyLinks.has(h.link)));
+    const erdelySources=/maszol|krónika|kronika|székelyhon|szekelyhon|transtelex|3szék|hargita népe|marosvásárhelyi rádió/i;
+    const groupIsErdely=g=>g.some(h=>(h.newsRegion||h.region)==='erdely'||erdelySources.test(String(h.forras||'')));
+    const groupIsMagyar=g=>g.some(h=>(h.newsRegion||h.region)==='magyar');
     const multi=sidebarRanked.filter(g=>sourceCount(g)>1);
-    const trending=[...multi,...sidebarRanked.filter(g=>sourceCount(g)===1)].slice(0,5);
+    const trending=[], used=new Set();
+    const takeOne=pool=>{const g=pool.find(x=>!used.has(x));if(g){trending.push(g);used.add(g);}};
+    takeOne(multi.filter(groupIsErdely));
+    takeOne(multi.filter(groupIsMagyar));
+    takeOne(multi.filter(groupIsErdely));
+    takeOne(multi);
+    takeOne(multi.filter(groupIsErdely));
+    [...multi,...sidebarRanked].forEach(g=>{if(trending.length<5&&!used.has(g)){trending.push(g);used.add(g);}});
     if(!trending.length)return;
     host.classList.add('nh-trending-host');
     host.innerHTML='<section class="nh-trending nh-trending-side"><header><span class="nh-trending-kicker">A mai sajtó közös témái</span><h2>Mi pörög ma?</h2><p>Forráslefedettség alapján</p></header><ol>'+trending.map((g,i)=>{const marks=[...new Map(g.map(h=>[h.forras,h])).values()].slice(0,3).map(h=>forrasIkonHTML(h,'kicsi')).join('');const visual=g.find(h=>h.kep)||g[0];const photo=visual.kep?`<span class="nh-trending-image"><img src="${biztonsagos(visual.kep)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.parentElement.hidden=true"></span>`:'';return `<li><button type="button" data-story-rank="${i}">${photo}<span class="nh-trending-row"><span class="nh-rank">${String(i+1).padStart(2,'0')}</span><span class="nh-trending-copy"><strong>${biztonsagos(g[0].cim)}</strong><small><span class="nh-trending-sources">${marks}</span>${sourceCount(g)} forrás · ${g.length} cikk</small></span></span></button></li>`}).join('')+'</ol></section>';
