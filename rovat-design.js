@@ -67,8 +67,9 @@
     const meta = h => `<span class="nh-meta">${forrasIkonHTML(h,'kicsi')}<b>${biztonsagos(h.forras)}</b><span>· ${idoOta(h.datum)}</span></span>`;
     const photo = h => h.kep ? `<span class="nh-photo"><img src="${biztonsagos(h.kep)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.parentElement.hidden=true"></span>` : '<span class="nh-photo nh-photo-fallback"></span>';
     const useful = items.filter(h => !/(mindekozben|celeb|reklam|apple-event|meghivo|eljegyzes|horoszkop|szorakozas|bulvar)/i.test(String(h.link||'')+' '+String(h.cim||'')));
-    const erdelySources=/maszol|krónika|kronika|székelyhon|szekelyhon|transtelex|3szék|hargita népe|marosvásárhelyi rádió/i;
-    const isErdely=h => (h.newsRegion||h.region)==='erdely' || erdelySources.test(String(h.forras||''));
+    const localSources=/székelyhon|szekelyhon|3szék|hargita népe|marosvásárhelyi rádió/i;
+    const localTerms=/erdély|erdely|székely|szekely|kolozsvár|kolozsvar|maros|hargita|kovászna|kovaszna|sepsi|csík|csik|udvarhely|brassó|brasso|partium|nagyvárad|nagyvarad|temesvár|temesvar|retyezát|retyezat|rmdsz|mík?onosz|romániai magyar|romaniai magyar/i;
+    const isErdely=h => localSources.test(String(h.forras||'')) || localTerms.test(String(h.cim||'')+' '+String(h.lead||'')+' '+String(h.link||''));
     const isMagyar=h => (h.newsRegion||h.region)==='magyar';
     const wordCache=new Map(),relatedCache=new Map();
     const words=h => {if(!wordCache.has(h))wordCache.set(h,new Set(String(h.cim||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').match(/[a-z0-9]{5,}/g)||[]));return wordCache.get(h)};
@@ -205,10 +206,11 @@ function nhGroupStories(articles) {
     const featuredLinks=new Set([...document.querySelectorAll('.tema-sav a[href]')].map(a=>a.getAttribute('href')));
     const dailyLinks=window.__nhDailyLinks||new Set();
     const sidebarRanked=ranked.filter(g=>!g.some(h=>featuredLinks.has(h.link)||dailyLinks.has(h.link)));
-    const erdelySources=/maszol|krónika|kronika|székelyhon|szekelyhon|transtelex|3szék|hargita népe|marosvásárhelyi rádió/i;
-    const groupIsErdely=g=>g.some(h=>(h.newsRegion||h.region)==='erdely'||erdelySources.test(String(h.forras||'')));
+    const localSources=/székelyhon|szekelyhon|3szék|hargita népe|marosvásárhelyi rádió/i;
+    const localTerms=/erdély|erdely|székely|szekely|kolozsvár|kolozsvar|maros|hargita|kovászna|kovaszna|sepsi|csík|csik|udvarhely|brassó|brasso|partium|nagyvárad|nagyvarad|temesvár|temesvar|retyezát|retyezat|rmdsz|mík?onosz|romániai magyar|romaniai magyar/i;
+    const groupIsErdely=g=>g.some(h=>localSources.test(String(h.forras||''))||localTerms.test(String(h.cim||'')+' '+String(h.lead||'')+' '+String(h.link||'')));
     const groupIsMagyar=g=>g.some(h=>(h.newsRegion||h.region)==='magyar');
-    const multi=sidebarRanked.filter(g=>sourceCount(g)>1);
+    const multi=sidebarRanked.filter(g=>sourceCount(g)>1&&!g.some(h=>/(celeb|bulvár|bulvar|temetés|temetes|horoszkóp|horoszkop)/i.test(String(h.cim||'')+' '+String(h.link||''))));
     const trending=[], used=new Set();
     const takeOne=pool=>{const g=pool.find(x=>!used.has(x));if(g){trending.push(g);used.add(g);}};
     takeOne(multi.filter(groupIsErdely));
