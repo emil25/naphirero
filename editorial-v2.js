@@ -6,6 +6,14 @@
   var articleAttr = function(h){return typeof dc === 'function' ? dc(h) : 'data-cikk="' + safeUrl(h.link) + '"';};
   var icon = function(h){return typeof forrasIkonHTML === 'function' ? forrasIkonHTML(h,'kicsi') : '<span class="v2-fallback-icon">' + esc(String(h.forras || 'N').slice(0,2).toUpperCase()) + '</span>';};
   var fresh = function(h){var t=new Date(h && h.datum).getTime();return !isFinite(t) || Date.now()-t < 7*24*3600000;};
+  var urlText = function(h){return String((h && h.link) || '').toLowerCase();};
+  var excludedRovatok = {sport:1,kultura:1,gazdasag:1,vilag:1,eletmod:1,tech:1,velemeny:1};
+  var domestic = function(h){
+    var u=urlText(h), r=String((h && h.rovat) || '').toLowerCase();
+    if(excludedRovatok[r]) return false;
+    return !/(kulfold|vilag|world|sport|kultura|gasztro|eletmod|mindekozben|szorakozas|tech|\bai\b|velemeny)/.test(u);
+  };
+
   var photo = function(h,cls){return h && h.kep ? '<div class="v2-card-image ' + (cls || '') + '"><img src="' + safeUrl(h.kep) + '" alt="" loading="lazy" decoding="async" onerror="this.parentElement.hidden=true"></div>' : '<div class="v2-card-image ' + (cls || '') + '"></div>';};
   var meta = function(h){return '<span class="v2-meta">' + icon(h) + '<strong>' + esc(h.forras || 'NapHíre') + '</strong><span>·</span><span>' + (typeof idoOta === 'function' ? idoOta(new Date(h.datum)) : '') + '</span></span>';};
   var href = function(h,cls){return '<a class="' + (cls || '') + '" ' + articleAttr(h) + ' href="' + safeUrl(h.link) + '">';};
@@ -68,13 +76,13 @@
       document.getElementById('tartalom').innerHTML='<div class="v2-layout"><div class="v2-main-column"><section class="v2-section"><div class="v2-section-head"><div><p>FOLYAMATOSAN ÉRKEZIK</p><h2>Legfrissebb</h2></div></div><div class="v2-section-side">' + sorted.slice(0,28).map(compact).join('') + '</div></section></div><aside class="v2-rail">' + latestBlock(sorted) + '</aside></div>';
       return;
     }
-    var by = function(fn){return clean.filter(fn).sort(function(a,b){return new Date(b.datum)-new Date(a.datum);}).slice(0,7);};
-    var erdely=by(function(h){return h.region==='erdely' && h.rovat!=='sport' && h.rovat!=='kultura' && h.rovat!=='gazdasag';});
-    var magyar=by(function(h){return h.region==='magyar' && h.rovat!=='sport' && h.rovat!=='kultura' && h.rovat!=='gazdasag';});
+    var by = function(fn){return clean.filter(fresh).filter(fn).sort(function(a,b){return new Date(b.datum)-new Date(a.datum);}).slice(0,7);};
+    var erdely=by(function(h){return h.region==='erdely' && domestic(h);});
+    var magyar=by(function(h){return h.region==='magyar' && domestic(h);});
     var gazdasag=by(function(h){return h.rovat==='gazdasag';});
     var sport=by(function(h){return h.rovat==='sport';});
     var kultura=by(function(h){return h.rovat==='kultura';});
-    var vilag=by(function(h){return h.rovat==='vilag' || h.newsRegion==='world';});
+    var vilag=by(function(h){return h.rovat==='vilag' || h.newsRegion==='world' || /kulfold|vilag|world/.test(urlText(h));});
     var hero='';
     if(topic){
       var heroTopic=topic.fo, heroImage=heroTopic.kep || (topic.tobbi.find(function(h){return h.kep;})||{}).kep;
