@@ -59,7 +59,8 @@
 /* Címlapi hírfolyam: önálló képes nyitás és tömör hírcsoportok. */
 (() => {
   mozaikHTML = function(cikkek) {
-    const items = [...new Map(cikkek.filter(Boolean).map(h => [h.link,h])).values()]
+    const source = (typeof osszesHir !== 'undefined' && Array.isArray(osszesHir) && osszesHir.length) ? osszesHir : cikkek;
+    const items = [...new Map(source.filter(Boolean).map(h => [h.link,h])).values()]
       .sort((a,b) => new Date(b.datum) - new Date(a.datum));
     if (!items.length) return '';
     const link = h => `${dc(h)} href="${biztonsagos(h.link)}" target="_blank" rel="noopener"`;
@@ -84,8 +85,8 @@
     return `<section class="nh-mixed nh-daily-spread" id="vegyes-hirek">
       <header class="nh-mixed-head"><div><span class="nh-eyebrow">A NAP FONTOS ÜGYEI</span><h2>Mai történetek</h2></div><span class="nh-mixed-tag">5 gyorsan átlátható hír</span></header>
       <div class="nh-daily-layout">
-        <a class="nh-story nh-daily-lead" ${link(lead)}>${photo(lead)}<span class="nh-copy">${meta(lead)}<h3>${biztonsagos(lead.cim)}</h3><p>${biztonsagos(String(lead.lead||'').slice(0,190))}</p></span></a>
-        <div class="nh-daily-river">${rest.map((h,i)=>`<a class="nh-daily-row" ${link(h)}><b>0${i+2}</b><span>${meta(h)}<h3>${biztonsagos(h.cim)}</h3></span></a>`).join('')}</div>
+        <a class="nh-story nh-daily-lead" ${link(lead)}>${photo(lead)}<span class="nh-daily-shade"></span><span class="nh-copy"><b class="nh-daily-number">01</b>${meta(lead)}<h3>${biztonsagos(lead.cim)}</h3><p>${biztonsagos(String(lead.lead||'').slice(0,190))}</p></span></a>
+        <div class="nh-daily-river">${rest.map((h,i)=>`<a class="nh-daily-card nh-daily-card-${i+2}" ${link(h)}>${photo(h)}<span class="nh-daily-shade"></span><span class="nh-copy"><b class="nh-daily-number">0${i+2}</b>${meta(h)}<h3>${biztonsagos(h.cim)}</h3></span></a>`).join('')}</div>
       </div>
     </section>`;
   };
