@@ -159,3 +159,13 @@ header.fo nav.rovatok button.pp{margin-left:auto}.kereso input{max-width:100%}
 .nh-brief-dialog{margin:auto;width:min(850px,calc(100% - 28px));max-height:88vh;border:0;border-radius:22px;padding:0;background:#f1f5f5;color:#203c4d;box-shadow:0 24px 90px #132c4055}.nh-brief-dialog::backdrop{background:#142b40aa}.nh-dialog-head{position:sticky;top:0;display:flex;justify-content:space-between;gap:15px;padding:22px 26px;background:#e0ebee;z-index:1}.nh-dialog-head h2{font:850 30px/1.1 'Archivo',sans-serif}.nh-dialog-head button{border:0;border-radius:50%;width:40px;height:40px;background:#fff;font-size:24px;cursor:pointer}.nh-brief-content{padding:24px}.nh-brief-note{font:13px/1.5 'Inter',sans-serif;color:#526c79;margin-bottom:22px}.nh-brief-item{background:#fff;border-radius:14px;padding:22px;margin-bottom:16px}.nh-brief-item h3{font:800 25px/1.15 'Archivo',sans-serif;margin:9px 0 13px}.nh-brief-item p{font:15px/1.6 'Inter',sans-serif;color:#536c7a}.nh-brief-item>a{display:inline-block;font:700 12px/1.4 'Inter',sans-serif;color:#a34738;margin-top:12px}.nh-brief-item details{margin-top:15px}.nh-brief-item summary{cursor:pointer;font-weight:700;font-size:13px}.nh-brief-item details a{display:block;padding:12px 0;font:14px/1.4 'Inter',sans-serif;color:#294c60}.nh-brief-item details b{display:block;font-size:11px;color:#6c8591}
 @media(max-width:1100px){header.fo .fejlec-in{grid-template-columns:1fr auto}.regio-kapcsolo{grid-column:1/-1;justify-self:start;order:3}.premium-header-actions .header-live{display:none}}
 @media(max-width:600px){header.fo .fejlec-in{padding:14px 16px;gap:12px;grid-template-columns:minmax(0,1fr) auto}.premium-header-actions{gap:7px}.nh-brief-button{font-size:11px;padding:11px}.premium-header-actions .kereso{display:none}.logo-fo{font-size:29px}.regio-kapcsolo{justify-self:stretch}.nh-trending{padding:20px}.nh-trending ol{grid-template-columns:1fr}.nh-dialog-head{padding:18px}.nh-brief-content{padding:16px}.nh-brief-item{padding:18px}.nh-brief-item h3{font-size:22px}}
+
+/* Klasszikus nézet: új, jól elkülönülő fejlécsáv és Mai történetek blokk. */
+header.fo nav.rovatok{background:linear-gradient(90deg,#193b4b 0%,#2d5c62 100%);border-bottom:4px solid #ed7963;padding-bottom:8px}
+header.fo nav.rovatok button{color:#dcecea}
+header.fo nav.rovatok button.aktiv,header.fo nav.rovatok button:hover{background:#fff1e9;color:#193b4b}
+header.fo nav.rovatok button.pp{background:#345e67;color:#ffd0c5}
+.nh-mixed{background:linear-gradient(135deg,#e4f0ed 0%,#f9eee7 100%);border:1px solid #c7ddda;border-top:6px solid #ed7963;border-radius:24px;padding:26px;box-shadow:0 12px 28px rgba(28,67,75,.08)}
+.nh-mixed-head h2{color:#193b4b}
+.nh-mixed-head h2>span{color:#ed7963}
+.nh-mixed-tag{background:#fff8f1;color:#55747b}
