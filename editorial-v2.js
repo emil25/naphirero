@@ -101,6 +101,7 @@
       (vilag.length ? section('Világ','A legfontosabb nemzetközi fejlemények',vilag,'vilag') : '') +
       romanBlock() + '</div><aside class="v2-rail">' + trendBlock(first, topicLinks) + latestBlock(sorted) + '</aside></div></div>';
     document.getElementById('tartalom').innerHTML=html;
+    document.documentElement.classList.add('nh-v2-ready');
     document.documentElement.classList.remove('nh-booting');
   }
   window.ujEditorialRender=renderV2;
