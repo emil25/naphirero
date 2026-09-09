@@ -381,3 +381,30 @@ header.fo nav.rovatok button.pp{background:#193748!important;color:#ffc1b5!impor
   .nh-daily-card .nh-photo{height:100%!important;min-height:145px!important}
   .nh-daily-card .nh-copy{padding:16px!important}
 }
+
+
+/* 2026-09-09 — a Mai történetek végigér a teljes lapszélességen. */
+.nh-daily-layout{display:block!important}
+.nh-daily-lead{
+  display:grid!important;grid-template-columns:minmax(0,1.22fr) minmax(300px,.78fr)!important;
+  align-items:stretch!important;width:100%!important
+}
+.nh-daily-lead .nh-photo{height:365px!important;min-height:365px!important}
+.nh-daily-lead .nh-copy{display:flex!important;flex-direction:column!important;justify-content:center!important}
+.nh-daily-river{
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  grid-template-rows:none!important;margin-top:12px!important
+}
+.nh-daily-card .nh-photo{height:155px!important;min-height:155px!important}
+@media(max-width:1050px){
+  .nh-daily-lead{grid-template-columns:minmax(0,1.12fr) minmax(280px,.88fr)!important}
+  .nh-daily-lead .nh-photo{height:330px!important;min-height:330px!important}
+  .nh-daily-river{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+@media(max-width:720px){
+  .nh-daily-lead{display:flex!important;grid-template-columns:none!important}
+  .nh-daily-lead .nh-photo{height:245px!important;min-height:245px!important}
+}
+@media(max-width:520px){
+  .nh-daily-river{grid-template-columns:1fr!important}
+}
