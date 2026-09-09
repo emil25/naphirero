@@ -207,7 +207,9 @@
   if(scores.length)sport?.insertAdjacentHTML('afterend',`<div class="ed-scores"><span>A sporthírekben közölt eredmények</span>${scores.map(h=>`<a ${attrs(h)}>${e(h.cim)}</a>`).join('')}</div>`);
  };
  const nav=document.querySelector('.rovatok-in');for(const [key,name] of [['eletmod','Magazin']]){const b=document.createElement('button');b.type='button';b.textContent=name;b.onclick=ev=>{ev.stopPropagation();if(!document.querySelector('#rovat-'+key)){history.replaceState(null,'',location.pathname);valtRovat('mind')}document.querySelector('#rovat-'+key)?.scrollIntoView({behavior:'smooth'})};nav.append(b)}
- rajzol();
- refreshRomanPress();
- document.documentElement.classList.remove('nh-booting');
+ if (osszesHir && osszesHir.length){
+  rajzol();
+  refreshRomanPress();
+  document.documentElement.classList.remove('nh-booting');
+ }
 })();
