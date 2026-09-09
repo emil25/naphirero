@@ -926,6 +926,38 @@ body{-webkit-font-smoothing:antialiased;overflow-x:hidden}
   font-size:26px;color:#fff;background:rgba(10,15,24,.28);opacity:0;transition:opacity .2s;
 }
 .video-sav .media-kartya:hover .kep::after{opacity:1}
+.video-sav{background:#102c3a;color:#f7fbfa;border:0;position:relative;overflow:hidden}
+.video-sav::before{content:'';position:absolute;inset:0 auto 0 0;width:7px;background:#f26e5e}
+.video-sav .media-sav-in{padding:34px 20px 38px}
+.video-sav .brand-logo{margin:0 0 22px;color:#f7fbfa;font-family:'Archivo',sans-serif;font-size:13px;letter-spacing:.16em;text-transform:uppercase;align-items:center;gap:10px}
+.video-sav .brand-logo::before{content:'▶';display:grid;place-items:center;width:31px;height:31px;border-radius:50%;background:#f26e5e;color:#102c3a;font-size:12px;letter-spacing:0}
+.video-sav .brand-logo span{font-size:1em;color:#f26e5e;opacity:1;letter-spacing:.16em}
+.video-lista.etv-lista{display:block}
+.etv-layout{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(340px,1fr);gap:26px;align-items:stretch}
+.etv-feature,.etv-row{color:inherit;text-decoration:none}
+.etv-feature{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(250px,.7fr);background:#f7fbfa;color:#102c3a;min-height:224px;overflow:hidden;border-radius:3px;transition:transform .2s,box-shadow .2s}
+.etv-feature:hover{transform:translateY(-2px);box-shadow:0 14px 30px #07182055}
+.etv-media{position:relative;min-height:224px;background:#204553;overflow:hidden}
+.etv-media img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s}
+.etv-feature:hover .etv-media img{transform:scale(1.04)}
+.etv-play{position:absolute;left:18px;bottom:18px;width:43px;height:43px;border-radius:50%;display:grid;place-items:center;background:#f26e5e;color:#102c3a;font-size:17px;box-shadow:0 4px 16px #07182055}
+.etv-feature-copy{padding:25px 24px 22px;display:flex;flex-direction:column;justify-content:flex-end}
+.etv-kicker{font:700 10px/1.2 'JetBrains Mono',monospace;letter-spacing:.13em;text-transform:uppercase;color:#f26e5e;margin-bottom:10px}
+.etv-feature h2{font-size:clamp(22px,2.4vw,34px);line-height:1.05;letter-spacing:-.035em;margin:0 0 16px}
+.etv-meta,.etv-row-meta{font:700 10px/1.2 'JetBrains Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:#6f8991}
+.etv-rail{display:grid;grid-template-columns:1fr;gap:10px}
+.etv-row{display:grid;grid-template-columns:132px minmax(0,1fr);gap:14px;align-items:stretch;padding:0 0 10px;border-bottom:1px solid #46707c}
+.etv-row:last-child{border-bottom:0;padding-bottom:0}
+.etv-row-media{position:relative;min-height:83px;background:#204553;overflow:hidden}
+.etv-row-media img{display:block;width:100%;height:100%;min-height:83px;object-fit:cover;transition:transform .3s}
+.etv-row:hover .etv-row-media img{transform:scale(1.04)}
+.etv-row-play{position:absolute;left:9px;bottom:8px;width:25px;height:25px;border-radius:50%;display:grid;place-items:center;background:#f26e5e;color:#102c3a;font-size:10px}
+.etv-row-copy{display:flex;flex-direction:column;justify-content:center;min-width:0}
+.etv-row h3{font-size:17px;line-height:1.12;letter-spacing:-.02em;margin:6px 0 8px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.etv-loading{min-height:180px;border:1px solid #46707c;background:linear-gradient(110deg,#163b49 8%,#204b59 18%,#163b49 33%);background-size:200% 100%;animation:etv-shimmer 1.4s linear infinite;display:grid;place-items:center;color:#b8d1d5;font:700 11px 'JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase}
+@keyframes etv-shimmer{to{background-position:-200% 0}}
+@media(max-width:900px){.etv-layout{grid-template-columns:1fr}.etv-rail{grid-template-columns:repeat(3,1fr);gap:14px}.etv-row{display:block;border:0;padding:0}.etv-row-media{min-height:112px}.etv-row-media img{min-height:112px}.etv-row h3{font-size:15px;margin-top:9px}}
+@media(max-width:600px){.video-sav .media-sav-in{padding:28px 16px 30px}.etv-feature{display:block}.etv-media{height:220px;min-height:0}.etv-feature-copy{padding:19px 18px 20px}.etv-feature h2{font-size:25px}.etv-rail{grid-template-columns:1fr 1fr;gap:16px;margin-top:18px}.etv-row-media,.etv-row-media img{min-height:118px}.etv-row h3{font-size:15px}.etv-row:nth-child(3){display:none}}
 .blog-sav{background:var(--paper-warm)}
 .noileg-sav{background:#fdf5f8}
 @media (max-width:1000px){
@@ -2068,6 +2100,7 @@ async function mindenHirBetolt(){
 /* ---------- Videó- és blogsáv: külön adatkészletek, nem keverednek a hírekbe ---------- */
 let osszesVideo = [];
 let osszesBlog = [];
+const VIDEO_CACHE_KEY = 'naphire_video_cache_v2';
 
 async function mediaBetolt(forrasLista){
   const eredmenyek = await Promise.allSettled(forrasLista.map(f => forrasFeldolgoz(f)));
@@ -2083,13 +2116,46 @@ function mediaKartyaHTML(h){
     <span class="meta">${idoOta(h.datum)}</span>
   </a>`;
 }
+function videoCacheBetolt(){
+  try{
+    const cached = JSON.parse(localStorage.getItem(VIDEO_CACHE_KEY) || '{}');
+    if (!Array.isArray(cached.items) || !cached.items.length) return [];
+    return cached.items.map(h => ({...h, datum:new Date(h.datum)})).filter(h => h.cim && h.link);
+  }catch{return []}
+}
+function videoCacheMent(items){
+  try{localStorage.setItem(VIDEO_CACHE_KEY, JSON.stringify({savedAt:Date.now(),items:items.slice(0,8)}))}catch{}
+}
+function etvVideoHTML(items, loading=false){
+  const lista = items.filter(Boolean).slice(0,4);
+  const listaEl = document.getElementById('video-lista');
+  if (!listaEl) return;
+  listaEl.className = 'video-lista etv-lista';
+  if (!lista.length){
+    listaEl.innerHTML = loading ? '<div class="etv-loading">Erdély TV videók betöltése…</div>' : '';
+    return;
+  }
+  const lead = lista[0];
+  const img = h => h.kep ? `<img src="${biztonsagos(h.kep)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.closest(\'.etv-media,.etv-row-media\')?.classList.add(\'etv-no-photo\')">` : '';
+  const href = h => `${dc(h)} href="${biztonsagos(h.link)}" target="_blank" rel="noopener"`;
+  const row = h => `<a class="etv-row" ${href(h)}><span class="etv-row-media">${img(h)}<b class="etv-row-play">▶</b></span><span class="etv-row-copy"><span class="etv-row-meta">${idoOta(h.datum)} · videó</span><h3>${biztonsagos(h.cim)}</h3></span></a>`;
+  listaEl.innerHTML = `<div class="etv-layout"><a class="etv-feature" ${href(lead)}><span class="etv-media">${img(lead)}<b class="etv-play">▶</b></span><span class="etv-feature-copy"><span class="etv-kicker">Erdély TV · kiemelt videó</span><h2>${biztonsagos(lead.cim)}</h2><span class="etv-meta">${idoOta(lead.datum)} · Megnézem az eredeti videót ↗</span></span></a><div class="etv-rail">${lista.slice(1).map(row).join('')}</div></div>`;
+}
 async function videoSavFrissit(){
-  osszesVideo = await mediaBetolt(VIDEO_FORRASOK);
   const sav = document.getElementById('video-sav');
-  const lista = document.getElementById('video-lista');
-  if (!osszesVideo.length){ sav.hidden = true; return; }
+  if (!sav) return;
+  // A korábbi eredmény azonnal megjelenik, az RSS-frissítés háttérben fut.
+  const cached = videoCacheBetolt();
   sav.hidden = false;
-  lista.innerHTML = osszesVideo.slice(0, 8).map(mediaKartyaHTML).join('');
+  etvVideoHTML(cached, true);
+  const friss = await mediaBetolt(VIDEO_FORRASOK);
+  if (friss.length){
+    osszesVideo = friss;
+    videoCacheMent(friss);
+    etvVideoHTML(friss);
+  } else if (!cached.length){
+    etvVideoHTML([], true);
+  }
 }
 async function blogSavFrissit(){
   osszesBlog = await mediaBetolt(BLOG_FORRASOK);
