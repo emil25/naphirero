@@ -11,7 +11,7 @@
   var domestic = function(h){
     var u=urlText(h), r=String((h && h.rovat) || '').toLowerCase();
     if(excludedRovatok[r]) return false;
-    return !/(kulfold|vilag|world|sport|kultura|gasztro|eletmod|mindekozben|szorakozas|tech|\bai\b|velemeny)/.test(u);
+    return !/(kulfold|vilag|world|sport|kultura|gasztro|elet|eletmod|mindekozben|szorakozas|tech|\bai\b|velemeny)/.test(u);
   };
 
   var photo = function(h,cls){return h && h.kep ? '<div class="v2-card-image ' + (cls || '') + '"><img src="' + safeUrl(h.kep) + '" alt="" loading="lazy" decoding="async" onerror="this.parentElement.hidden=true"></div>' : '<div class="v2-card-image ' + (cls || '') + '"></div>';};
