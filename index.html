@@ -3362,14 +3362,17 @@ if (teljesCache){
   gyorsitotarKorabol = indulasiCache.mentveKor;
   tartalekTipus = 'cache';
 } else {
-  osszesHir = TARTALEK_HIREK.map(h => ({ ...h, rovat:rovatBesorol(h) }));
-  gyorsitotarKorabol = Date.now();
+  // Élő RSS-adat nélkül ne rajzoljuk ki a régi beépített tartalék híreket.
+  // A betöltő állapot marad látható az első élő hírkészletig.
+  osszesHir = [];
+  gyorsitotarKorabol = null;
   tartalekTipus = 'static';
 }
 renderForrasaink();
-rajzol();
-// A gyorsítótárból vagy a beépített tartalékból azonnal kirajzolunk; az RSS csak háttérfrissítés.
-document.documentElement.classList.remove('nh-booting');
+if (osszesHir.length){
+  rajzol();
+  document.documentElement.classList.remove('nh-booting');
+}
 
 betoltBeallitasok().then(() => {
   renderForrasaink();
