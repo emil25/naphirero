@@ -192,3 +192,55 @@ header.fo nav.rovatok button.pp{background:#345e67;color:#ffd0c5}
 .nh-region-row .nh-copy{padding:14px}
 .nh-region-row h3{font-size:17px;line-height:1.18;color:#173847}
 @media(max-width:760px){.nh-mixed-head{padding:22px 20px 18px}.nh-mixed-head h2{font-size:34px}.nh-region-column{padding:19px 20px 22px}.nh-region-lead{display:block}.nh-region-lead .nh-photo{height:190px}.nh-region-stream{grid-template-columns:1fr}.nh-region-row{display:grid;grid-template-columns:110px 1fr}.nh-region-row .nh-photo{height:100%}}
+
+
+/* Klasszikus nézet – karakteres, önálló menüsáv */
+header.fo nav.rovatok{background:#f3eee5!important;border-top:4px solid #ef735f!important;border-bottom:1px solid #d8cdc0!important;padding:0!important;box-shadow:0 8px 20px rgba(25,47,64,.08)!important}
+header.fo nav.rovatok .rovatok-in{gap:0;min-height:58px}
+header.fo nav.rovatok button{color:#193748!important;border-radius:0!important;min-height:58px!important;padding:12px 19px!important;font-size:12px!important;font-weight:850!important;letter-spacing:.035em;background:transparent!important;border-right:1px solid #ddd2c5!important}
+header.fo nav.rovatok button:first-child{border-left:1px solid #ddd2c5!important}
+header.fo nav.rovatok button:hover{background:#e7ddd0!important;color:#b94d3e!important}
+header.fo nav.rovatok button.aktiv{background:#176e69!important;color:#fff!important;box-shadow:inset 0 -5px 0 #ef735f!important}
+header.fo nav.rovatok button.pp{background:#193748!important;color:#ffc1b5!important;margin-left:auto}
+
+/* Klasszikus nézet – Mai történetek: vegyes, egy nagy + négy tömör ügy */
+.nh-mixed.nh-daily-spread{margin:30px 0;background:#163f4a;border-radius:22px;padding:0;overflow:hidden;box-shadow:0 18px 38px rgba(22,63,74,.17);border-left:7px solid #ef735f}
+.nh-daily-spread .nh-mixed-head{margin:0;padding:25px 27px 19px;border-bottom:1px solid rgba(255,255,255,.17);align-items:flex-end}
+.nh-daily-spread .nh-eyebrow{color:#ffb5a7;letter-spacing:.14em}
+.nh-daily-spread .nh-mixed-head h2{font:700 42px/1.02 'Source Serif 4',Georgia,serif;color:#fff;letter-spacing:-.04em;margin-top:5px}
+.nh-daily-spread .nh-mixed-tag{background:transparent;color:#b9d1d3;border:1px solid rgba(255,255,255,.25);font-weight:750}
+.nh-daily-layout{display:grid;grid-template-columns:minmax(0,1.18fr) minmax(350px,.82fr);margin:0 20px 20px;background:#f7f3eb;border-radius:15px;overflow:hidden}
+.nh-daily-lead{display:grid!important;grid-template-columns:minmax(245px,1fr) minmax(260px,.92fr);min-height:330px;border-radius:0!important;background:#f7f3eb!important}
+.nh-daily-lead .nh-photo{height:100%!important;min-height:330px;margin:0;background:linear-gradient(145deg,#315d67,#b2c4c2)}
+.nh-daily-lead .nh-photo-fallback{display:block}
+.nh-daily-lead .nh-copy{display:flex;flex-direction:column;justify-content:center;padding:27px 26px}
+.nh-daily-lead h3{font:700 clamp(27px,2.5vw,38px)/1.06 'Source Serif 4',Georgia,serif!important;color:#193748!important;letter-spacing:-.035em}
+.nh-daily-lead p{font-size:13px;line-height:1.5;color:#617780;margin-top:12px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.nh-daily-river{display:grid;grid-template-rows:repeat(4,minmax(0,1fr));background:#e5efed}
+.nh-daily-row{display:grid;grid-template-columns:42px minmax(0,1fr);gap:12px;align-items:center;padding:15px 18px;border-bottom:1px solid #c7d9d6;color:#193748}
+.nh-daily-row:last-child{border-bottom:0}
+.nh-daily-row>b{font:850 21px/1 'Archivo',sans-serif;color:#ef735f}
+.nh-daily-row .nh-meta{font-size:9px;margin:0 0 5px;display:flex;align-items:center;gap:6px}
+.nh-daily-row .nh-meta .forras-ikon{width:20px;height:20px}
+.nh-daily-row h3{font:800 15px/1.24 'Inter',sans-serif;color:#193748;letter-spacing:-.015em}
+.nh-daily-row:hover h3{color:#b94d3e}
+@media(max-width:980px){
+ header.fo nav.rovatok button.pp{margin-left:0}
+ .nh-daily-layout{grid-template-columns:1fr}
+ .nh-daily-river{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:auto}
+ .nh-daily-row:nth-child(odd){border-right:1px solid #c7d9d6}
+}
+@media(max-width:650px){
+ header.fo nav.rovatok .rovatok-in{display:flex;overflow-x:auto;flex-wrap:nowrap}
+ header.fo nav.rovatok button{white-space:nowrap;min-height:50px!important;padding:10px 15px!important}
+ .nh-mixed.nh-daily-spread{border-radius:15px}
+ .nh-daily-spread .nh-mixed-head{display:block;padding:21px 18px 16px}
+ .nh-daily-spread .nh-mixed-head h2{font-size:34px}
+ .nh-daily-spread .nh-mixed-tag{display:inline-block;margin-top:10px}
+ .nh-daily-layout{margin:0 10px 10px}
+ .nh-daily-lead{grid-template-columns:1fr;min-height:0}
+ .nh-daily-lead .nh-photo{min-height:210px;height:210px!important}
+ .nh-daily-lead .nh-copy{padding:21px 18px}
+ .nh-daily-river{grid-template-columns:1fr}
+ .nh-daily-row:nth-child(odd){border-right:0}
+}
