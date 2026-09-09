@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="728" height="90" viewBox="0 0 728 90" role="img" aria-labelledby="title desc">
+  <title id="title">Demó hirdetési banner</title>
+  <desc id="desc">Prémium 728 × 90 pixeles minta hirdetési felület</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#17384b"/>
+      <stop offset="0.56" stop-color="#245d70"/>
+      <stop offset="1" stop-color="#0d817f"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#e84f3d"/>
+      <stop offset="1" stop-color="#f4b522"/>
+    </linearGradient>
+  </defs>
+  <rect width="728" height="90" rx="3" fill="url(#bg)"/>
+  <path d="M0 0h155l-38 90H0z" fill="#102c3e"/>
+  <path d="M36 20h12l-13 50H23z" fill="#e84f3d"/>
+  <text x="58" y="43" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700">NAP HÍRE</text>
+  <text x="58" y="60" fill="#a9ccd5" font-family="Arial, Helvetica, sans-serif" font-size="8" font-weight="700" letter-spacing="1.5">PRÉMIUM MÉDIA</text>
+  <rect x="181" y="18" width="1" height="54" fill="#ffffff" opacity=".18"/>
+  <text x="207" y="38" fill="#f4b522" font-family="Arial, Helvetica, sans-serif" font-size="9" font-weight="700" letter-spacing="1.8">HIRDETÉSI MINTA</text>
+  <text x="207" y="60" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700">Az Ön üzenete itt jelenhet meg</text>
+  <rect x="613" y="25" width="88" height="40" rx="2" fill="#ffffff"/>
+  <text x="657" y="42" text-anchor="middle" fill="#17384b" font-family="Arial, Helvetica, sans-serif" font-size="9" font-weight="700">728 × 90</text>
+  <text x="657" y="55" text-anchor="middle" fill="#547181" font-family="Arial, Helvetica, sans-serif" font-size="7" font-weight="700" letter-spacing="1">DEMÓ</text>
+  <rect x="0" y="86" width="728" height="4" fill="url(#accent)"/>
+</svg>

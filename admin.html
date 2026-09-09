@@ -95,6 +95,17 @@ input[type=file]{display:none}
   padding:16px;border-radius:3px;max-height:260px;overflow:auto;white-space:pre-wrap;word-break:break-all;
   margin-top:14px;line-height:1.6;
 }
+.theme-racs{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.theme-kartya{position:relative;display:flex;align-items:flex-start;gap:12px;padding:16px;border:1px solid var(--line);background:var(--paper-warm);cursor:pointer;transition:.15s}
+.theme-kartya:hover{border-color:var(--parazs);background:#fff}
+.theme-kartya input{margin-top:4px;accent-color:var(--parazs)}
+.theme-kartya strong{display:block;font-family:'Archivo',sans-serif;font-size:15px;margin-bottom:3px}.theme-kartya small{display:block;color:var(--ink-soft);line-height:1.45}.theme-link{display:inline-block;margin-top:7px;color:var(--parazs);font-size:12px;font-weight:700}
+@media(max-width:640px){.theme-racs{grid-template-columns:1fr}.sor2,.sor3,.forras-racs{grid-template-columns:1fr}}
+.admin-hero{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:22px;padding:26px 28px;background:linear-gradient(120deg,#17384b,#245d70);color:#fff;border-radius:10px;box-shadow:0 14px 28px rgba(23,56,75,.18)}
+.admin-hero h1{font-family:'Archivo',sans-serif;font-size:30px;line-height:1;letter-spacing:-.04em;margin:0 0 7px}.admin-hero p{color:#c9e0e4;font-size:13px;margin:0}.admin-hero .admin-stamp{font:700 10px/1.3 'JetBrains Mono',monospace;letter-spacing:.12em;color:#ffd36b;text-transform:uppercase;text-align:right;white-space:nowrap}
+.panel{border-radius:8px;overflow:hidden;box-shadow:0 7px 20px rgba(31,56,70,.06)}.panel-fej{padding:14px 20px;background:#17384b}.panel-test{padding:22px}.gomb-fo{background:linear-gradient(135deg,#e84f3d,#f06b4e);box-shadow:0 7px 15px rgba(232,79,61,.18)}
+.tema-panel{border:2px solid #d8e6ea}.tema-panel .panel-fej{background:linear-gradient(120deg,#17384b,#245d70)}.tema-panel.erdely-panel{border-color:#b9e3da}.tema-panel.erdely-panel .panel-fej{background:linear-gradient(120deg,#0f655f,#148b81)}
+.tema-panel .panel-test{background:linear-gradient(180deg,#fbfdfd,#f3f8f8)}.tema-aktiv{display:flex;align-items:center;gap:10px;margin-bottom:16px;padding:11px 13px;border:1px solid #cbdfe4;background:#edf6f7}.tema-aktiv input{width:auto;accent-color:#148b81}.tema-aktiv span{font-weight:700}
 </style>
 </head>
 <body>
@@ -107,12 +118,16 @@ input[type=file]{display:none}
 </header>
 
 <main>
+  <div class="admin-hero">
+    <div><h1>Szerkesztői vezérlőpult</h1><p>A főoldal témái, megjelenése és hírforrásai egy helyen.</p></div>
+    <div class="admin-stamp">NAP HÍRE<br>LIVE CONTROL</div>
+  </div>
   <div class="info-sav">
     <strong>Így működik ez az admin felület</strong>
     A naphíre.ro egy statikus fájl, nincs mögötte adatbázis vagy szerver. Ezért az itt beállított
-    dolgok (bannerek, kiemelt téma, kikapcsolt források) egy <code>settings.json</code> nevű
+    dolgok (megjelenés, bannerek, kiemelt téma, kikapcsolt források) egy <code>settings.json</code> nevű
     fájlba kerülnek. Állítsd be lent, amit szeretnél, töltsd le a <strong>settings.json</strong>-t,
-    majd a tárhelykezelőben töltsd fel <em>ugyanabba a mappába</em>, ahol az <code>index.html</code>
+    majd FTP-vel/tárhelykezelőn töltsd fel <em>ugyanabba a mappába</em>, ahol a <code>naphire.html</code>
     van (felülírva a régit, ha már létezik). A honlap ezt a fájlt olvassa be induláskor és 5 percenként –
     innentől MINDEN látogatónál érvényes lesz, nem csak a te böngésződben.
     Ha már van korábbi settings.json-od, először töltsd be a "Meglévő settings.json betöltése" gombbal, hogy tovább szerkeszthesd.
@@ -120,7 +135,27 @@ input[type=file]{display:none}
 
   <div class="gombsor" style="margin-bottom:26px">
     <button class="gomb-mas" onclick="document.getElementById('betolt-fajl').click()">📂 Meglévő settings.json betöltése</button>
+    <a class="gomb-mas" href="index.html?view=modern" style="display:inline-flex;align-items:center;text-decoration:none">↗ Új főoldal előnézete</a>
+    <a class="gomb-mas" href="legacy.html?view=classic" style="display:inline-flex;align-items:center;text-decoration:none">↗ Régi változat</a>
     <input type="file" id="betolt-fajl" accept="application/json">
+  </div>
+
+  <!-- MEGJELENÉS -->
+  <div class="panel">
+    <div class="panel-fej"><span class="jelzo"></span>Alapértelmezett megjelenés</div>
+    <div class="panel-test">
+      <div class="theme-racs">
+        <label class="theme-kartya">
+          <input type="radio" name="theme" id="theme-modern" value="modern" checked>
+          <span><strong>Új prémium főoldal</strong><small>Ez legyen a főoldal: a friss, világos fejlécű és új rovatszerkezetű változat.</small><a class="theme-link" href="index.html?view=modern">Előnézet →</a></span>
+        </label>
+        <label class="theme-kartya">
+          <input type="radio" name="theme" id="theme-classic" value="classic">
+          <span><strong>Régi klasszikus</strong><small>A korábbi portál változata külön oldalon marad, visszaváltható alternatívaként.</small><a class="theme-link" href="legacy.html?view=classic">Előnézet →</a></span>
+        </label>
+      </div>
+      <div class="jegyzet" style="margin-top:12px">A választás a letöltött <code>settings.json</code>-ban lesz aktív. Alapértelmezésként az új prémium főoldal van bekapcsolva.</div>
+    </div>
   </div>
 
   <!-- SZLOGEN -->
@@ -129,18 +164,18 @@ input[type=file]{display:none}
     <div class="panel-test">
       <div class="mezo">
         <label>Szlogen (a logó alatt)</label>
-        <input type="text" id="f-szlogen" value="Erdélyi és magyarországi hírek">
+        <input type="text" id="f-szlogen" value="A napi hírfigyelő · percről percre">
       </div>
     </div>
   </div>
 
-  <!-- NAP TÉMÁJA -->
+  <!-- MAGYARORSZÁG NAP TÉMÁJA -->
   <div class="panel">
-    <div class="panel-fej"><span class="jelzo"></span>A nap témája – kézi kiemelés</div>
+    <div class="panel-fej"><span class="jelzo"></span>A nap témája – Magyarország</div>
     <div class="panel-test">
       <div class="kapcsolo-sor">
         <input type="checkbox" id="t-aktiv" onchange="temaMezokFrissit()">
-        <span>Kézzel kiválasztott téma legyen a főoldalon (nem az automatikus felismerés)</span>
+        <span>Kézzel kiválasztott magyarországi téma legyen a főoldalon</span>
       </div>
       <div id="tema-mezok" style="opacity:.4;pointer-events:none">
         <div class="mezo">
@@ -166,6 +201,27 @@ input[type=file]{display:none}
           </div>
         </div>
         <div class="jegyzet">A rendszer automatikusan megkeresi majd, mely más portálok írtak még hasonló címmel a témáról, és azokat is megjeleníti az „Így írták meg mások" listában.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ERDÉLY NAP TÉMÁJA -->
+  <div class="panel tema-panel erdely-panel">
+    <div class="panel-fej"><span class="jelzo" style="background:#7be1d1"></span>A nap témája – Erdély</div>
+    <div class="panel-test">
+      <div class="tema-aktiv">
+        <input type="checkbox" id="te-aktiv" onchange="temaMezokFrissit('erdely')">
+        <span>Kézzel kiválasztott erdélyi téma legyen a főoldalon</span>
+      </div>
+      <div id="tema-erdely-mezok" style="opacity:.4;pointer-events:none">
+        <div class="mezo"><label>Cím</label><input type="text" id="te-cim" placeholder="pl. Új fejlesztés indul a Székelyföldön"></div>
+        <div class="mezo"><label>Rövid lead / összefoglaló</label><textarea id="te-lead" placeholder="2-3 mondatos erdélyi összefoglaló"></textarea></div>
+        <div class="sor3">
+          <div class="mezo"><label>Kép URL</label><input type="url" id="te-kep" placeholder="https://..."></div>
+          <div class="mezo"><label>Cikk linkje</label><input type="url" id="te-link" placeholder="https://..."></div>
+          <div class="mezo"><label>Forrás neve</label><input type="text" id="te-forras" placeholder="pl. Maszol"></div>
+        </div>
+        <div class="jegyzet">A kapcsolódó erdélyi cikkek az „Így írták meg mások” blokkban jelennek meg. Ha kikapcsolod, az automatikus erdélyi téma marad aktív.</div>
       </div>
     </div>
   </div>
@@ -212,12 +268,12 @@ input[type=file]{display:none}
     <button class="gomb-fo" onclick="letoltSettings()">⬇ settings.json letöltése</button>
     <button class="gomb-mas" onclick="jsonElonezetMutat()">👁 JSON előnézet</button>
   </div>
-  <div class="allapot" id="allapot-uzenet">✓ settings.json letöltve – most töltsd fel a szerverre az index.html mellé.</div>
+  <div class="allapot" id="allapot-uzenet">✓ settings.json letöltve – most töltsd fel a szerverre a naphire.html mellé.</div>
   <div class="json-doboz" id="json-doboz" style="display:none"></div>
 </main>
 
 <script>
-/* Az index.html-lel megegyező forráslista – ha ott bővíted, itt is vezesd át */
+/* A naphire.html-lel megegyező forráslista – ha ott bővíted, itt is vezesd át */
 const FORRASOK = [
   { nev:'Maszol', region:'erdely', szin:'#1e9be0' },
   { nev:'Krónika', region:'erdely', szin:'#f2a007' },
@@ -225,12 +281,14 @@ const FORRASOK = [
   { nev:'Transtelex', region:'erdely', szin:'#e0315f' },
   { nev:'3Szék', region:'erdely', szin:'#1f8fd1' },
   { nev:'Hargita Népe', region:'erdely', szin:'#2f7fd6' },
+  { nev:'Marosvásárhelyi Rádió', region:'erdely', szin:'#8b5fc7' },
   { nev:'Telex', region:'magyar', szin:'#0b7261' },
   { nev:'HVG', region:'magyar', szin:'#d43d17' },
   { nev:'24.hu', region:'magyar', szin:'#1e56c8' },
   { nev:'Index', region:'magyar', szin:'#e8b207' },
   { nev:'444', region:'magyar', szin:'#111111' },
   { nev:'Origo', region:'magyar', szin:'#e07a1f' },
+  { nev:'ATV', region:'magyar', szin:'#e54251' },
 ];
 
 document.getElementById('forras-lista').innerHTML = FORRASOK.map(f => `
@@ -241,9 +299,10 @@ document.getElementById('forras-lista').innerHTML = FORRASOK.map(f => `
     <span class="regio">${f.region === 'erdely' ? 'Erdély' : 'Magyarország'}</span>
   </label>`).join('');
 
-function temaMezokFrissit(){
-  const be = document.getElementById('t-aktiv').checked;
-  const doboz = document.getElementById('tema-mezok');
+function temaMezokFrissit(melyik){
+  const prefix = melyik === 'erdely' ? 'te-' : 't-';
+  const be = document.getElementById(prefix + 'aktiv').checked;
+  const doboz = document.getElementById(melyik === 'erdely' ? 'tema-erdely-mezok' : 'tema-mezok');
   doboz.style.opacity = be ? '1' : '.4';
   doboz.style.pointerEvents = be ? 'auto' : 'none';
 }
@@ -259,7 +318,8 @@ function bannerElonezetFrissit(elotag){
 function beallitasokOsszeallit(){
   const forrasokKi = [...document.querySelectorAll('#forras-lista input:checked')].map(el => el.dataset.forras);
   return {
-    tagline: document.getElementById('f-szlogen').value.trim() || 'Erdélyi és magyarországi hírek',
+    theme: document.querySelector('input[name="theme"]:checked')?.value || 'modern',
+    tagline: document.getElementById('f-szlogen').value.trim() || 'A napi hírfigyelő · percről percre',
     banners: {
       fejlec: { kep: document.getElementById('b0-kep').value.trim(), link: document.getElementById('b0-link').value.trim() },
       tartalom: { kep: document.getElementById('b1-kep').value.trim(), link: document.getElementById('b1-link').value.trim() },
@@ -272,6 +332,14 @@ function beallitasokOsszeallit(){
       kep: document.getElementById('t-kep').value.trim(),
       link: document.getElementById('t-link').value.trim(),
       forras: document.getElementById('t-forras').value.trim()
+    },
+    kiemeltTemaErdely: {
+      aktiv: document.getElementById('te-aktiv').checked,
+      cim: document.getElementById('te-cim').value.trim(),
+      lead: document.getElementById('te-lead').value.trim(),
+      kep: document.getElementById('te-kep').value.trim(),
+      link: document.getElementById('te-link').value.trim(),
+      forras: document.getElementById('te-forras').value.trim()
     },
     forrasokKi
   };
@@ -297,6 +365,7 @@ function jsonElonezetMutat(){
 }
 
 function beallitasokBetolt(adat){
+  document.querySelectorAll('input[name="theme"]').forEach(el => el.checked = el.value === (adat.theme || 'modern'));
   document.getElementById('f-szlogen').value = adat.tagline || '';
   const b = adat.banners || {};
   document.getElementById('b0-kep').value = (b.fejlec && b.fejlec.kep) || '';
@@ -314,6 +383,14 @@ function beallitasokBetolt(adat){
   document.getElementById('t-link').value = t.link || '';
   document.getElementById('t-forras').value = t.forras || '';
   temaMezokFrissit();
+  const te = adat.kiemeltTemaErdely || {};
+  document.getElementById('te-aktiv').checked = !!te.aktiv;
+  document.getElementById('te-cim').value = te.cim || '';
+  document.getElementById('te-lead').value = te.lead || '';
+  document.getElementById('te-kep').value = te.kep || '';
+  document.getElementById('te-link').value = te.link || '';
+  document.getElementById('te-forras').value = te.forras || '';
+  temaMezokFrissit('erdely');
   const ki = new Set(adat.forrasokKi || []);
   document.querySelectorAll('#forras-lista input').forEach(el => el.checked = ki.has(el.dataset.forras));
 }
@@ -331,4 +408,3 @@ document.getElementById('betolt-fajl').addEventListener('change', e => {
 </script>
 </body>
 </html>
-

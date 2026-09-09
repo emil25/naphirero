@@ -1,18 +1,27 @@
 {
-  "tagline": "Erdélyi és magyarországi hírek",
+  "theme": "modern",
+  "tagline": "A napi hírfigyelő · percről percre",
   "banners": {
-    "fejlec": { "kep": "banner-madefalvi.jpeg", "link": "" },
+    "fejlec": { "kep": "demo-banner-728x90.svg", "link": "" },
     "tartalom": { "kep": "", "link": "" },
     "oldalsav": { "kep": "", "link": "" }
   },
   "kiemeltTema": {
-    "aktiv": false,
-    "cim": "",
-    "lead": "",
-    "kep": "",
-    "link": "",
-    "forras": ""
+    "aktiv": true,
+    "cim": "Kelemen Hunor elhatárolódott az RMDSZ szenátorától a görögországi lobbiút miatt",
+    "lead": "Antal Lórántnak nem volt mit keresnie sem a magángépen, sem a görögországi lobbiúton – jelentette ki Kelemen Hunor. Az RMDSZ elnöke hibának nevezte, hogy a szövetség szenátora is tagja volt a romániai küldöttségnek.",
+    "kep": "https://cdn.szekelyhon.ro/udvarhely/aktualis/2026/03/sm_korond-bolcsode-atado-oa-marc2626.jpg",
+    "link": "https://kronika.ro/belfold/kelemen-hunor-elhatarolodott-az-rmdsz-szenatoratol-a-gorogorszagi-lobbiut-miatt",
+    "forras": "Krónika",
+    "kulcsszavak": ["Antal Lóránt", "Mykonos", "Míkonosz", "magángép", "görögországi lobbiút"]
   },
-  "forrasokKi": ["3Szék", "Origo"]
+  "kiemeltTemaErdely": {
+    "aktiv": true,
+    "cim": "Csoma Botond kényszerhelyzettel magyarázza, hogy az RMDSZ megszavazta a képviselőház új vezetését",
+    "lead": "A politikus szerint a keddi ülés előtt előkerült a magyarkártya és az is felmerült, hogy a szövetség talán túl sok pozícióval rendelkezik, mert az ipari és a külügyi szakbizottságot is RMDSZ-es politikus vezeti.",
+    "kep": "https://assets.telex.hu/images/20240425/1714047315-temp-koLEKc_facebook.jpg",
+    "link": "https://transtelex.ro/kozelet/2026/09/02/csoma-botond-hazbizottsag-szavazas-psd-aur-sos-rmdsz",
+    "forras": "Transtelex"
+  },
+  "forrasokKi": []
 }
-
