@@ -408,3 +408,24 @@ header.fo nav.rovatok button.pp{background:#193748!important;color:#ffc1b5!impor
 @media(max-width:520px){
   .nh-daily-river{grid-template-columns:1fr!important}
 }
+
+
+/* 2026-09-09 — a többforrásos panel ne foglalja el a Mai történetek jobb felét. */
+.nh-daily-lead.nh-event{display:block!important;width:100%!important}
+.nh-daily-lead.nh-event>.nh-event-main{
+  display:grid!important;grid-template-columns:minmax(0,1.22fr) minmax(300px,.78fr)!important;
+  align-items:stretch!important;width:100%!important;background:#f8f3eb!important
+}
+.nh-daily-lead.nh-event>.nh-sources{
+  display:block!important;width:100%!important;min-height:0!important;
+  border-radius:0!important;background:#dce9ec!important
+}
+.nh-daily-lead.nh-event>.nh-sources>summary{
+  min-height:54px!important;padding:12px 20px!important
+}
+.nh-daily-card.nh-event{display:flex!important;flex-direction:column!important}
+.nh-daily-card.nh-event>.nh-event-main{display:flex!important;flex:1;flex-direction:column!important}
+.nh-daily-card.nh-event>.nh-sources>summary{padding:10px 14px!important}
+@media(max-width:720px){
+  .nh-daily-lead.nh-event>.nh-event-main{display:flex!important;flex-direction:column!important}
+}
