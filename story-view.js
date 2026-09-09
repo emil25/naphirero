@@ -64,7 +64,7 @@ for(const name of ['napTemajaHTML','erdelyTemaHTML']){
  window[name]=function(topic){
   if(!topic?.fo)return original(topic);
   const supplied=[topic.fo,...(topic.osszes||topic.tobbi||[])];
-  const stored=articleIndex.get(topic.fo.link)?.articles||[];
+  const stored=topic.rogzitett ? [] : (articleIndex.get(topic.fo.link)?.articles||[]);
   const unique=new Map();
   for(const h of [...supplied,...stored])if(h?.link&&!unique.has(h.link))unique.set(h.link,{...h,datum:new Date(h.datum)});
  const current=[...unique.values()].sort((a,b)=>b.datum-a.datum);
