@@ -134,3 +134,10 @@ html.nh-editorial-v2 .variant-switch-old{display:inline-flex;align-items:center;
  html.nh-editorial-v2 .v2-card-title{font-size:25px}
  html.nh-editorial-v2 .v2-roman>footer{display:block}
 }
+
+/* Induláskor a klasszikus HTML-tartalom nem villanhat fel az új nézet előtt. */
+html.nh-editorial-v2:not(.nh-v2-ready) #tartalom>*{visibility:hidden!important}
+html.nh-editorial-v2:not(.nh-v2-ready) #tartalom{min-height:58vh;position:relative}
+html.nh-editorial-v2:not(.nh-v2-ready) #tartalom::before{content:'NapHíre';position:absolute;left:50%;top:110px;transform:translateX(-50%);font:850 34px/1 Archivo,Inter,sans-serif;letter-spacing:-.05em;color:#173b4b}
+html.nh-editorial-v2:not(.nh-v2-ready) #tartalom::after{content:'';position:absolute;left:50%;top:165px;width:84px;height:3px;transform:translateX(-50%);background:linear-gradient(90deg,#ee6d57 0 34%,#d7e4e2 34% 100%);animation:nhV2Boot 1s ease-in-out infinite alternate}
+@keyframes nhV2Boot{to{width:118px;opacity:.65}}
