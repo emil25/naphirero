@@ -11,7 +11,7 @@
   var domestic = function(h){
     var u=urlText(h), r=String((h && h.rovat) || '').toLowerCase();
     if(excludedRovatok[r]) return false;
-    return !/(kulfold|vilag|world|sport|kultura|gasztro|elet|eletmod|mindekozben|szorakozas|tech|\bai\b|velemeny)/.test(u);
+    return !/(kulfold|vilag|world|sport|kultura|karakter|konyv|nadas|gasztro|elet|eletmod|mindekozben|szorakozas|tech|\bai\b|velemeny)/.test(u);
   };
 
   var photo = function(h,cls){return h && h.kep ? '<div class="v2-card-image ' + (cls || '') + '"><img src="' + safeUrl(h.kep) + '" alt="" loading="lazy" decoding="async" onerror="this.parentElement.hidden=true"></div>' : '<div class="v2-card-image ' + (cls || '') + '"></div>';};
@@ -41,7 +41,7 @@
   var trendBlock = function(items, excluded){
     var candidates=items.filter(fresh);
     try{if(typeof felkapottTop === 'function') candidates=felkapottTop();}catch(e){}
-    var rows=candidates.filter(fresh).filter(function(h){return !excluded || !excluded.has(h.link);}).slice(0,5);
+    var rows=candidates.filter(fresh).filter(function(h){var u=urlText(h);return (!excluded || !excluded.has(h.link)) && !/(mindekozben|gasztro|elet|szorakozas|celeb|reklam)/.test(u);}).slice(0,5);
     if(!rows.length) rows=items.filter(fresh).slice(0,5);
     return '<section class="v2-rail-block"><div class="v2-rail-head"><h2>Mi pörög most?</h2><span>Források alapján</span></div>' +
       rows.map(function(h,i){return href(h,'v2-trend') + '<b class="v2-trend-num">0' + (i+1) + '</b><span><span class="v2-trend-title">' + esc(h.cim) + '</span><span class="v2-trend-meta">' + esc(h.forras) + ' · ' + (typeof idoOta === 'function' ? idoOta(new Date(h.datum)) : '') + '</span></span>' + close;}).join('') + '</section>';
