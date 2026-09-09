@@ -21,7 +21,8 @@
     if (!configs[variant]) return originalSection(cim, osztaly, cikkek, variant);
     if (!cikkek.length) return '';
     const [key, overline, name] = configs[variant];
-    const unique = [...new Map(cikkek.map(h => [h.link, h])).values()];
+    const unique = [...new Map(cikkek.filter(h => !(window.__nhDailyLinks && window.__nhDailyLinks.has(h.link))).map(h => [h.link, h])).values()];
+    if (!unique.length) return '';
     const first = unique.find(h => h.kep) || unique[0];
     const rest = unique.filter(h => h !== first);
     const chapter = String(Object.keys(configs).indexOf(variant) + 1).padStart(2, '0');
@@ -58,19 +59,35 @@
 /* Címlapi hírfolyam: önálló képes nyitás és tömör hírcsoportok. */
 (() => {
   mozaikHTML = function(cikkek) {
-    const items = [...new Map(cikkek.filter(Boolean).map(h => [h.link,h])).values()];
+    const items = [...new Map(cikkek.filter(Boolean).map(h => [h.link,h])).values()]
+      .sort((a,b) => new Date(b.datum) - new Date(a.datum));
     if (!items.length) return '';
     const link = h => `${dc(h)} href="${biztonsagos(h.link)}" target="_blank" rel="noopener"`;
-    const meta = h => `<span class="nh-meta">${biztonsagos(h.forras)} <span>· ${idoOta(h.datum)}</span></span>`;
-    const photo = h => h.kep ? `<span class="nh-photo"><img src="${biztonsagos(h.kep)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.parentElement.hidden=true"></span>` : '';
-    const region = (key, name) => {
-      const list = items.filter(h => (h.newsRegion || h.region) === key).slice(0,7);
-      if (!list.length) return '';
-      const lead = list.find(h => h.kep) || list[0];
-      const rest = list.filter(h => h !== lead).slice(0,6);
-      return `<section class="nh-region-column nh-region-${key}"><header><span>${key === 'erdely' ? 'HELYBEN FONTOS' : 'ORSZÁGOS ÜGYEK'}</span><h3>${name}</h3></header><a class="nh-story nh-region-lead" ${link(lead)}>${photo(lead)}<span class="nh-copy">${meta(lead)}<h3>${biztonsagos(lead.cim)}</h3></span></a>${rest.length ? `<div class="nh-region-stream">${rest.map(h=>`<a class="nh-story nh-region-row" ${link(h)}>${photo(h)}<span class="nh-copy">${meta(h)}<h3>${biztonsagos(h.cim)}</h3></span></a>`).join('')}</div>` : ''}</section>`;
+    const meta = h => `<span class="nh-meta">${forrasIkonHTML(h,'kicsi')}<b>${biztonsagos(h.forras)}</b><span>· ${idoOta(h.datum)}</span></span>`;
+    const photo = h => h.kep ? `<span class="nh-photo"><img src="${biztonsagos(h.kep)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.parentElement.hidden=true"></span>` : '<span class="nh-photo nh-photo-fallback"></span>';
+    const useful = items.filter(h => !/(mindekozben|celeb|reklam|apple-event|meghivo|eljegyzes|horoszkop|szorakozas)/i.test(String(h.link||'')+' '+String(h.cim||'')));
+    const chosen=[], seen=new Set();
+    const add = test => {
+      const hit=useful.find(h => !seen.has(h.link) && test(h));
+      if(hit){chosen.push(hit);seen.add(hit.link);}
     };
-    return `<section class="nh-mixed" id="vegyes-hirek"><header class="nh-mixed-head"><div><span class="nh-eyebrow">A nap fontos ügyei</span><h2>Mai történetek<span>↗</span></h2></div><span class="nh-mixed-tag">Friss történetek</span></header><div class="nh-region-columns">${region('erdely','A nap fontos ügyei')}</div></section>`;
+    add(h => (h.newsRegion||h.region)==='erdely');
+    add(h => (h.newsRegion||h.region)==='magyar');
+    add(h => h.rovat==='gazdasag');
+    add(h => h.rovat==='sport');
+    add(h => h.rovat==='kultura' || h.rovat==='vilag');
+    useful.some(h => {if(chosen.length>=5)return true;if(!seen.has(h.link)){chosen.push(h);seen.add(h.link);}return false;});
+    if(!chosen.length) return '';
+    let lead=chosen.find(h => (h.newsRegion||h.region)==='erdely' && h.kep) || chosen.find(h=>h.kep) || chosen[0];
+    const rest=chosen.filter(h=>h!==lead).slice(0,4);
+    window.__nhDailyLinks = new Set(chosen.map(h=>h.link));
+    return `<section class="nh-mixed nh-daily-spread" id="vegyes-hirek">
+      <header class="nh-mixed-head"><div><span class="nh-eyebrow">A NAP FONTOS ÜGYEI</span><h2>Mai történetek</h2></div><span class="nh-mixed-tag">5 gyorsan átlátható hír</span></header>
+      <div class="nh-daily-layout">
+        <a class="nh-story nh-daily-lead" ${link(lead)}>${photo(lead)}<span class="nh-copy">${meta(lead)}<h3>${biztonsagos(lead.cim)}</h3><p>${biztonsagos(String(lead.lead||'').slice(0,190))}</p></span></a>
+        <div class="nh-daily-river">${rest.map((h,i)=>`<a class="nh-daily-row" ${link(h)}><b>0${i+2}</b><span>${meta(h)}<h3>${biztonsagos(h.cim)}</h3></span></a>`).join('')}</div>
+      </div>
+    </section>`;
   };
   if (!document.documentElement.classList.contains('nh-booting')) rajzol();
 })();
