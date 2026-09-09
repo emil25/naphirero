@@ -92,7 +92,7 @@
    const haystack=normal(`${h.cim||''} ${h.lead||''}`);
    return keywords.filter(keyword=>haystack.includes(keyword)).length >= 2;
   };
-  const matches=all.filter(h=>canonical(h.link)!==canonical(fo.link)&&(related(fo,h)||keywordMatch(h)));
+  const matches=all.filter(h=>canonical(h.link)!==canonical(fo.link)&&(nhSameEvent(fo,h)||keywordMatch(h)));
   const unique=[fo,...matches]
    .filter((h,index,list)=>list.findIndex(other=>canonical(other.link)===canonical(h.link))===index)
    .sort((a,b)=>new Date(b.datum)-new Date(a.datum));
