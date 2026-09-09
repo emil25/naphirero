@@ -244,3 +244,41 @@ header.fo nav.rovatok button.pp{background:#193748!important;color:#ffc1b5!impor
  .nh-daily-river{grid-template-columns:1fr}
  .nh-daily-row:nth-child(odd){border-right:0}
 }
+
+
+/* Mai történetek nagy editorial mozaik */
+.nh-daily-spread .nh-mixed-tag{font-size:11px;padding:9px 14px}
+.nh-daily-layout{grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr);min-height:610px;background:#163f4a;gap:12px}
+.nh-daily-lead{display:block!important;position:relative;min-height:610px!important;border-radius:14px!important;overflow:hidden;background:#244f59!important}
+.nh-daily-lead .nh-photo{position:absolute;inset:0;width:100%;height:100%!important;min-height:0;margin:0}
+.nh-daily-lead .nh-photo img,.nh-daily-card .nh-photo img{width:100%;height:100%;object-fit:cover;transition:transform .45s ease}
+.nh-daily-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(9,27,35,.03) 20%,rgba(9,27,35,.92) 100%);z-index:1}
+.nh-daily-lead .nh-copy{position:absolute;z-index:2;left:0;right:0;bottom:0;padding:34px 34px 30px;display:block;color:#fff}
+.nh-daily-number{display:inline-block;font:900 12px/1 'Archivo',sans-serif;letter-spacing:.12em;color:#ff9b88;border-bottom:3px solid #ef735f;padding-bottom:7px;margin-bottom:12px}
+.nh-daily-lead .nh-meta,.nh-daily-lead .nh-meta b,.nh-daily-lead .nh-meta span{color:#d9e8e7}
+.nh-daily-lead h3{font:700 clamp(34px,3.4vw,52px)/1.02 'Source Serif 4',Georgia,serif!important;color:#fff!important;max-width:720px;text-shadow:0 2px 15px rgba(0,0,0,.3)}
+.nh-daily-lead p{color:#d2e0df;max-width:60ch;font-size:14px}
+.nh-daily-river{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));gap:12px;background:#163f4a}
+.nh-daily-card{position:relative;display:block;min-height:299px;border-radius:14px;overflow:hidden;background:#315d66;color:#fff}
+.nh-daily-card .nh-photo{position:absolute;inset:0;width:100%;height:100%!important;margin:0;background:linear-gradient(145deg,#315d67,#799594)}
+.nh-daily-card .nh-copy{position:absolute;z-index:2;left:0;right:0;bottom:0;padding:19px 18px}
+.nh-daily-card .nh-meta,.nh-daily-card .nh-meta b,.nh-daily-card .nh-meta span{color:#e1eeee}
+.nh-daily-card .nh-meta{font-size:9px;margin-bottom:8px}
+.nh-daily-card h3{font:750 clamp(17px,1.5vw,23px)/1.1 'Archivo',sans-serif;color:#fff;letter-spacing:-.025em;text-shadow:0 2px 12px rgba(0,0,0,.35)}
+.nh-daily-card:hover h3,.nh-daily-lead:hover h3{color:#ffd0c7!important}
+.nh-daily-card:hover img,.nh-daily-lead:hover img{transform:scale(1.045)}
+@media(max-width:1050px){
+ .nh-daily-layout{grid-template-columns:1fr;min-height:0}
+ .nh-daily-lead{min-height:480px!important}
+ .nh-daily-river{grid-template-rows:repeat(2,260px)}
+ .nh-daily-card{min-height:260px}
+}
+@media(max-width:650px){
+ .nh-daily-lead{min-height:420px!important}
+ .nh-daily-lead .nh-copy{padding:25px 21px}
+ .nh-daily-lead h3{font-size:34px!important}
+ .nh-daily-lead p{display:none}
+ .nh-daily-river{grid-template-columns:1fr;grid-template-rows:none}
+ .nh-daily-card{min-height:285px}
+ .nh-daily-card h3{font-size:22px}
+}
