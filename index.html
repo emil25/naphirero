@@ -3369,10 +3369,9 @@ if (teljesCache){
   tartalekTipus = 'static';
 }
 renderForrasaink();
-if (osszesHir.length){
-  rajzol();
-  document.documentElement.classList.remove('nh-booting');
-}
+// A gyorsítótárat csak előkészítjük. A képernyőt a deferrel betöltött
+// editorial renderer rajzolja ki, így a régi sablon egyetlen képkockára sem villan fel.
+window.__NH_CACHE_READY__ = osszesHir.length > 0;
 
 betoltBeallitasok().then(() => {
   renderForrasaink();
