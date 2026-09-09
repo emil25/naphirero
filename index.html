@@ -2522,7 +2522,24 @@ function temaRogzitettbol(kiemelt, jelolt, regio){
     link: kiemelt.link || '#', forras: kiemelt.forras || 'Szerkesztőség',
     datum: new Date(), region: regio || 'magyar'
   };
-  const talalatok = jelolt.filter(h => ugyanazATema(fo, h) && h.link !== fo.link);
+  // A kézzel kiemelt történet sem fagy be: az RSS-frissítésből érkező új cikkeket
+  // a szerkesztői kulcsszavak és az eseményazonosság alapján ugyanahhoz a történethez kötjük.
+  const szerkesztoiSzavak = Array.isArray(kiemelt.kulcsszavak) ? kiemelt.kulcsszavak.join(' ') : '';
+  const temaKulcsok = new Set(stemek(`${kiemelt.cim || ''} ${szerkesztoiSzavak}`));
+  const kapcsolodo = h => {
+    if (!h || h.link === fo.link) return false;
+    if (ugyanazATema(fo, h)) return true;
+    const egyezes = kozosDb(temaKulcsok, new Set(temaStemek(h)));
+    return egyezes >= 2;
+  };
+  const rssTalalatok = jelolt.filter(kapcsolodo);
+  const kezzelHozzaadott = (Array.isArray(kiemelt.tovabbiCikkek) ? kiemelt.tovabbiCikkek : [])
+    .filter(c => c && c.link && c.link !== fo.link)
+    .map(c => ({
+      cim: c.cim || 'Kapcsolódó cikk', lead: c.lead || '', kep: c.kep || '', link: c.link,
+      forras: c.forras || 'Forrás', datum: new Date(c.datum || Date.now()), region: regio || 'magyar'
+    }));
+  const talalatok = [...new Map([...rssTalalatok, ...kezzelHozzaadott].map(h => [h.link, h])).values()];
   const latott = new Set([fo.forras]);
   const tobbi = talalatok.filter(h => {
     if (latott.has(h.forras)) return false;
