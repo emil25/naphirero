@@ -61,6 +61,13 @@
       href(lead,'v2-lead-card') + photo(lead) + meta(lead) + '<span class="v2-card-title">' + esc(lead.cim) + '</span><span class="v2-card-lead">' + esc(lead.lead || '') + '</span>' + close +
       '<div class="v2-section-side">' + side.map(compact).join('') + '</div></div></section>';
   };
+  var dailyBlock = function(items){
+    if(!items.length) return '';
+    var lead=items[0], rest=items.slice(1,5);
+    return '<section class="v2-daily"><div class="v2-daily-head"><div><span>A NAP FONTOS ÜGYEI</span><h2>Mai történetek</h2></div><p>Gyors áttekintés a most meghatározó hírekről</p></div><div class="v2-daily-layout">' +
+      href(lead,'v2-daily-lead') + photo(lead) + '<span class="v2-daily-lead-copy">' + meta(lead) + '<span class="v2-daily-lead-title">' + esc(lead.cim) + '</span><span class="v2-daily-lead-text">' + esc(lead.lead || '') + '</span></span>' + close +
+      '<div class="v2-daily-list">' + rest.map(function(h,i){return href(h,'v2-daily-row') + '<b>0' + (i+2) + '</b><span>' + meta(h) + '<span class="v2-daily-title">' + esc(h.cim) + '</span></span>' + close;}).join('') + '</div></div></section>';
+  };
   var romanBlock = function(){
     if(typeof romanPressHTML !== 'function' || typeof romanNews === 'undefined' || !romanNews.length) return '';
     return '<section class="v2-roman"><span class="v2-kicker">ROMÁN SAJTÓ MAGYARUL</span><h2>Román lapszemle</h2><p>Mi foglalkoztatja ma a román sajtót?</p><div class="ro-press-layout">' + romanNews.slice(0,6).map(function(h,i){return href(h,'ro-press-story ' + (i===0?'ro-press-lead':'ro-press-row')) + photo(h) + '<div>' + meta(h) + '<h3>' + esc(h.huCim || h.cim) + '</h3></div>' + close;}).join('') + '</div><footer><span>Magyar összefoglaló · eredeti román cikk a történetoldalon</span><b>HotNews · G4Media · Digi24</b></footer></section>';
@@ -79,7 +86,9 @@
       document.getElementById('tartalom').innerHTML='<div class="v2-layout"><div class="v2-main-column"><section class="v2-section"><div class="v2-section-head"><div><p>FOLYAMATOSAN ÉRKEZIK</p><h2>Legfrissebb</h2></div></div><div class="v2-section-side">' + sorted.slice(0,28).map(compact).join('') + '</div></section></div><aside class="v2-rail">' + latestBlock(sorted) + '</aside></div>';
       return;
     }
-    var by = function(fn){return clean.filter(fresh).filter(fn).sort(function(a,b){return new Date(b.datum)-new Date(a.datum);}).slice(0,7);};
+    var daily=sorted.filter(fresh).slice(0,5);
+    var dailyLinks=new Set(daily.map(function(h){return h.link;}));
+    var by = function(fn){return clean.filter(fresh).filter(function(h){return !dailyLinks.has(h.link);}).filter(fn).sort(function(a,b){return new Date(b.datum)-new Date(a.datum);}).slice(0,7);};
     var erdely=by(function(h){return h.region==='erdely' && domestic(h);});
     var magyar=by(function(h){return h.region==='magyar' && domestic(h);});
     var gazdasag=by(function(h){return h.rovat==='gazdasag';});
@@ -92,7 +101,7 @@
       hero='<section class="v2-hero"><div class="v2-hero-media">' + (heroImage ? '<img src="' + safeUrl(heroImage) + '" alt="" fetchpriority="high">' : '') + '</div><div class="v2-hero-copy"><span class="v2-kicker">A NAP TÉMÁJA</span>' + href(heroTopic,'') + '<h1>' + esc(heroTopic.cim) + '</h1>' + close + '<p>' + esc(heroTopic.lead || '') + '</p><div class="v2-hero-foot"><span class="v2-meta"><strong>' + topic.forrasDb + ' forrás</strong><span>·</span><span>' + topic.osszes.length + ' cikk</span></span><a class="v2-open" href="#tortenet=' + encodeURIComponent(heroTopic.link) + '">Összkép</a></div></div>' + sourceRows(topic) + '</section>';
     }
     var first = sorted.slice(0,5);
-    var html='<div class="v2-home">' + hero + '<div class="v2-layout"><div class="v2-main-column">' +
+    var html='<div class="v2-home">' + hero + dailyBlock(daily) + '<div class="v2-layout"><div class="v2-main-column">' +
       section('Erdély','A fő tartalmi fókusz',erdely,'erdely') +
       section('Magyarország','Közélet és társadalom',magyar,'magyar') +
       section('Gazdaság','Döntések, árak, következmények',gazdasag,'gazdasag') +
