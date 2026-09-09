@@ -90,7 +90,7 @@
   const keywordMatch=h=>{
    if(!keywords.length)return false;
    const haystack=normal(`${h.cim||''} ${h.lead||''}`);
-   return keywords.some(keyword=>haystack.includes(keyword));
+   return keywords.filter(keyword=>haystack.includes(keyword)).length >= 2;
   };
   const matches=all.filter(h=>canonical(h.link)!==canonical(fo.link)&&(related(fo,h)||keywordMatch(h)));
   const unique=[fo,...matches]
