@@ -62,5 +62,12 @@
         }
       ]
     }
+  ],
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "/uj.html",
+      "permanent": false
+    }
   ]
 }
