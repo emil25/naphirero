@@ -38,8 +38,11 @@
     return '<div class="v2-sources"><div class="v2-sources-head"><h2>Ugyanerről írnak</h2><span>' + t.forrasDb + ' forrás · ' + t.osszes.length + ' cikk</span></div><div class="v2-source-grid">' +
       t.osszes.slice(0,8).map(function(h){return href(h,'v2-source-row') + icon(h) + '<span><span class="v2-source-title">' + esc(h.cim) + '</span><span class="v2-source-meta">' + esc(h.forras) + ' · ' + (typeof idoOta === 'function' ? idoOta(new Date(h.datum)) : '') + '</span></span>' + close;}).join('') + '</div></div>';
   };
-  var trendBlock = function(items){
-    var rows=items.filter(fresh).slice(0,5);
+  var trendBlock = function(items, excluded){
+    var candidates=items.filter(fresh);
+    try{if(typeof felkapottTop === 'function') candidates=felkapottTop();}catch(e){}
+    var rows=candidates.filter(fresh).filter(function(h){return !excluded || !excluded.has(h.link);}).slice(0,5);
+    if(!rows.length) rows=items.filter(fresh).slice(0,5);
     return '<section class="v2-rail-block"><div class="v2-rail-head"><h2>Mi pörög most?</h2><span>Források alapján</span></div>' +
       rows.map(function(h,i){return href(h,'v2-trend') + '<b class="v2-trend-num">0' + (i+1) + '</b><span><span class="v2-trend-title">' + esc(h.cim) + '</span><span class="v2-trend-meta">' + esc(h.forras) + ' · ' + (typeof idoOta === 'function' ? idoOta(new Date(h.datum)) : '') + '</span></span>' + close;}).join('') + '</section>';
   };
@@ -96,7 +99,7 @@
       section('Sport','Pályán és azon túl',sport,'sport') +
       section('Kultúra','Alkotók, történetek, találkozások',kultura,'kultura') +
       (vilag.length ? section('Világ','A legfontosabb nemzetközi fejlemények',vilag,'vilag') : '') +
-      romanBlock() + '</div><aside class="v2-rail">' + trendBlock(first) + latestBlock(sorted) + '</aside></div></div>';
+      romanBlock() + '</div><aside class="v2-rail">' + trendBlock(first, topicLinks) + latestBlock(sorted) + '</aside></div></div>';
     document.getElementById('tartalom').innerHTML=html;
     document.documentElement.classList.remove('nh-booting');
   }
