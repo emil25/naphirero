@@ -3362,14 +3362,15 @@ if (teljesCache){
   gyorsitotarKorabol = indulasiCache.mentveKor;
   tartalekTipus = 'cache';
 } else {
-  osszesHir = TARTALEK_HIREK.map(h => ({ ...h, rovat:rovatBesorol(h) }));
-  gyorsitotarKorabol = Date.now();
+  // Az új nézet nem rajzolhatja ki induláskor a régi beépített sablont.
+  osszesHir = [];
+  gyorsitotarKorabol = null;
   tartalekTipus = 'static';
 }
 renderForrasaink();
-rajzol();
-// A gyorsítótárból vagy a beépített tartalékból azonnal kirajzolunk; az RSS csak háttérfrissítés.
-document.documentElement.classList.remove('nh-booting');
+// A gyorsítótárat az editorial-v2 renderer rajzolja ki közvetlenül.
+// Így a régi címlap nem villan fel az új nézet előtt.
+window.__NH_CACHE_READY__ = osszesHir.length > 0;
 
 betoltBeallitasok().then(() => {
   renderForrasaink();
