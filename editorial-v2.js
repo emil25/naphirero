@@ -86,7 +86,20 @@
       document.getElementById('tartalom').innerHTML='<div class="v2-layout"><div class="v2-main-column"><section class="v2-section"><div class="v2-section-head"><div><p>FOLYAMATOSAN ÉRKEZIK</p><h2>Legfrissebb</h2></div></div><div class="v2-section-side">' + sorted.slice(0,28).map(compact).join('') + '</div></section></div><aside class="v2-rail">' + latestBlock(sorted) + '</aside></div>';
       return;
     }
-    var daily=sorted.filter(fresh).slice(0,5);
+    var dailyPool=sorted.filter(fresh).filter(function(h){
+      return !/(mindekozben|celeb|reklam|apple-event|apple-bemutato|meghivo|store-mar-nem|eljegyzes|szorakozas|karakter)/.test(urlText(h));
+    });
+    var daily=[], dailySeen={};
+    var addDaily=function(test){
+      var hit=dailyPool.find(function(h){return !dailySeen[h.link] && test(h);});
+      if(hit){daily.push(hit);dailySeen[hit.link]=1;}
+    };
+    addDaily(function(h){return h.region==='erdely' && domestic(h);});
+    addDaily(function(h){return h.region==='magyar' && domestic(h);});
+    addDaily(function(h){return h.rovat==='gazdasag';});
+    addDaily(function(h){return h.rovat==='sport';});
+    addDaily(function(h){return h.rovat==='kultura' || h.rovat==='vilag';});
+    dailyPool.some(function(h){if(daily.length>=5)return true;if(!dailySeen[h.link]){daily.push(h);dailySeen[h.link]=1;}return false;});
     var dailyLinks=new Set(daily.map(function(h){return h.link;}));
     var by = function(fn){return clean.filter(fresh).filter(function(h){return !dailyLinks.has(h.link);}).filter(fn).sort(function(a,b){return new Date(b.datum)-new Date(a.datum);}).slice(0,7);};
     var erdely=by(function(h){return h.region==='erdely' && domestic(h);});
@@ -108,7 +121,7 @@
       section('Sport','Pályán és azon túl',sport,'sport') +
       section('Kultúra','Alkotók, történetek, találkozások',kultura,'kultura') +
       (vilag.length ? section('Világ','A legfontosabb nemzetközi fejlemények',vilag,'vilag') : '') +
-      romanBlock() + '</div><aside class="v2-rail">' + trendBlock(first, topicLinks) + latestBlock(sorted) + '</aside></div></div>';
+      romanBlock() + '</div><aside class="v2-rail">' + trendBlock(first, new Set(Array.from(topicLinks).concat(Array.from(dailyLinks)))) + latestBlock(sorted) + '</aside></div></div>';
     document.getElementById('tartalom').innerHTML=html;
     document.documentElement.classList.add('nh-v2-ready');
     document.documentElement.classList.remove('nh-booting');
