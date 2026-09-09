@@ -189,8 +189,9 @@ function nhGroupStories(articles) {
     if(recent.length<6)recent=osszesHir.filter(h=>Date.now()-new Date(h.datum).getTime()<=24*3600000);
     ranked=nhGroupStories([...recent].sort((a,b)=>b.datum-a.datum)).sort((a,b)=>sourceCount(b)-sourceCount(a)||b.length-a.length||b[0].datum-a[0].datum);
     const mosaic=document.querySelector('.nh-mixed');
-    const host=document.querySelector('.foblokk .jobb-sav');
-    if(!mosaic||!host)return;
+    const mainBlock=document.querySelector('.foblokk');
+    const host=document.querySelector('.nh-trending-host')||document.querySelector('.foblokk .jobb-sav');
+    if(!mosaic||!mainBlock||!host)return;
     const featuredLinks=new Set([...document.querySelectorAll('.tema-sav a[href]')].map(a=>a.getAttribute('href')));
     const sidebarRanked=ranked.filter(g=>!g.some(h=>featuredLinks.has(h.link)));
     const multi=sidebarRanked.filter(g=>sourceCount(g)>1);
@@ -198,6 +199,8 @@ function nhGroupStories(articles) {
     if(!trending.length)return;
     host.classList.add('nh-trending-host');
     host.innerHTML='<section class="nh-trending nh-trending-side"><header><span class="nh-trending-kicker">A mai sajtó közös témái</span><h2>Mi pörög ma?</h2><p>Forráslefedettség alapján</p></header><ol>'+trending.map((g,i)=>{const marks=[...new Map(g.map(h=>[h.forras,h])).values()].slice(0,3).map(h=>forrasIkonHTML(h,'kicsi')).join('');const visual=g.find(h=>h.kep)||g[0];const photo=visual.kep?`<span class="nh-trending-image"><img src="${biztonsagos(visual.kep)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.parentElement.hidden=true"></span>`:'';return `<li><button type="button" data-story-rank="${i}">${photo}<span class="nh-trending-row"><span class="nh-rank">${String(i+1).padStart(2,'0')}</span><span class="nh-trending-copy"><strong>${biztonsagos(g[0].cim)}</strong><small><span class="nh-trending-sources">${marks}</span>${sourceCount(g)} forrás · ${g.length} cikk</small></span></span></button></li>`}).join('')+'</ol></section>';
+    mainBlock.classList.add('nh-trending-layout');
+    if(host.parentElement===mainBlock)mainBlock.insertAdjacentElement('afterend',host);
     const section=host.querySelector('.nh-trending');
     section.addEventListener('click',e=>{const target=e.target.closest('[data-story-rank]');if(target)openBrief([trending[Number(target.dataset.storyRank)]],true);});
   };
