@@ -141,3 +141,10 @@ html.nh-editorial-v2:not(.nh-v2-ready) #tartalom{min-height:58vh;position:relati
 html.nh-editorial-v2:not(.nh-v2-ready) #tartalom::before{content:'NapHíre';position:absolute;left:50%;top:110px;transform:translateX(-50%);font:850 34px/1 Archivo,Inter,sans-serif;letter-spacing:-.05em;color:#173b4b}
 html.nh-editorial-v2:not(.nh-v2-ready) #tartalom::after{content:'';position:absolute;left:50%;top:165px;width:84px;height:3px;transform:translateX(-50%);background:linear-gradient(90deg,#ee6d57 0 34%,#d7e4e2 34% 100%);animation:nhV2Boot 1s ease-in-out infinite alternate}
 @keyframes nhV2Boot{to{width:118px;opacity:.65}}
+
+/* Az új nézet menüsávja önálló színrendszert kapott. */
+html.nh-editorial-v2 nav.rovatok{background:#0f6b67;border-top:4px solid #ee6d57}
+html.nh-editorial-v2 nav.rovatok button{color:#d8efeb;border-right-color:rgba(255,255,255,.14)}
+html.nh-editorial-v2 nav.rovatok button:hover{background:#2a807b;color:#fff}
+html.nh-editorial-v2 nav.rovatok button.aktiv{background:#f7f2e9;color:#173b4b}
+html.nh-editorial-v2 nav.rovatok button.pp{color:#ffd3c8}
