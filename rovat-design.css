@@ -169,3 +169,26 @@ header.fo nav.rovatok button.pp{background:#345e67;color:#ffd0c5}
 .nh-mixed-head h2{color:#193b4b}
 .nh-mixed-head h2>span{color:#ed7963}
 .nh-mixed-tag{background:#fff8f1;color:#55747b}
+
+/* Mai történetek: önálló, magazinos vizuális egység a klasszikus címlapon. */
+.nh-mixed{margin-top:34px;background:#153f4d;color:#fff;border:0;border-radius:28px;padding:0;overflow:hidden;box-shadow:0 16px 34px rgba(21,63,77,.16)}
+.nh-mixed-head{margin:0;padding:28px 30px 22px;align-items:flex-end;border-bottom:1px solid rgba(255,255,255,.18)}
+.nh-eyebrow{color:#ffc9bf}
+.nh-mixed-head h2{color:#fff;font-size:44px;margin-top:6px}
+.nh-mixed-head h2>span{color:#ff806d}
+.nh-mixed-tag{background:#ff806d;color:#173847;border-radius:999px;padding:9px 13px}
+.nh-region-columns{display:block}
+.nh-region-column{padding:23px 30px 30px}
+.nh-region-column>header{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:14px}
+.nh-region-column>header span{font:700 10px/1.3 'Inter',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#a9d6d0}
+.nh-region-column>header h3{font:800 18px/1.2 'Archivo',sans-serif;color:#fff;margin:0}
+.nh-region-lead{display:grid;grid-template-columns:minmax(250px,.9fr) 1.1fr;background:#f7f1e9;border-radius:18px}
+.nh-region-lead .nh-photo{height:230px}
+.nh-region-lead .nh-copy{padding:25px 27px}
+.nh-region-lead h3{font-size:30px;line-height:1.1;color:#173847}
+.nh-region-stream{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:14px}
+.nh-region-row{background:#fff8f1;border-top:3px solid #ef7b65;border-radius:14px}
+.nh-region-row .nh-photo{height:115px}
+.nh-region-row .nh-copy{padding:14px}
+.nh-region-row h3{font-size:17px;line-height:1.18;color:#173847}
+@media(max-width:760px){.nh-mixed-head{padding:22px 20px 18px}.nh-mixed-head h2{font-size:34px}.nh-region-column{padding:19px 20px 22px}.nh-region-lead{display:block}.nh-region-lead .nh-photo{height:190px}.nh-region-stream{grid-template-columns:1fr}.nh-region-row{display:grid;grid-template-columns:110px 1fr}.nh-region-row .nh-photo{height:100%}}
