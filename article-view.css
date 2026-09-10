@@ -1,0 +1,346 @@
+/* NapHíre – önálló cikkoldal, 2026 */
+body:has(.cikkoldal) #tartalom{
+  background:
+    radial-gradient(circle at 8% 4%,rgba(255,112,94,.08),transparent 28rem),
+    linear-gradient(180deg,#f5f8f8 0,#fff 42rem);
+}
+body .cikkoldal{
+  max-width:1400px;
+  padding:34px 28px 84px;
+}
+body .cikkoldal .cn-fejlec{
+  margin:0 0 20px;
+  padding:0 2px;
+}
+body .cikkoldal .vissza{
+  border:0;
+  border-radius:999px;
+  padding:11px 16px;
+  background:#fff;
+  box-shadow:0 4px 18px rgba(20,48,64,.08);
+  color:#234758;
+  font-size:11px;
+}
+body .cikkoldal .vissza:hover{
+  background:#17394a;
+  color:#fff;
+}
+body .cikkoldal .cikk-kontekstus{
+  color:#75909c;
+  font-size:9px;
+  letter-spacing:.18em;
+}
+
+/* Vezető rész: a cím és a kép egymást erősíti. */
+body .cikkoldal .cikk-fo{
+  display:grid;
+  grid-template-columns:minmax(0,.92fr) minmax(480px,1.08fr);
+  grid-template-rows:auto auto minmax(120px,1fr) auto;
+  gap:0;
+  min-height:570px;
+  padding:0;
+  overflow:hidden;
+  border:1px solid #dbe6e8;
+  border-top:6px solid #ff6f5f;
+  border-radius:25px;
+  background:
+    radial-gradient(circle at 12% 18%,rgba(255,111,95,.12),transparent 18rem),
+    #fff;
+  color:#173747;
+  box-shadow:0 22px 60px rgba(23,55,71,.12);
+}
+body .cikkoldal .cikk-fo::after{
+  content:"CIKK";
+  inset:auto auto 22px 34px;
+  color:rgba(31,83,98,.055);
+  background:none;
+  opacity:1;
+  font:900 90px/1 'Archivo',sans-serif;
+  letter-spacing:-.08em;
+  pointer-events:none;
+}
+body .cikkoldal .cikk-fo>*{
+  position:relative;
+  z-index:1;
+}
+body .cikkoldal .cikk-fo .cn-cimkek{
+  grid-column:1;
+  grid-row:1;
+  margin:0;
+  padding:38px 42px 20px;
+}
+body .cikkoldal .cikk-fo .rovat-jelveny{
+  border-radius:999px;
+  padding:8px 13px;
+  background:#ff6f5f;
+  color:#fff;
+  box-shadow:none;
+}
+body .cikkoldal .cikk-fo .rovat-jelveny.zold{
+  background:#147a70;
+}
+body .cikkoldal .cikk-fo .cn-ido{
+  color:#607d89;
+}
+body .cikkoldal .cikk-fo h1{
+  grid-column:1;
+  grid-row:2;
+  max-width:none;
+  margin:0;
+  padding:0 42px 22px;
+  color:#173747;
+  font-size:clamp(40px,4.2vw,68px);
+  font-weight:650;
+  line-height:1.01;
+  letter-spacing:-.048em;
+  text-wrap:balance;
+}
+body .cikkoldal .cikk-dek{
+  grid-column:1;
+  grid-row:3;
+  max-width:none;
+  margin:0;
+  padding:0 42px 34px;
+  align-self:start;
+  color:#526f7b;
+  font-size:18px;
+  line-height:1.55;
+}
+body .cikkoldal .cikk-hero{
+  grid-column:2;
+  grid-row:1/5;
+  width:100%;
+  height:100%;
+  min-height:570px;
+  max-height:none;
+  margin:0;
+  aspect-ratio:auto;
+  position:relative;
+  background:linear-gradient(135deg,#dfe8ea,#aec1c8);
+}
+body .cikkoldal .cikk-hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(90deg,rgba(23,55,71,.13),transparent 24%);
+  pointer-events:none;
+}
+body .cikkoldal .cikk-hero img{
+  object-fit:cover;
+}
+body .cikkoldal .cikk-hero-alairas{
+  grid-column:1;
+  grid-row:4;
+  margin:0;
+  padding:16px 42px 22px;
+  border-top:1px solid #e3ebed;
+  color:#6b8792;
+  font-size:9px;
+}
+
+/* A háttér és a források szerkesztőségi felülete. */
+body .cikkoldal .cikk-racs{
+  grid-template-columns:minmax(0,1fr) 370px;
+  gap:28px;
+  margin-top:30px;
+}
+body .cikkoldal .cikk-panel,
+body .cikkoldal .cikk-oldalpanel{
+  border:1px solid #dce6e8;
+  border-radius:20px;
+  background:#fff;
+  box-shadow:0 10px 34px rgba(22,55,70,.07);
+}
+body .cikkoldal .cikk-panel{
+  padding:26px 28px;
+  margin-bottom:24px;
+}
+body .cikkoldal .cikk-panel-cim{
+  align-items:center;
+  padding-bottom:14px;
+  margin-bottom:16px;
+  border-bottom:1px solid #cadadd;
+}
+body .cikkoldal .cikk-panel-cim h2,
+body .cikkoldal .cikk-panel-cim h3{
+  color:#173747;
+  font-family:'Archivo',sans-serif;
+  font-size:18px;
+  letter-spacing:-.02em;
+  text-transform:none;
+}
+body .cikkoldal .cikk-panel-cim span{
+  padding:6px 10px;
+  border-radius:999px;
+  background:#edf3f4;
+  color:#55737f;
+  font:700 10px 'JetBrains Mono',monospace;
+}
+body .cikkoldal .hang-lista{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px;
+  margin-bottom:16px;
+}
+body .cikkoldal .hang-lista button{
+  min-height:52px;
+  border:1px solid #d9e4e6;
+  border-radius:13px;
+  padding:12px 14px;
+  background:#f7faf9;
+  color:#214656;
+}
+body .cikkoldal .hang-lista button small{
+  margin-left:auto;
+  color:#708a95;
+  font-size:10px;
+}
+body .cikkoldal .hang-lista button:hover{
+  border-color:#9bb4bc;
+  background:#eef4f4;
+  color:#173747;
+}
+body .cikkoldal .hang-lista button.aktiv{
+  border-color:#173e4f;
+  background:#173e4f;
+  color:#fff;
+}
+body .cikkoldal .hang-lista button.aktiv small{
+  color:#bdd0d6;
+}
+body .cikkoldal .mp-panel{
+  border:0;
+  border-radius:16px;
+  padding:22px 24px;
+  background:linear-gradient(135deg,#f4f1eb,#f7faf9);
+}
+body .cikkoldal .mp-panel-fej{
+  padding-bottom:12px;
+  border-bottom:1px solid #d8e2e3;
+  color:#54717d;
+}
+body .cikkoldal .mp-szoveg{
+  color:#284a59;
+  font-size:18px;
+  line-height:1.55;
+}
+body .cikkoldal .eredeti-gomb{
+  background:#ff6f5f;
+  box-shadow:0 8px 20px rgba(255,111,95,.22);
+}
+body .cikkoldal .eredeti-gomb:hover{
+  background:#e85648;
+}
+body .cikkoldal .cikk-racs>aside{
+  position:sticky;
+  top:22px;
+}
+body .cikkoldal .cikk-oldalpanel{
+  margin-bottom:18px;
+  padding:24px;
+}
+body .cikkoldal .cikk-oldalpanel:first-child{
+  border-top:4px solid #ff6f5f;
+}
+body .cikkoldal .cikk-oldalpanel h3{
+  margin-bottom:16px;
+  color:#50717e;
+}
+body .cikkoldal .cikk-oldalpanel ul{
+  display:grid;
+  gap:12px;
+  padding-left:18px;
+}
+body .cikkoldal .cikk-oldalpanel li{
+  color:#294a59;
+  font-size:14px;
+  line-height:1.55;
+}
+body .cikkoldal .cikk-kapcsolodo{
+  gap:0;
+}
+body .cikkoldal .cikk-kapcsolodo a{
+  position:relative;
+  padding:14px 24px 14px 0;
+  border-top:1px solid #dce6e8;
+  color:#1f4353;
+  font-size:17px;
+  line-height:1.24;
+}
+body .cikkoldal .cikk-kapcsolodo a::after{
+  content:"↗";
+  position:absolute;
+  top:15px;
+  right:0;
+  color:#ff6f5f;
+  font:800 13px 'Inter',sans-serif;
+}
+body .cikkoldal .rogzit-gomb{
+  border:0;
+  border-radius:999px;
+  background:#e6eff1;
+  color:#214858;
+}
+body .cikkoldal .rogzit-gomb:hover{
+  background:#173e4f;
+  color:#fff;
+}
+body .cikkoldal .cikk-idovonal{
+  background:linear-gradient(180deg,#fff,#f7faf9);
+}
+body .cikkoldal .idovonal-lista::before{
+  background:linear-gradient(#ff6f5f,#5e8794);
+}
+body .cikkoldal .idovonal-esemeny{
+  border-radius:12px;
+  padding:13px 10px 13px 0;
+}
+body .cikkoldal .idovonal-esemeny:hover{
+  background:#f0f5f5;
+}
+body .cikkoldal .idovonal-cim{
+  color:#244554;
+  font-size:15px;
+}
+
+@media(max-width:1050px){
+  body .cikkoldal .cikk-fo{
+    grid-template-columns:minmax(0,1fr) minmax(360px,.8fr);
+  }
+  body .cikkoldal .cikk-racs{
+    grid-template-columns:minmax(0,1fr) 320px;
+  }
+}
+@media(max-width:900px){
+  body .cikkoldal{padding:26px 18px 65px}
+  body .cikkoldal .cikk-fo{
+    display:grid;
+    grid-template-columns:1fr;
+    grid-template-rows:auto auto auto minmax(300px,55vw) auto;
+    min-height:0;
+  }
+  body .cikkoldal .cikk-fo .cn-cimkek{grid-column:1;grid-row:1;padding:28px 28px 17px}
+  body .cikkoldal .cikk-fo h1{grid-column:1;grid-row:2;padding:0 28px 18px;font-size:clamp(38px,7vw,58px)}
+  body .cikkoldal .cikk-dek{grid-column:1;grid-row:3;padding:0 28px 28px}
+  body .cikkoldal .cikk-hero{grid-column:1;grid-row:4;min-height:300px}
+  body .cikkoldal .cikk-hero-alairas{grid-column:1;grid-row:5;padding:14px 28px 18px}
+  body .cikkoldal .cikk-fo::after{display:none}
+  body .cikkoldal .cikk-racs{grid-template-columns:1fr}
+  body .cikkoldal .cikk-racs>aside{position:static}
+}
+@media(max-width:600px){
+  body .cikkoldal{padding:20px 12px 54px}
+  body .cikkoldal .cn-fejlec{align-items:flex-start}
+  body .cikkoldal .cikk-kontekstus{display:none}
+  body .cikkoldal .cikk-fo{border-radius:18px;grid-template-rows:auto auto auto 65vw auto}
+  body .cikkoldal .cikk-fo .cn-cimkek{padding:23px 20px 15px}
+  body .cikkoldal .cikk-fo h1{padding:0 20px 17px;font-size:36px;line-height:1.04}
+  body .cikkoldal .cikk-dek{padding:0 20px 22px;font-size:16px}
+  body .cikkoldal .cikk-hero{min-height:240px}
+  body .cikkoldal .cikk-hero-alairas{padding:12px 20px 16px}
+  body .cikkoldal .cikk-panel{padding:21px 18px;border-radius:17px}
+  body .cikkoldal .hang-lista{grid-template-columns:1fr}
+  body .cikkoldal .mp-panel{padding:18px}
+  body .cikkoldal .mp-panel-fej{align-items:flex-start}
+  body .cikkoldal .eredeti-gomb{width:100%;justify-content:center;text-align:center;font-size:11px}
+  body .cikkoldal .cikk-oldalpanel{padding:21px}
+}
