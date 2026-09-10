@@ -2039,7 +2039,7 @@ async function mindenHirBetolt(){
   let koraiRajz = false;
   const koraiTimer = setInterval(() => {
     const beertForrasok = new Set(gyujto.map(h => h.forras)).size;
-    if (!koraiRajz && gyujto.length >= 12 && beertForrasok >= 3){
+    if (!koraiRajz && gyujto.length >= 8 && beertForrasok >= 2){
       koraiRajz = true;
       osszesit();
       // A gyors első rajz már élő hírekből készül: a korábbi nap témájának
