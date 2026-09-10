@@ -210,6 +210,6 @@
  if (osszesHir && osszesHir.length){
   rajzol();
   refreshRomanPress();
-  document.documentElement.classList.remove('nh-booting');
+  document.documentElement.classList.remove('nh-booting','nh-topic-syncing');
  }
 })();
