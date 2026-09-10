@@ -2038,13 +2038,19 @@ async function mindenHirBetolt(){
   const kesleltet = ms => new Promise(r => setTimeout(r, ms));
   let koraiRajz = false;
   const koraiTimer = setInterval(() => {
-    if (!koraiRajz && gyujto.length >= 12 && tartalekTipus === 'static'){
+    const beertForrasok = new Set(gyujto.map(h => h.forras)).size;
+    if (!koraiRajz && gyujto.length >= 12 && beertForrasok >= 3){
       koraiRajz = true;
       osszesit();
+      // A gyors első rajz már élő hírekből készül: a korábbi nap témájának
+      // böngészőben tárolt választását ne vigyük át erre az adatkészletre.
+      temaValasztasTorol('magyar');
+      temaValasztasTorol('erdely');
       hirGyorsitotarMent(osszesHir);
       rajzol();
+      document.documentElement.classList.remove('nh-booting','nh-topic-syncing');
     }
-  }, 400);
+  }, 250);
   const mindenForras = Promise.all(aktivForrasok.map((f, i) =>
     kesleltet(i * 180) // ne induljon minden forrás lekérése egyszerre – a proxyk másodpercenkénti korlátot tartanak
       .then(() => forrasFeldolgoz(f))
