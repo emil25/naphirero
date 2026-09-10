@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="hu" class="nh-booting">
+<html lang="hu" class="nh-booting nh-topic-syncing">
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; connect-src 'self'; img-src 'self' https: data: blob:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; media-src 'self' https:; base-uri 'self'; form-action 'self'; frame-ancestors 'self';">
@@ -1597,7 +1597,7 @@ html{scrollbar-gutter:stable}
 .fejlec-in>.logo{min-width:0;flex:0 1 auto}
 .premium-header-actions{margin-left:auto}
 </style>
-<link rel="stylesheet" href="rovat-design.css?v=540f1051">
+<link rel="stylesheet" href="rovat-design.css?v=c236242f">
 <link rel="stylesheet" href="story-view.css">
 <link rel="stylesheet" href="editorial-home.css">
 <script defer src="rovat-design.js?v=e443b15a"></script>
@@ -2096,6 +2096,7 @@ async function mindenHirBetolt(){
   document.getElementById('frissitve').textContent =
     (gyorsitotarKorabol ? 'Korábbi hírek · lekérés sikertelen: ' : 'Források ellenőrizve: ') + new Date().toLocaleTimeString('hu-HU',{hour:'2-digit',minute:'2-digit'});
   rajzol();
+  document.documentElement.classList.remove('nh-booting','nh-topic-syncing');
 }
 
 /* ---------- Videó- és blogsáv: külön adatkészletek, nem keverednek a hírekbe ---------- */
