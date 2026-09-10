@@ -1599,6 +1599,7 @@ html{scrollbar-gutter:stable}
 </style>
 <link rel="stylesheet" href="rovat-design.css?v=62f5a084">
 <link rel="stylesheet" href="story-view.css?v=7c9d5547">
+<link rel="stylesheet" href="article-view.css?v=80410d76">
 <link rel="stylesheet" href="editorial-home.css?v=116f70e8">
 <script defer src="rovat-design.js?v=e443b15a"></script>
 <script defer src="story-engine.js?v=7a310fec"></script>
@@ -2661,6 +2662,7 @@ const IRANYZAT = {
 };
 let rogzitettLink = null;      // a címlapra rögzített cikk (munkamenetre szól)
 let aktHangok = [], aktHangIdx = 0;
+let nyitottCikk = null; // megőrzi a megnyitott cikket az RSS háttérfrissítése alatt
 
 const dc = h => `data-cikk="${encodeURIComponent(h.link)}"`;
 function forrasAdat(nev){ return FORRASOK.find(f => f.nev === nev) || {}; }
@@ -2701,7 +2703,7 @@ function hangPanelHTML(){
       <span class="iranyzat-chip ${kulcs}">${IRANYZAT[kulcs].chip}</span>
     </div>
     <p class="mp-szoveg">${biztonsagos(szoveg)}</p>
-    <a class="eredeti-gomb" href="${biztonsagos(h.link)}" target="_blank" rel="noopener">Eredeti sajtótermék megnyitása ➜</a>`;
+    <a class="eredeti-gomb" href="${biztonsagos(h.link)}" target="_blank" rel="noopener">Eredeti cikk megnyitása ↗</a>`;
 }
 function valtHang(i){
   aktHangIdx = i;
@@ -2715,6 +2717,7 @@ function rogzitCimlapon(gomb){
 }
 
 function cikkNezet(hir){
+  nyitottCikk = hir;
   aktHangok = kapcsolodoHangok(hir);
   aktHangIdx = 0;
   const jelenIranyok = new Set(aktHangok.map(irany));
@@ -2751,7 +2754,7 @@ function cikkNezet(hir){
   <div class="cikkoldal">
     <div class="cn-fejlec">
       <a class="vissza" href="#" onclick="location.hash='';return false">← Vissza a címlapra</a>
-      <span class="cikk-kontekstus">NapHíre · belső cikkoldal</span>
+      <span class="cikk-kontekstus">NapHíre · a cikk tágabb képe</span>
     </div>
     <article class="cikk-fo">
         <div class="cn-cimkek">
@@ -2775,7 +2778,7 @@ function cikkNezet(hir){
         ${idovonalHTML}
       </main>
       <aside>
-        <section class="cikk-oldalpanel"><h3>Szerkesztői összefoglaló</h3><ul>${pontok.map(p => `<li>${biztonsagos(p)}</li>`).join('')}</ul></section>
+        <section class="cikk-oldalpanel"><h3>A cikk röviden</h3><ul>${pontok.map(p => `<li>${biztonsagos(p)}</li>`).join('')}</ul></section>
         <section class="cikk-oldalpanel"><h3>Kapcsolódó hírek</h3><div class="cikk-kapcsolodo">${(kapcsolodo.length ? kapcsolodo : [hir]).map(h => `<a ${dc(h)} href="${biztonsagos(h.link)}">${biztonsagos(h.cim)}</a>`).join('')}</div></section>
         <button class="rogzit-gomb" onclick="rogzitCimlapon(this)">★ Rögzítés a címlapon</button>
       </aside>
@@ -3083,7 +3086,10 @@ function rajzol(){
   // ha cikknézet van megnyitva (#cikk=...), azt rajzoljuk újra
   const utvonal = location.hash.match(/cikk=(.+)/);
   if (utvonal && osszesHir.length){
-    const h = osszesHir.find(x => x.link === decodeURIComponent(utvonal[1]));
+    let keresettLink = '';
+    try { keresettLink = decodeURIComponent(utvonal[1]); } catch(e) {}
+    const h = osszesHir.find(x => x.link === keresettLink)
+      || (nyitottCikk && nyitottCikk.link === keresettLink ? nyitottCikk : null);
     if (h){ cikkNezet(h); return; }
   }
 
