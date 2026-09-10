@@ -514,3 +514,16 @@ html.nh-topic-syncing .tema-sav::before{
   html.nh-topic-syncing .tema-sav{min-height:390px!important}
   .nh-daily-spread .nh-daily-layout{width:calc(100% - 20px)!important;margin:0 10px 10px!important}
 }
+
+
+/* 2026-09-10 — a Mai történetek minden renderelési állapotban feloldja a régi 332 px-es oldalsávot. */
+.foblokk:has(#vegyes-hirek){
+  padding-right:0!important;width:100%!important;max-width:none!important
+}
+.foblokk:has(#vegyes-hirek)>div:first-child,
+.foblokk:has(#vegyes-hirek) #vegyes-hirek{
+  width:100%!important;max-width:none!important
+}
+.foblokk:has(#vegyes-hirek) #vegyes-hirek .nh-daily-layout{
+  box-sizing:border-box!important
+}
