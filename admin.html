@@ -107,41 +107,56 @@ input[type=file]{display:none}
 .tema-panel{border:2px solid #d8e6ea}.tema-panel .panel-fej{background:linear-gradient(120deg,#17384b,#245d70)}.tema-panel.erdely-panel{border-color:#b9e3da}.tema-panel.erdely-panel .panel-fej{background:linear-gradient(120deg,#0f655f,#148b81)}
 .tema-panel .panel-test{background:linear-gradient(180deg,#fbfdfd,#f3f8f8)}.tema-aktiv{display:flex;align-items:center;gap:10px;margin-bottom:16px;padding:11px 13px;border:1px solid #cbdfe4;background:#edf6f7}.tema-aktiv input{width:auto;accent-color:#148b81}.tema-aktiv span{font-weight:700}
 </style>
+<link rel="stylesheet" href="admin-ui.css?v=2bb70177">
 </head>
 <body>
 
 <header>
   <div class="header-in">
-    <span class="logo"><span class="nap">nap</span><span class="hire">híre</span><span class="ro">.ro</span></span>
-    <span class="admin-cimke">Szerkesztőségi admin</span>
+    <a class="logo" href="klasszikus"><span class="nap">nap</span><span class="hire">híre</span><span class="ro">.ro</span></a>
+    <div class="admin-head-actions">
+      <a class="admin-head-link" href="klasszikus">← Híroldal megnyitása</a>
+      <span class="admin-cimke">Szerkesztőségi admin</span>
+    </div>
   </div>
 </header>
 
 <main>
-  <div class="admin-hero">
-    <div><h1>Szerkesztői vezérlőpult</h1><p>A főoldal témái, megjelenése és hírforrásai egy helyen.</p></div>
-    <div class="admin-stamp">NAP HÍRE<br>LIVE CONTROL</div>
+  <div class="admin-hero" id="attekintes">
+    <div><h1>Szerkesztői vezérlőpult</h1><p>A címlap kiemelései, a megjelenés és a hírforrások egyetlen áttekinthető felületen.</p></div>
+    <div class="admin-stamp-wrap">
+      <div class="admin-stamp">NAPHÍRE<br>SZERKESZTŐSÉG</div>
+      <div class="admin-kpis">
+        <div class="admin-kpi"><strong id="kpi-temak">0</strong><span>kézi téma</span></div>
+        <div class="admin-kpi"><strong id="kpi-forrasok">14</strong><span>aktív forrás</span></div>
+        <div class="admin-kpi"><strong>3</strong><span>bannerhely</span></div>
+      </div>
+    </div>
   </div>
+  <nav class="admin-nav" aria-label="Admin szakaszok">
+    <a href="#attekintes">Áttekintés</a>
+    <a href="#tema-magyar">Nap témái</a>
+    <a href="#megjelenes">Megjelenés</a>
+    <a href="#hirdetesek">Hirdetések</a>
+    <a href="#forrasok">Források</a>
+    <a href="#exportalas">Mentés</a>
+  </nav>
   <div class="info-sav">
-    <strong>Így működik ez az admin felület</strong>
-    A naphíre.ro egy statikus fájl, nincs mögötte adatbázis vagy szerver. Ezért az itt beállított
-    dolgok (megjelenés, bannerek, kiemelt téma, kikapcsolt források) egy <code>settings.json</code> nevű
-    fájlba kerülnek. Állítsd be lent, amit szeretnél, töltsd le a <strong>settings.json</strong>-t,
-    majd FTP-vel/tárhelykezelőn töltsd fel <em>ugyanabba a mappába</em>, ahol a <code>naphire.html</code>
-    van (felülírva a régit, ha már létezik). A honlap ezt a fájlt olvassa be induláskor és 5 percenként –
-    innentől MINDEN látogatónál érvényes lesz, nem csak a te böngésződben.
-    Ha már van korábbi settings.json-od, először töltsd be a "Meglévő settings.json betöltése" gombbal, hogy tovább szerkeszthesd.
+    <div class="info-main"><strong>Az admin közvetlenül itt nyílik meg, külön bejelentkezés jelenleg nincs.</strong>
+    A felület automatikusan betölti az élő <code>settings.json</code>-t és a módosításokat helyi piszkozatként megőrzi. Az élesítéshez töltsd le a fájlt, majd frissítsd vele a GitHub-tárhely gyökerében lévő <code>settings.json</code>-t.</div>
+    <span class="info-pill">Helyi szerkesztői eszköz</span>
   </div>
 
-  <div class="gombsor" style="margin-bottom:26px">
-    <button class="gomb-mas" onclick="document.getElementById('betolt-fajl').click()">📂 Meglévő settings.json betöltése</button>
-    <a class="gomb-mas" href="index.html?view=modern" style="display:inline-flex;align-items:center;text-decoration:none">↗ Új főoldal előnézete</a>
-    <a class="gomb-mas" href="legacy.html?view=classic" style="display:inline-flex;align-items:center;text-decoration:none">↗ Régi változat</a>
+  <div class="gombsor top-actions">
+    <button class="gomb-mas" onclick="document.getElementById('betolt-fajl').click()">📂 Settings.json betöltése</button>
+    <a class="gomb-mas" href="klasszikus" style="display:inline-flex;align-items:center">↗ Főoldal ellenőrzése</a>
+    <a class="gomb-mas" href="index.html?view=modern" style="display:inline-flex;align-items:center">↗ Új nézet</a>
+    <span class="draft-note" id="draft-note">✓ Piszkozat mentve</span>
     <input type="file" id="betolt-fajl" accept="application/json">
   </div>
 
   <!-- MEGJELENÉS -->
-  <div class="panel">
+  <div class="panel" id="megjelenes">
     <div class="panel-fej"><span class="jelzo"></span>Alapértelmezett megjelenés</div>
     <div class="panel-test">
       <div class="theme-racs">
@@ -159,7 +174,7 @@ input[type=file]{display:none}
   </div>
 
   <!-- SZLOGEN -->
-  <div class="panel">
+  <div class="panel" id="alapadatok">
     <div class="panel-fej"><span class="jelzo"></span>Alapadatok</div>
     <div class="panel-test">
       <div class="mezo">
@@ -170,7 +185,8 @@ input[type=file]{display:none}
   </div>
 
   <!-- MAGYARORSZÁG NAP TÉMÁJA -->
-  <div class="panel">
+  <div class="topic-grid">
+  <div class="panel tema-panel" id="tema-magyar">
     <div class="panel-fej"><span class="jelzo"></span>A nap témája – Magyarország</div>
     <div class="panel-test">
       <div class="kapcsolo-sor">
@@ -206,7 +222,7 @@ input[type=file]{display:none}
   </div>
 
   <!-- ERDÉLY NAP TÉMÁJA -->
-  <div class="panel tema-panel erdely-panel">
+  <div class="panel tema-panel erdely-panel" id="tema-erdely">
     <div class="panel-fej"><span class="jelzo" style="background:#7be1d1"></span>A nap témája – Erdély</div>
     <div class="panel-test">
       <div class="tema-aktiv">
@@ -225,9 +241,10 @@ input[type=file]{display:none}
       </div>
     </div>
   </div>
+  </div>
 
   <!-- BANNEREK -->
-  <div class="panel">
+  <div class="panel" id="hirdetesek">
     <div class="panel-fej"><span class="jelzo"></span>Hirdetési helyek</div>
     <div class="panel-test">
       <label style="margin-bottom:10px">Fejléc-banner (a logó mellett, a fejléc sorában – üresen semmi sem jelenik meg)</label>
@@ -256,19 +273,24 @@ input[type=file]{display:none}
   </div>
 
   <!-- FORRÁSOK -->
-  <div class="panel">
+  <div class="panel" id="forrasok">
     <div class="panel-fej"><span class="jelzo"></span>Források be- / kikapcsolása</div>
     <div class="panel-test">
-      <div class="jegyzet" style="margin-bottom:14px">A kipipált források hírei NEM jelennek meg a honlapon (se a rovatokban, se a Forrásaink sávban), amíg vissza nem kapcsolod.</div>
+      <div class="jegyzet" style="margin-bottom:14px">A kipipált források hírei nem jelennek meg a honlapon, amíg vissza nem kapcsolod őket.</div>
+      <div class="forras-toolbar">
+        <input class="forras-kereses" type="text" id="forras-kereses" placeholder="Forrás keresése…" oninput="forrasSzures(this.value)">
+        <span class="forras-szamlalo" id="forras-szamlalo">14 aktív forrás</span>
+      </div>
       <div class="forras-racs" id="forras-lista"></div>
     </div>
   </div>
 
-  <div class="gombsor">
-    <button class="gomb-fo" onclick="letoltSettings()">⬇ settings.json letöltése</button>
-    <button class="gomb-mas" onclick="jsonElonezetMutat()">👁 JSON előnézet</button>
+  <div class="export-bar" id="exportalas">
+    <div class="export-copy"><strong>Beállítások mentése</strong><small>Ellenőrizd, majd töltsd le az élesítéshez szükséges fájlt.</small></div>
+    <button class="gomb-mas" onclick="jsonElonezetMutat()">JSON ellenőrzése</button>
+    <button class="gomb-fo" onclick="letoltSettings()">Settings.json letöltése ↓</button>
   </div>
-  <div class="allapot" id="allapot-uzenet">✓ settings.json letöltve – most töltsd fel a szerverre a naphire.html mellé.</div>
+  <div class="allapot" id="allapot-uzenet">✓ A settings.json elkészült. Frissítsd vele a GitHub-tárhely gyökerében lévő fájlt.</div>
   <div class="json-doboz" id="json-doboz" style="display:none"></div>
 </main>
 
@@ -298,6 +320,21 @@ document.getElementById('forras-lista').innerHTML = FORRASOK.map(f => `
     <span class="nev">${f.nev}</span>
     <span class="regio">${f.region === 'erdely' ? 'Erdély' : 'Magyarország'}</span>
   </label>`).join('');
+
+function adminAllapotFrissit(){
+  const kikapcsolt = document.querySelectorAll('#forras-lista input:checked').length;
+  const aktiv = FORRASOK.length - kikapcsolt;
+  const keziTemak = Number(document.getElementById('t-aktiv').checked) + Number(document.getElementById('te-aktiv').checked);
+  document.getElementById('kpi-temak').textContent = keziTemak;
+  document.getElementById('kpi-forrasok').textContent = aktiv;
+  document.getElementById('forras-szamlalo').textContent = aktiv + ' aktív · ' + kikapcsolt + ' kikapcsolva';
+}
+function forrasSzures(kereses){
+  const k = (kereses || '').trim().toLocaleLowerCase('hu-HU');
+  document.querySelectorAll('#forras-lista .forras-sor').forEach(sor => {
+    sor.style.display = !k || sor.textContent.toLocaleLowerCase('hu-HU').includes(k) ? '' : 'none';
+  });
+}
 
 function temaMezokFrissit(melyik){
   const prefix = melyik === 'erdely' ? 'te-' : 't-';
@@ -347,6 +384,14 @@ function beallitasokOsszeallit(){
 
 function letoltSettings(){
   const adat = beallitasokOsszeallit();
+  const hianyos = [];
+  if (adat.kiemeltTema.aktiv && (!adat.kiemeltTema.cim || !adat.kiemeltTema.link)) hianyos.push('magyarországi téma');
+  if (adat.kiemeltTemaErdely.aktiv && (!adat.kiemeltTemaErdely.cim || !adat.kiemeltTemaErdely.link)) hianyos.push('erdélyi téma');
+  if (hianyos.length){
+    alert('A kézi ' + hianyos.join(' és ') + ' bekapcsolva maradt, de nincs kitöltve a cím vagy a cikk linkje.');
+    document.getElementById(hianyos[0].startsWith('magyar') ? 'tema-magyar' : 'tema-erdely').scrollIntoView({behavior:'smooth'});
+    return;
+  }
   const blob = new Blob([JSON.stringify(adat, null, 2)], { type:'application/json' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
@@ -400,11 +445,50 @@ document.getElementById('betolt-fajl').addEventListener('change', e => {
   if (!file) return;
   const olvaso = new FileReader();
   olvaso.onload = () => {
-    try{ beallitasokBetolt(JSON.parse(olvaso.result)); }
+    try{
+      beallitasokBetolt(JSON.parse(olvaso.result));
+      piszkozatMent();
+      adminAllapotFrissit();
+    }
     catch(err){ alert('Nem sikerült beolvasni a fájlt – ellenőrizd, hogy érvényes settings.json-e.'); }
   };
   olvaso.readAsText(file);
 });
+
+const ADMIN_PISZKOZAT_KULCS = 'naphire_admin_piszkozat_v2';
+let adminMenteseTiltva = false;
+let adminMenteseIdozito = null;
+function piszkozatMent(){
+  if (adminMenteseTiltva) return;
+  try{
+    localStorage.setItem(ADMIN_PISZKOZAT_KULCS, JSON.stringify({mentve:Date.now(),adat:beallitasokOsszeallit()}));
+    const jel = document.getElementById('draft-note');
+    jel.classList.add('mutat');
+    clearTimeout(adminMenteseIdozito);
+    adminMenteseIdozito = setTimeout(() => jel.classList.remove('mutat'), 1800);
+  }catch(e){}
+  adminAllapotFrissit();
+}
+async function adminIndit(){
+  adminMenteseTiltva = true;
+  try{
+    const valasz = await fetch('settings.json', {cache:'no-store'});
+    if (valasz.ok) beallitasokBetolt(await valasz.json());
+  }catch(e){}
+  try{
+    const piszkozat = JSON.parse(localStorage.getItem(ADMIN_PISZKOZAT_KULCS) || 'null');
+    if (piszkozat && piszkozat.adat) beallitasokBetolt(piszkozat.adat);
+  }catch(e){}
+  adminMenteseTiltva = false;
+  adminAllapotFrissit();
+}
+document.addEventListener('input', e => {
+  if (e.target.matches('input,textarea')) piszkozatMent();
+});
+document.addEventListener('change', e => {
+  if (e.target.matches('input,textarea')) piszkozatMent();
+});
+adminIndit();
 </script>
 </body>
 </html>
