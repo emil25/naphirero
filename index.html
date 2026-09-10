@@ -1599,7 +1599,7 @@ html{scrollbar-gutter:stable}
 </style>
 <link rel="stylesheet" href="rovat-design.css?v=62f5a084">
 <link rel="stylesheet" href="story-view.css?v=7c9d5547">
-<link rel="stylesheet" href="article-view.css?v=80410d76">
+<link rel="stylesheet" href="article-view.css?v=8b1e9f6f">
 <link rel="stylesheet" href="editorial-home.css?v=116f70e8">
 <script defer src="rovat-design.js?v=e443b15a"></script>
 <script defer src="story-engine.js?v=7a310fec"></script>
@@ -2672,6 +2672,55 @@ function cnIdo(d){
   return oraPerc(d) + ' · ' + (ma ? 'MA' : d.toLocaleDateString('hu-HU',{month:'short',day:'numeric'}).toUpperCase());
 }
 
+let cikkBetoltesAlatt = '';
+function cikkForrasUrlbol(link){
+  let host = '';
+  try { host = new URL(link).hostname.replace(/^www\./,'').toLowerCase(); } catch(e) {}
+  const talalat = FORRASOK.find(f => (f.urls || []).some(u => {
+    try { return new URL(u).hostname.replace(/^www\./,'').toLowerCase() === host; } catch(e) { return false; }
+  }));
+  return talalat || { nev:host || 'Eredeti forrás', region:'magyar', szin:'#607d89', iranyzat:'centrista' };
+}
+function cikkMeta(doc, nev){
+  const elem = doc.querySelector(`meta[property="${nev}"],meta[name="${nev}"]`);
+  return elem ? (elem.getAttribute('content') || '').trim() : '';
+}
+async function hianyzoCikkBetolt(link){
+  if (!link || cikkBetoltesAlatt === link) return;
+  cikkBetoltesAlatt = link;
+  const cel = document.getElementById('tartalom');
+  cel.innerHTML = `<div class="cikkoldal"><div class="cn-fejlec"><a class="vissza" href="#" onclick="location.hash='';return false">← Vissza a címlapra</a></div><div class="cikk-betoltes"><span></span><strong>A cikk adatainak betöltése</strong><small>Az eredeti forrás ellenőrzése folyamatban…</small></div></div>`;
+  try{
+    const valasz = await fetch('/api/rss?url=' + encodeURIComponent(link));
+    if (!valasz.ok) throw new Error('HTTP ' + valasz.status);
+    const html = await valasz.text();
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+    const forras = cikkForrasUrlbol(link);
+    let cim = cikkMeta(doc,'og:title') || cikkMeta(doc,'twitter:title') || doc.title || '';
+    cim = cim.replace(/^(hvg360|hvg|telex|index|444|24\.hu|origo|atv)\s*:\s*/i,'').trim();
+    if (!cim) throw new Error('Hiányzó cím');
+    const lead = cikkMeta(doc,'og:description') || cikkMeta(doc,'description') || cikkMeta(doc,'twitter:description') || '';
+    const kep = kepUrlTisztit(cikkMeta(doc,'og:image') || cikkMeta(doc,'twitter:image') || '');
+    const idoNyers = cikkMeta(doc,'article:published_time') || cikkMeta(doc,'date') || cikkMeta(doc,'datePublished');
+    const ido = new Date(idoNyers || Date.now());
+    const hir = {
+      cim, link, lead, kep,
+      forras:forras.nev,
+      region:forras.region || 'magyar',
+      datum:Number.isNaN(ido.getTime()) ? new Date() : ido,
+      kategoriak:cikkMeta(doc,'article:section') || ''
+    };
+    nyitottCikk = hir;
+    if (!osszesHir.some(h => h.link === link)) osszesHir.unshift(hir);
+    hirGyorsitotarMent(osszesHir);
+    cikkNezet(hir);
+  }catch(e){
+    cel.innerHTML = `<div class="cikkoldal"><div class="cn-fejlec"><a class="vissza" href="#" onclick="location.hash='';return false">← Vissza a címlapra</a></div><div class="cikk-betoltes hiba"><strong>A cikk előnézete most nem tölthető be.</strong><small>Az eredeti cikk ettől még elérhető.</small><a class="eredeti-gomb" href="${biztonsagos(link)}" target="_blank" rel="noopener">Eredeti cikk megnyitása ↗</a></div></div>`;
+  }finally{
+    cikkBetoltesAlatt = '';
+  }
+}
+
 /* ugyanarról az eseményről szóló cikkek – forrásonként a legfrissebb */
 function kapcsolodoHangok(hir){
   const talalatok = osszesHir.filter(h => {
@@ -3085,12 +3134,13 @@ function rajzol(){
 
   // ha cikknézet van megnyitva (#cikk=...), azt rajzoljuk újra
   const utvonal = location.hash.match(/cikk=(.+)/);
-  if (utvonal && osszesHir.length){
+  if (utvonal){
     let keresettLink = '';
     try { keresettLink = decodeURIComponent(utvonal[1]); } catch(e) {}
     const h = osszesHir.find(x => x.link === keresettLink)
       || (nyitottCikk && nyitottCikk.link === keresettLink ? nyitottCikk : null);
     if (h){ cikkNezet(h); return; }
+    if (keresettLink){ hianyzoCikkBetolt(keresettLink); return; }
   }
 
   if (!osszesHir.length){
