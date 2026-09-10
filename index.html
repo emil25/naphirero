@@ -3363,11 +3363,15 @@ const indulasiCache = hirGyorsitotarBetolt();
 const indulasiRegiok = new Set((indulasiCache && indulasiCache.hirek || []).map(h => h.region));
 const teljesCache = indulasiCache && indulasiCache.hirek.length >= 12
   && indulasiRegiok.has('erdely') && indulasiRegiok.has('magyar')
-  && Date.now() - indulasiCache.mentveKor < 24 * 3600 * 1000;
+  && Date.now() - indulasiCache.mentveKor < 30 * 60 * 1000;
 if (teljesCache){
   osszesHir = indulasiCache.hirek.map(h => ({ ...h, rovat:h.rovat || rovatBesorol(h) }));
   gyorsitotarKorabol = indulasiCache.mentveKor;
   tartalekTipus = 'cache';
+  // Induláskor a friss hírkészletből számoljuk újra a témát; a böngészőben
+  // korábban megjegyzett horgony nem írhatja felül a jelenlegi sajtóképet.
+  temaValasztasTorol('magyar');
+  temaValasztasTorol('erdely');
 } else {
   // Élő RSS-adat nélkül ne rajzoljuk ki a régi beépített tartalék híreket.
   // A betöltő állapot marad látható az első élő hírkészletig.
