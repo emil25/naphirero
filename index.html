@@ -3373,11 +3373,6 @@ renderForrasaink();
 // A gyorsítótárat csak előkészítjük. A képernyőt a deferrel betöltött
 // editorial renderer rajzolja ki, így a régi sablon egyetlen képkockára sem villan fel.
 window.__NH_CACHE_READY__ = osszesHir.length > 0;
-// Öt percnél frissebb teljes cache esetén a már ellenőrzött témát azonnal
-// megmutatjuk; régebbi cache-nél az élő RSS-válogatásig marad a semleges helyőrző.
-if (teljesCache && Date.now() - indulasiCache.mentveKor < 5 * 60 * 1000){
-  document.documentElement.classList.remove('nh-topic-syncing');
-}
 
 betoltBeallitasok().then(() => {
   renderForrasaink();
