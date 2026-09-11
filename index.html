@@ -2479,6 +2479,20 @@ function temaValasztasTorol(nev){
   delete TEMA_KIVALASZTAS[nev];
   try{ localStorage.removeItem(temaTarKulcs(nev)); }catch(e){ /* nincs elérhető tároló */ }
 }
+function temaResetAlkalmaz(nev, verzio){
+  const v = String(verzio || '').trim();
+  if (!v) return;
+  const kulcs = 'naphire_tema_reset_' + nev;
+  try{
+    if (localStorage.getItem(kulcs) !== v){
+      temaValasztasTorol(nev);
+      localStorage.setItem(kulcs, v);
+    }
+  }catch(e){
+    if (!TEMA_MEMORIA[nev]) return;
+    temaValasztasTorol(nev);
+  }
+}
 function napTemajaStabil(jelolt, nev, minForras, oraAblak){
   minForras = minForras || MIN_FORRAS_TEMA;
   const most = Date.now();
@@ -3199,6 +3213,7 @@ function rajzol(){
     const temaRegio = aktivRegio === 'erdely' ? 'erdely' : 'magyar';
     const temaBeallitas = temaRegio === 'erdely' ? BEALLITASOK.kiemeltTemaErdely : BEALLITASOK.kiemeltTema;
     const regioHirek = hirek.filter(h => h.region === temaRegio);
+    temaResetAlkalmaz(temaRegio, temaBeallitas && temaBeallitas.reset);
     tema = (temaBeallitas && temaBeallitas.aktiv && temaBeallitas.cim)
       ? temaRogzitettbol(temaBeallitas, regioHirek, temaRegio)
       : napTemajaStabil(regioHirek, temaRegio, temaRegio === 'erdely' ? 2 : 3, 72);
@@ -3218,6 +3233,7 @@ function rajzol(){
   let temaErdely = null;
   if (aktivRegio === 'mind' && aktivRovat === 'mind' && !aktivForras && !keresoSzo){
     const erdelyJelolt = marad.filter(h => h.region === 'erdely');
+    temaResetAlkalmaz('erdely', BEALLITASOK.kiemeltTemaErdely && BEALLITASOK.kiemeltTemaErdely.reset);
     temaErdely = (BEALLITASOK.kiemeltTemaErdely && BEALLITASOK.kiemeltTemaErdely.aktiv && BEALLITASOK.kiemeltTemaErdely.cim)
       ? temaRogzitettbol(BEALLITASOK.kiemeltTemaErdely, erdelyJelolt, 'erdely')
       : napTemajaStabil(erdelyJelolt, 'erdely', 2, 72);

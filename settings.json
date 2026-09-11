@@ -16,12 +16,12 @@
     }
   },
   "kiemeltTema": {
-    "aktiv": true,
-    "cim": "Kelemen Hunor elhatárolódott az RMDSZ szenátorától a görögországi lobbiút miatt",
-    "lead": "Antal Lórántnak nem volt mit keresnie sem a magángépen, sem a görögországi lobbiúton – jelentette ki Kelemen Hunor. Az RMDSZ elnöke hibának nevezte, hogy a szövetség szenátora is tagja volt a romániai küldöttségnek.",
-    "kep": "https://cdn.szekelyhon.ro/udvarhely/aktualis/2026/03/sm_korond-bolcsode-atado-oa-marc2626.jpg",
-    "link": "https://kronika.ro/belfold/kelemen-hunor-elhatarolodott-az-rmdsz-szenatoratol-a-gorogorszagi-lobbiut-miatt",
-    "forras": "Krónika",
+    "aktiv": false,
+    "cim": "",
+    "lead": "",
+    "kep": "",
+    "link": "",
+    "forras": "",
     "kulcsszavak": [
       "Antal Lóránt",
       "Mykonos",
@@ -40,7 +40,8 @@
         "forras": "Székelyhon",
         "datum": "2026-09-09T12:00:00+03:00"
       }
-    ]
+    ],
+    "reset": 1789129355582
   },
   "kiemeltTemaErdely": {
     "aktiv": true,

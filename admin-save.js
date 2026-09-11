@@ -47,6 +47,8 @@
   async function save() {
     const data = typeof window.beallitasokOsszeallit === 'function' ? window.beallitasokOsszeallit() : null;
     if (!data || !validate(data)) return;
+    if (data.kiemeltTema && !data.kiemeltTema.aktiv) data.kiemeltTema.reset = Date.now();
+    if (data.kiemeltTemaErdely && !data.kiemeltTemaErdely.aktiv) data.kiemeltTemaErdely.reset = Date.now();
     const token = getToken();
     if (!token) { status('Az éles mentéshez írd be az admin kódot.', 'error'); tokenField().focus(); return; }
     const button = document.querySelector('[data-server-save]');
