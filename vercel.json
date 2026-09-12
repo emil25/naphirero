@@ -15,7 +15,7 @@
     },
     {
       "source": "/klasszikus",
-      "destination": "/index.html"
+      "destination": "/classic-editorial.html"
     }
   ],
   "headers": [
