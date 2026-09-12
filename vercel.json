@@ -15,7 +15,7 @@
     },
     {
       "source": "/klasszikus",
-      "destination": "/index.html"
+      "destination": "/legacy.html"
     }
   ],
   "headers": [
@@ -91,7 +91,7 @@
   "redirects": [
     {
       "source": "/",
-      "destination": "/uj.html",
+      "destination": "/klasszikus",
       "permanent": false
     }
   ]
