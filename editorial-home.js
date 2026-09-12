@@ -210,6 +210,7 @@
  if (osszesHir && osszesHir.length){
   rajzol();
   refreshRomanPress();
-  document.documentElement.classList.remove('nh-booting');
  }
+ window.__NH_EDITORIAL_READY__ = true;
+ window.__NH_REVEAL__?.();
 })();
