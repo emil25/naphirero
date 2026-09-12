@@ -15,7 +15,7 @@
     },
     {
       "source": "/klasszikus",
-      "destination": "/legacy.html"
+      "destination": "/index.html"
     }
   ],
   "headers": [
