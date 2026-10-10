@@ -45,4 +45,6 @@ test('A Körkép külön sorrendben rendezi a napi válogatást és a többforr�
   assert.match(css, /\.rd-sport \.rd-sport-layout/);
   assert.match(css, /\.rd-kultura \.rd-culture-layout/);
   assert.match(css, /clip-path:polygon/);
+  assert.match(css, /\.nh-trending-host\{background:#173f49!important/);
+  assert.match(css, /\.ro-press-river\{display:grid!important;grid-template-columns:repeat\(3,minmax\(0,1fr\)\)!important/);
 });
