@@ -315,3 +315,20 @@ html.nh-korkep .rd-kultura .rd-culture-story{border-top:1px solid #bca9c2!import
  html.nh-korkep .rd-kultura .rd-culture-layout{grid-template-columns:1fr!important}
  html.nh-korkep .rd-kultura .rd-culture-bottom{grid-template-columns:1fr!important}
 }
+
+/* A napi mozaik ne hagyjon üres bal hasábot: főcikk felül, négy kitöltött történet alatta. */
+html.nh-korkep .nh-daily-spread .nh-daily-layout{grid-template-columns:minmax(0,1fr)!important;gap:20px!important}
+html.nh-korkep .nh-daily-spread .nh-daily-river{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;align-items:start!important;gap:20px!important}
+html.nh-korkep .nh-daily-spread .nh-daily-card{display:flex!important;flex-direction:column!important;min-width:0!important;padding:0 0 14px!important;border-bottom:2px solid #17645f!important}
+html.nh-korkep .nh-daily-spread .nh-daily-card .nh-photo{width:100%!important;height:auto!important;min-height:0!important;aspect-ratio:16/10!important;margin-bottom:10px!important}
+html.nh-korkep .nh-daily-spread .nh-daily-card .nh-copy{padding:0!important}
+html.nh-korkep .nh-daily-spread .nh-daily-card h3{font-size:clamp(17px,1.45vw,21px)!important}
+html.nh-korkep .nh-daily-spread .nh-daily-card .nh-meta{margin-bottom:6px!important}
+html.nh-korkep .nh-daily-spread .nh-daily-card .nh-sources{width:100%;margin-top:8px!important}
+@media(max-width:900px){html.nh-korkep .nh-daily-spread .nh-daily-river{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+@media(max-width:600px){
+ html.nh-korkep .nh-daily-spread .nh-daily-river{grid-template-columns:1fr!important;gap:0!important}
+ html.nh-korkep .nh-daily-spread .nh-daily-card{display:grid!important;grid-template-columns:106px minmax(0,1fr)!important;column-gap:13px!important;flex-direction:row!important;padding:12px 0!important}
+ html.nh-korkep .nh-daily-spread .nh-daily-card .nh-photo{grid-column:1;grid-row:1;width:106px!important;height:82px!important;aspect-ratio:auto!important;margin:0!important}
+ html.nh-korkep .nh-daily-spread .nh-daily-card .nh-copy{grid-column:2;grid-row:1}
+}
