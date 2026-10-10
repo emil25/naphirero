@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="hu">
+<html lang="hu" class="nh-booting" data-nh-edition="legacy">
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval' data: blob:; connect-src *; img-src * data: blob:; style-src * 'unsafe-inline'; font-src * data:;">
@@ -988,6 +988,8 @@ footer{background:var(--ej);color:#8f98a8;margin-top:40px}
 }
 :focus-visible{outline:2px solid var(--parazs);outline-offset:2px}
 </style>
+<link rel="stylesheet" href="home-runtime.css?v=64af3067" onerror="document.documentElement.dataset.nhLoadError='1'">
+<script defer src="home-runtime.js?v=38da86c3" onerror="document.documentElement.dataset.nhLoadError='1'"></script>
 </head>
 <body>
 
@@ -1116,15 +1118,9 @@ const NOILEG_FORRAS = [
   { nev:'Nőileg', urls:['https://noileg.ro/feed/','https://noileg.ro/feed','https://noileg.ro/rss'] },
 ];
 
-/* Letöltési stratégiák – sorban próbálja őket, amíg az egyik nem válaszol.
-   Az rss2json kész JSON-t ad vissza, a többi CORS-proxyn át hozza a nyers XML-t. */
+/* A hírforrásokat a saját szerveroldali RSS-végpont közvetíti. */
 const STRATEGIAK = [
-  u => ({ url: `/rss?url=${encodeURIComponent(u)}`, tipus:'text' }), // szerveroldali funkció (Cloudflare Pages) – ha be van állítva, ez a legmegbízhatóbb
-  u => ({ url: u, tipus:'text' }),  // közvetlen próba – sok RSS-nél ez is működik, és ingyenes/korlátlan
-  u => ({ url:`https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(u)}`, tipus:'text' }),
-  u => ({ url:`https://api.allorigins.win/raw?url=${encodeURIComponent(u)}`, tipus:'text' }),
-  u => ({ url:`https://api.allorigins.win/get?url=${encodeURIComponent(u)}`, tipus:'json' }),
-  u => ({ url:`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(u)}`, tipus:'rss2json' }), // erősen korlátozott, ezért utolsó próba
+  u => ({ url: `/api/rss?url=${encodeURIComponent(u)}`, tipus:'text' })
 ];
 
 let osszesHir = [];
@@ -1156,19 +1152,7 @@ function fejlecBannerHTML(){
   </a>`;
 }
 async function betoltBeallitasok(){
-  try{
-    const valasz = await fetch('settings.json', { cache:'no-store' });
-    if (valasz.ok){
-      const nyers = await valasz.json();
-      BEALLITASOK = { ...BEALLITASOK, ...nyers,
-        banners: { ...BEALLITASOK.banners, ...(nyers.banners||{}) },
-        kiemeltTema: { ...BEALLITASOK.kiemeltTema, ...(nyers.kiemeltTema||{}) }
-      };
-    }
-  }catch(e){ /* nincs settings.json, marad az alapértelmezés */ }
-  document.querySelectorAll('.szlogen').forEach(el => el.textContent = BEALLITASOK.tagline);
-  const fejlecBanner = document.getElementById('fejlec-banner');
-  if (fejlecBanner) fejlecBanner.innerHTML = fejlecBannerHTML();
+  return NHHome.loadSettings();
 }
 
 /* ---------- Segédek ---------- */
@@ -1291,18 +1275,7 @@ function jsonFeldolgoz(j, forras){
 }
 
 async function forrasFeldolgoz(forras){
-  // minden lehetséges feed-címet minden stratégiával végigpróbál
-  for (const url of forras.urls){
-    for (const strategia of STRATEGIAK){
-      const eredmeny = await leker(url, strategia);
-      if (!eredmeny) continue;
-      const hirek = eredmeny.mod === 'json'
-        ? jsonFeldolgoz(eredmeny.adat, forras)
-        : xmlFeldolgoz(eredmeny.adat, forras);
-      if (hirek && hirek.length) return hirek;
-    }
-  }
-  throw new Error('nem elérhető');
+  return NHHome.loadSource(forras);
 }
 
 /* Mentett előzmény tartalék: ha az ingyenes proxyk épp mind akadoznak, ne üres hibaüzenet
@@ -1311,7 +1284,7 @@ const HIR_GYORSITOTAR_KULCS = 'naphire_hir_gyorsitotar_v1';
 let gyorsitotarKorabol = null; // ha a jelenlegi hírek a tartalékból jönnek, ide kerül az időbélyeg
 function hirGyorsitotarMent(hirek){
   try{
-    const konnyu = hirek.slice(0, 200).map(h => ({ ...h, datum: h.datum.toISOString() }));
+    const konnyu = hirek.slice(0, 400).map(h => ({ ...h, datum: h.datum.toISOString() }));
     localStorage.setItem(HIR_GYORSITOTAR_KULCS, JSON.stringify({ hirek: konnyu, mentveKor: Date.now() }));
   }catch(e){ /* nincs elérhető tároló, nem gond */ }
 }
@@ -1325,50 +1298,7 @@ function hirGyorsitotarBetolt(){
 }
 
 async function mindenHirBetolt(){
-  const gomb = document.getElementById('frissit-gomb');
-  gomb.classList.add('forog');
-  hibasForrasok = [];
-  const gyujto = [];
-
-  const osszesit = () => {
-    // duplikátumok kiszűrése cím alapján, időrendi sorrend
-    const latott = new Set();
-    const hirek = gyujto.filter(h => {
-      const kulcs = h.cim.toLowerCase();
-      if (latott.has(kulcs)) return false;
-      latott.add(kulcs);
-      return true;
-    });
-    hirek.sort((a,b) => b.datum - a.datum);
-    osszesHir = hirek;
-    gyorsitotarKorabol = null;
-    if (osszesHir.length) rajzol(); // már az első beérkező forrásnál megjelenik az oldal
-  };
-
-  const aktivForrasok = FORRASOK.filter(f => !BEALLITASOK.forrasokKi.includes(f.nev));
-  const kesleltet = ms => new Promise(r => setTimeout(r, ms));
-  await Promise.all(aktivForrasok.map((f, i) =>
-    kesleltet(i * 180) // ne induljon minden forrás lekérése egyszerre – a proxyk másodpercenkénti korlátot tartanak
-      .then(() => forrasFeldolgoz(f))
-      .then(h => { gyujto.push(...h); osszesit(); })
-      .catch(() => { hibasForrasok.push(f.nev); })
-  ));
-
-  if (osszesHir.length){
-    hirGyorsitotarMent(osszesHir);
-  } else {
-    // minden forrás bukott ebben a körben – nézzük, van-e korábbi, elmentett hírkészlet
-    const tartalek = hirGyorsitotarBetolt();
-    if (tartalek && tartalek.hirek.length){
-      osszesHir = tartalek.hirek;
-      gyorsitotarKorabol = tartalek.mentveKor;
-    }
-  }
-
-  gomb.classList.remove('forog');
-  document.getElementById('frissitve').textContent =
-    'Frissítve: ' + new Date().toLocaleTimeString('hu-HU',{hour:'2-digit',minute:'2-digit'});
-  rajzol();
+  return NHHome.refresh();
 }
 
 /* ---------- Videó- és blogsáv: külön adatkészletek, nem keverednek a hírekbe ---------- */
@@ -2436,22 +2366,14 @@ document.getElementById('kereso-mezo').addEventListener('input', e => {
   keresoSzo = e.target.value.trim();
   rajzol();
 });
-document.getElementById('frissit-gomb').addEventListener('click', () => betoltBeallitasok().then(mindenHirBetolt));
+document.getElementById('frissit-gomb').addEventListener('click', () => NHHome.refresh());
 
 /* ---------- Indítás ---------- */
 document.getElementById('mai-datum').textContent =
   new Date().toLocaleDateString('hu-HU',{year:'numeric',month:'long',day:'numeric',weekday:'long'});
 document.getElementById('ev').textContent = new Date().getFullYear();
 
-betoltBeallitasok().then(() => {
-  renderForrasaink();
-  mindenHirBetolt();
-  videoSavFrissit();
-});
-setInterval(() => {
-  betoltBeallitasok().then(mindenHirBetolt);
-  videoSavFrissit();
-}, 5 * 60 * 1000); // 5 percenként automatikus frissítés
+// A közös indító a végleges rendererek és a beállítások után rajzol.
 </script>
 </body>
 </html>

@@ -1,6 +1,10 @@
 (() => {
 const KEY='naphire-stories-v1';let saved;try{saved=JSON.parse(localStorage.getItem(KEY));if(!Array.isArray(saved?.stories))saved=null}catch{}
 const store=new NHStories.Store(saved);let storageError=false;
+const TOPIC_KEY='naphire-topic-updates-v1';let topicSaved;
+try{topicSaved=JSON.parse(localStorage.getItem(TOPIC_KEY))}catch{}
+const topicTracker=new NHStories.TopicTracker(topicSaved);
+const saveTopics=()=>{try{localStorage.setItem(TOPIC_KEY,JSON.stringify(topicTracker.data))}catch{}};
 let indexedInput=null;let articleIndex=new Map();
 function rebuildIndex(){articleIndex=new Map();for(const story of store.data.stories)for(const h of story.articles)articleIndex.set(h.link,story)}
 rebuildIndex();
@@ -12,7 +16,7 @@ const latest=s=>Math.max(...s.articles.map(h=>Date.parse(h.datum)));
 const href=s=>'#tortenet='+s.id;
 const link=h=>`<a href="${esc(h.link)}" target="_blank" rel="noopener noreferrer">${esc(h.forras)} ↗</a>`;
 const sourceLine=h=>`${forrasIkonHTML(h)}<span><span>${esc(h.forras)} · ${new Date(h.datum).toLocaleString('hu-HU')}</span><h3>${esc(h.cim)}</h3>${link(h)}</span>`;
-const excerpt=h=>String(h.lead||h.cim).replace(/The post[\s\S]*$/i,'').trim();
+const excerpt=h=>NHStories.cleanExcerpt(h.lead||'');
 function route(){const m=location.hash.match(/^#tortenet=([\w-]+)$/);return m&&m[1]}
 function sourceMarks(story,compact=true){
  const unique=[...new Map(story.articles.map(h=>[h.forras,h])).values()];
@@ -32,19 +36,48 @@ function renderOverview(mode){
  document.getElementById('tartalom').innerHTML=`<div class="story-page"><a class="story-back" href="#">← Főoldal</a><header class="story-hero"><h1>${mode==='ora'?'Utolsó óra':mode==='kovetett'?'Követett történetek':'NapHíre ajánlja'}</h1><p>${mode==='ajanlja'?'Az elmúlt 48 óra történetei, a források száma szerint.':mode==='kovetett'?'Ebben a böngészőben követett történetek.':'Az elmúlt 60 percben megjelent cikkek történetei.'}</p></header><nav class="story-nav"><a href="#tortenetek=ajanlja">NapHíre ajánlja</a><a href="#tortenetek=ora">Utolsó óra</a><a href="#tortenetek=kovetett">Követett</a></nav>${list.slice(0,40).map(s=>`<a class="story-open" href="${href(s)}"><span>${sources(s)} forrás · ${s.articles.length} cikk · ${idoOta(new Date(latest(s)))}${store.data.following[s.id]!=null&&store.data.following[s.id]<s.revision?' · ÚJ FEJLEMÉNY':''}</span><strong>${esc(title(s))}</strong>${sourceMarks(s)}</a>`).join('')||'<p style="padding:24px">Ebben a nézetben még nincs történet.</p>'}</div>`;
 }
 const overview=document.createElement('button');overview.type='button';overview.textContent='Történetek';overview.onclick=e=>{e.stopPropagation();location.hash='tortenetek=ajanlja'};document.querySelector('.rovatok-in').append(overview);
+const dateText=value=>{const date=new Date(value);return Number.isFinite(+date)?date.toLocaleString('hu-HU',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}):'Időpont nem elérhető'};
+function renderReader(story,selected){
+ const target=document.getElementById('tartalom');
+ const unique=new Map();
+ for(const h of [selected,...(story?.articles||[])]){const key=NHStories.canonicalLink(h?.link);if(key&&!unique.has(key))unique.set(key,h)}
+ const articles=[...unique.values()].sort((a,b)=>Date.parse(b.datum)-Date.parse(a.datum));
+ if(!articles.length)return;
+ const publishers=new Set(articles.map(h=>h.forras)).size;
+ const settings=typeof BEALLITASOK==='undefined'?{}:BEALLITASOK;
+ let editorial=NHStories.summaryFor(articles,settings,selected.link);
+ if(!editorial){const pin=[settings.kiemeltTema,settings.kiemeltTemaErdely].find(t=>t?.aktiv&&NHStories.canonicalLink(t.link)===NHStories.canonicalLink(selected.link));editorial=pin?.lead?.trim()||''}
+ const summary=editorial||excerpt(selected);
+ const image=selected.kep||(story?articles.find(h=>h.kep)?.kep:'');
+ const following=story&&store.data.following[story.id]!=null;
+ const region={erdely:'Erdély',magyar:'Magyarország',vilag:'Világ',roman:'Román lapszemle'}[selected.newsRegion||selected.region]||'NapHíre';
+ const updates=(story?.events||[]).filter(event=>event.type==='updated').slice(-5).reverse();
+ const sourceCards=articles.map(h=>`<article class="nh-reader-source">${forrasIkonHTML(h)}<div><div class="nh-reader-source-meta"><strong>${esc(h.forras)}</strong><time datetime="${esc(new Date(h.datum).toISOString())}">${esc(dateText(h.datum))}</time></div><h3><a href="${esc(NHStories.canonicalLink(h.link))}" target="_blank" rel="noopener noreferrer">${esc(h.cim)}</a></h3>${excerpt(h)?`<p>${esc(excerpt(h))}</p>`:''}<a class="nh-reader-original" href="${esc(NHStories.canonicalLink(h.link))}" target="_blank" rel="noopener noreferrer">Eredeti cikk · ${esc(h.forras)} ↗</a></div></article>`).join('');
+ target.innerHTML=`<article class="nh-reader"><div class="nh-reader-top"><a href="#" class="nh-reader-back">← Vissza a főoldalra</a><span>NAP HÍRE · TÖBB NÉZŐPONT</span></div><header class="nh-reader-header"><div class="nh-reader-kicker"><span>${esc(region)}</span><span>${publishers} forrás · ${articles.length} cikk</span></div><h1>${esc(selected.cim)}</h1><div class="nh-reader-meta">${forrasIkonHTML(selected,'kicsi')}<strong>${esc(selected.forras)}</strong><time>${esc(dateText(selected.datum))}</time>${story?`<button type="button" id="story-follow" aria-pressed="${!!following}">${following?'✓ Követed ezt a történetet':'＋ Történet követése'}</button>`:''}</div></header>${image?`<figure class="nh-reader-photo"><img src="${esc(image)}" alt="" fetchpriority="high" decoding="async" onerror="this.closest('figure').remove()"><figcaption>Kép forrása: ${esc(selected.kep?selected.forras:articles.find(h=>h.kep)?.forras||selected.forras)}</figcaption></figure>`:''}<nav class="nh-reader-nav" aria-label="A történet részei"><a href="#reader-what">Mi történt?</a><a href="#reader-sources">${publishers>1?'Ugyanerről írnak':'Eredeti forrás'}</a><a href="#reader-timeline">Idővonal</a></nav><section class="nh-reader-summary" id="reader-what"><div><span class="nh-reader-eyebrow">A TÖRTÉNET RÖVIDEN</span><h2>Mi történt?</h2></div><div>${summary?summary.split(/\n\s*\n/).map(paragraph=>`<p>${esc(paragraph)}</p>`).join(''):'<p>Ehhez a cikkhez még nem érkezett rövid leírás. A részleteket az eredeti forrásnál olvashatod.</p>'}<small>${editorial?'Szerkesztőségi összefoglaló · NapHíre':`Forrásrészlet · ${esc(selected.forras)}`}</small></div></section><section id="reader-sources" class="nh-reader-sources"><div class="nh-reader-section-head"><div><span class="nh-reader-eyebrow">AZ EREDETI CIKKEK</span><h2>${publishers>1?'Ugyanerről írnak':'Eredeti forrás'}</h2></div><span>${publishers} forrás · ${articles.length} cikk</span></div><div class="nh-reader-source-grid">${sourceCards}</div></section><section id="reader-timeline" class="nh-reader-history"><div class="nh-reader-section-head"><div><span class="nh-reader-eyebrow">A MEGJELENÉSEK SORRENDJE</span><h2>A történet idővonala</h2></div></div><ol>${articles.map(h=>`<li><time>${esc(dateText(h.datum))}</time><div><span>${esc(h.forras)}</span><a href="${esc(NHStories.canonicalLink(h.link))}" target="_blank" rel="noopener noreferrer">${esc(h.cim)} ↗</a></div></li>`).join('')}</ol>${updates.length?`<div class="nh-reader-revisions"><h3>Módosult cikkek</h3>${updates.map(event=>`<p><strong>${esc(event.source)}</strong> · ${esc(event.title)}<small>NapHíre észlelte: ${esc(dateText(event.at))}</small></p>`).join('')}</div>`:''}</section><a href="#" class="nh-reader-back nh-reader-bottom">← Vissza a főoldalra</a>${storageError?'<p role="alert">A böngésző tárolója nem elérhető. A történetkövetés nem mentődik.</p>':''}</article>`;
+ target.querySelectorAll('.nh-reader-nav a').forEach(a=>a.onclick=event=>{event.preventDefault();target.querySelector(a.getAttribute('href')).scrollIntoView({behavior:'smooth'})});
+ const follow=target.querySelector('#story-follow');
+ if(follow)follow.onclick=()=>{if(following)delete store.data.following[story.id];else store.data.following[story.id]=story.revision;save();renderReader(story,selected)};
+ if(following){store.data.following[story.id]=story.revision;save()}
+}
 function renderStory(key){
- const s=store.get(key);const target=document.getElementById('tartalom');
- if(!s){target.innerHTML='<p>A történet ezen a böngészőn még nem érhető el. <a href="#">Vissza a főoldalra</a></p>';return}
- const articles=[...s.articles].sort((a,b)=>Date.parse(b.datum)-Date.parse(a.datum));
- const unique=[...new Map(articles.map(h=>[h.forras,h])).values()];const following=store.data.following[s.id]!=null;
- const fresh=following&&store.data.following[s.id]<s.revision;
- target.innerHTML=`<article class="story-page"><a href="#" class="story-back">← Főoldal</a><header class="story-hero"><span class="story-label">EGY TÖRTÉNET – TÖBB FORRÁS</span><h1>${esc(title(s))}</h1><p>${sources(s)} forrás · ${articles.length} kapcsolódó cikk · Legutóbbi cikk: ${idoOta(new Date(latest(s)))}</p><div class="story-publishers">${sourceMarks(s,false)}</div><button type="button" id="story-follow">${following?'Követés kikapcsolása':'Történet követése'}</button>${fresh?'<strong class="story-new">Új fejlemény érkezett</strong>':''}</header><nav class="story-nav"><a href="#story-what">Mi történt?</a><a href="#story-sources">Mit írnak róla?</a><a href="#story-changes">Mi változott?</a></nav><section id="story-what"><h2>Mi történt?</h2><p>${esc(excerpt(articles[0]))}</p><small>Forrásrészlet: ${link(articles[0])}</small></section><section><h2>Mi a legfontosabb?</h2><p class="story-note">A források kiemelt állításai, automatikusan kiválasztott RSS-részletekkel.</p><ul class="story-points">${unique.slice(0,5).map(h=>`<li>${esc(excerpt(h))} <small>${link(h)}</small></li>`).join('')}</ul></section><section><h2>Napi összkép · NapHíre AI</h2><p class="story-note">Az AI-elemzés még nincs bekötve. Közös tényállítást, fontossági értékelést és automatikus eltérésvizsgálatot ezért még nem készítünk.</p></section><section id="story-sources"><h2>Mit írnak róla?</h2><p class="story-note">Az ehhez az eseményhez kapcsolt cikkek. A korábbi, hasonló témájú híreket lent, az Előzmények között találod.</p>${articles.map(h=>`<div class="story-source">${sourceLine(h)}</div>`).join('')}</section><section><h2>Források szerint</h2>${unique.map(h=>`<div class="story-perspective">${forrasIkonHTML(h)}<span><h3>${esc(h.forras)}</h3><p>${esc(excerpt(h))}</p>${link(h)}</span></div>`).join('')}</section><section><h2>Eltérések</h2><p>A források közötti érdemi eltérések nincsenek automatikusan ellenőrizve. Ez nem jelenti azt, hogy minden forrás egyetért.</p></section><section id="story-changes"><h2>Mi változott?</h2><p>Az új cikkek a meglévő történethez kapcsolódnak. A lista a NapHíre által észlelt frissítéseket mutatja.</p><ol class="story-timeline">${s.events.slice(-20).reverse().map(e=>`<li><time>${new Date(e.at).toLocaleString('hu-HU')}</time><span>${esc(e.source||'Szerkesztés')} · ${esc(e.title)}</span></li>`).join('')}</ol></section>${earlierStories(s)}<details class="story-editor"><summary>Szerkesztői javítás · helyi előnézet</summary><p>Ezek a módosítások ebben a böngészőben tárolódnak. Éles szerkesztői jogosultságkezelés még nincs bekötve.</p><label>Összevonás ezzel a történettel<select id="story-merge-target">${store.data.stories.filter(o=>o!==s).map(o=>`<option value="${o.id}">${esc(title(o))}</option>`).join('')}</select></label><button id="story-merge">Összevonás</button><fieldset><legend>Külön történetbe helyezendő cikkek</legend>${articles.map((h,i)=>`<label><input type="checkbox" name="story-split" value="${i}"> ${esc(h.forras)} – ${esc(h.cim)}</label>`).join('')}</fieldset><button id="story-split">Kijelölt cikkek szétválasztása</button><p id="story-editor-status" role="status"></p></details>${storageError?'<p role="alert">A böngésző tárolója megtelt vagy nem elérhető. A változások nem mentődnek.</p>':''}</article>`;
- // A szekciónavigáció ne változtassa meg a történet útvonalát.
- target.querySelectorAll('.story-nav a').forEach(a=>a.onclick=e=>{e.preventDefault();target.querySelector(a.getAttribute('href')).scrollIntoView({behavior:'smooth'})});
- target.querySelector('#story-follow').onclick=()=>{if(following)delete store.data.following[s.id];else store.data.following[s.id]=s.revision;rebuildIndex();save();renderStory(s.id)};
- if(following){store.data.following[s.id]=s.revision;save()}
- target.querySelector('#story-merge').onclick=()=>{try{store.merge(s.id,target.querySelector('#story-merge-target').value);rebuildIndex();save();renderStory(s.id)}catch(e){target.querySelector('#story-editor-status').textContent=e.message}};
- target.querySelector('#story-split').onclick=()=>{try{const links=[...target.querySelectorAll('[name=story-split]:checked')].map(n=>articles[Number(n.value)].link);store.split(s.id,links);rebuildIndex();save();renderStory(s.id)}catch(e){target.querySelector('#story-editor-status').textContent=e.message}};
+ const story=store.get(key);
+ if(!story){document.getElementById('tartalom').innerHTML='<div class="nh-reader"><p>A történet ezen a böngészőn még nem érhető el.</p><a class="nh-reader-back" href="#">← Vissza a főoldalra</a></div>';return}
+ const selected=[...story.articles].sort((a,b)=>Date.parse(b.datum)-Date.parse(a.datum))[0];
+ renderReader(story,selected);
+}
+// A főoldali cikk-kattintás és a történetlink ugyanazt az olvasóoldalt használja.
+cikkNezet=function(article){renderReader(articleIndex.get(article.link),article)};
+function topicUpdateHTML(notice,articles){
+ if(!notice)return '';
+ const labels=[];
+ if(notice.sources.length)labels.push(`+${notice.sources.length} új forrás`);
+ if(notice.added.length)labels.push(`${notice.added.length} új cikk`);
+ if(notice.updated.length)labels.push(`${notice.updated.length} frissített cikk`);
+ const added=new Set(notice.added);
+ const links=new Set([...notice.added,...notice.updated]);
+ const changed=articles.filter(h=>links.has(NHStories.canonicalLink(h.link)));
+ const list=changed.map(h=>`<li><a href="${esc(NHStories.canonicalLink(h.link))}" target="_blank" rel="noopener noreferrer">${forrasIkonHTML(h,'kicsi')}<span><small>${esc(h.forras)} · ${added.has(NHStories.canonicalLink(h.link))?'Új beszámoló':'Módosult cím vagy bevezető'}</small><strong>${esc(h.cim)}</strong></span></a></li>`).join('');
+ return `<section class="nh-topic-update" aria-label="A történet frissítései"><div class="nh-topic-update-head" role="status"><h3 class="nh-topic-update-label">Mi változott azóta?</h3><span>${labels.map(esc).join(' · ')}</span><small>Az előző megtekintésedhez képest · észlelve ${esc(new Date(notice.at).toLocaleTimeString('hu-HU',{hour:'2-digit',minute:'2-digit'}))}</small></div>${list?`<ul class="nh-topic-update-list">${list}</ul>`:''}<p class="nh-topic-update-note">A jelzés az új vagy módosult beszámolókat mutatja; önmagában nem jelent új fejleményt az ügyben.</p></section>`;
 }
 // Közös történetadatok a meglévő főoldali elemek számára.
 nhSameEvent=(a,b)=>{
@@ -78,7 +111,11 @@ for(const name of ['napTemajaHTML','erdelyTemaHTML']){
    story.articles=current;
    rebuildIndex();
   }
-  return original({...topic,fo:newest,osszes:current,tobbi:current.filter(h=>h.link!==newest.link),forrasDb:new Set(current.map(h=>h.forras)).size});
+  const key=name+':'+(topic.rogzitett?NHStories.canonicalLink(topic.fo.link):(articleIndex.get(topic.fo.link)?.id||NHStories.canonicalLink(topic.fo.link)));
+  const observed=current.map(h=>osszesHir.find(article=>article.link===h.link)||h);
+  const notice=topicTracker.observe(key,observed);saveTopics();
+  const html=original({...topic,fo:newest,osszes:current,tobbi:current.filter(h=>h.link!==newest.link),forrasDb:new Set(current.map(h=>h.forras)).size});
+  return html.replace('<div class="ts-racs">',topicUpdateHTML(notice,observed)+'<div class="ts-racs">');
  };
 }
 const previous=rajzol;
@@ -93,6 +130,7 @@ rajzol=function(){
   const s=articleIndex.get(url);if(!s||sources(s)<2)continue;
   let host=anchor.closest('.tema-sav-in')||anchor.closest('.nh-event');
   if(!host){host=document.createElement('article');host.className=anchor.className+' nh-event';anchor.className='nh-event-main';anchor.replaceWith(host);host.append(anchor)}
+  if(host.matches('.nh-daily-lead,.nh-daily-card'))host.querySelector('.nh-sources')?.remove();
   if(host.querySelector(`[data-story-open="${s.id}"]`))continue;
   const a=document.createElement('a');a.dataset.storyOpen=s.id;a.href=href(s);
   if(host.classList.contains('tema-sav-in')){
@@ -102,7 +140,7 @@ rajzol=function(){
   }else if(host.classList.contains('nh-region-row')){
    a.className='story-open story-open-compact';a.innerHTML=`<span>${sources(s)} FORRÁS · ÖSSZKÉP ↗</span>`;host.append(a);
   }else{
-   a.className='story-open';a.innerHTML=`<span>EGY TÖRTÉNET · ${sources(s)} forrás · ${s.articles.length} cikk</span>${sourceMarks(s)}<strong>Történet megnyitása ↗</strong>`;host.append(a);
+   a.className='story-open story-open-compact';a.innerHTML=`<strong>Ugyanerről írnak · ${sources(s)} forrás ↗</strong>`;host.append(a);
   }
  }
 };
@@ -115,15 +153,15 @@ window.addEventListener('hashchange',event=>{
  }
 },true);
 document.addEventListener('click',event=>{
- const back=event.target.closest('.story-back');if(!back)return;
+ const back=event.target.closest('.story-back,.nh-reader-back');if(!back)return;
  event.preventDefault();event.stopImmediatePropagation();
  history.pushState(null,'',location.pathname+location.search);
  aktivRovat='mind';aktivForras=null;keresoSzo='';
  rajzol();window.scrollTo({top:0,behavior:'instant'});
 },true);
 
-const previousRovat=valtRovat;valtRovat=function(r){if(route()||location.hash.startsWith('#tortenetek='))history.replaceState(null,'',location.pathname);previousRovat(r)};
-const previousRegio=valtRegio;valtRegio=function(r){if(route()||location.hash.startsWith('#tortenetek='))history.replaceState(null,'',location.pathname);previousRegio(r)};
+const previousRovat=valtRovat;valtRovat=function(r){if(route()||location.hash.startsWith('#tortenetek=')||location.hash.startsWith('#cikk='))history.replaceState(null,'',location.pathname+location.search);previousRovat(r)};
+const previousRegio=valtRegio;valtRegio=function(r){if(route()||location.hash.startsWith('#tortenetek=')||location.hash.startsWith('#cikk='))history.replaceState(null,'',location.pathname+location.search);previousRegio(r)};
 if(!document.documentElement.classList.contains('nh-booting'))rajzol();
 })();
 

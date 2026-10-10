@@ -262,3 +262,6 @@ button,.gomb-mas{
   .export-copy{margin:0 0 4px}
   .export-bar button{width:100%}
 }
+.summary-help{font-size:13px;line-height:1.65;color:#547079;margin-bottom:18px}
+.admin-summary-row{padding:20px;border:1px solid #d5e2df;border-left:4px solid #22816d;border-radius:8px;background:#f5f9f7;margin:0 0 18px}
+.admin-summary-row textarea{min-height:130px;line-height:1.65}.admin-summary-row button{padding:10px 14px;font-size:10px}

@@ -58,5 +58,42 @@ function previousStories(current, stories, limit=4){
  }
  return candidates.sort((a,b)=>b.score-a.score||b.end-a.end).slice(0,limit).map(x=>x.story);
 }
-root.NHStories={Store,match,previousStories};
+function canonicalLink(link){
+ try{const url=new URL(link);if(!/^https?:$/.test(url.protocol))return '';url.hash='';for(const key of [...url.searchParams.keys()])if(/^utm_/i.test(key)||/^(fbclid|gclid|msclkid)$/i.test(key))url.searchParams.delete(key);url.searchParams.sort();return url.href}catch{return ''}
+}
+function cleanExcerpt(value){
+ return String(value||'').replace(/The post[\s\S]*$/i,'').replace(/<[^>]*>/g,' ').replace(/&#(x[\da-f]+|\d+);/gi,(_,number)=>{const code=number[0].toLowerCase()==='x'?parseInt(number.slice(1),16):Number(number);return code>0&&code<=0x10ffff?String.fromCodePoint(code):''}).replace(/&(amp|quot|apos|lt|gt|nbsp);/gi,(_,key)=>({amp:'&',quot:'"',apos:"'",lt:'<',gt:'>',nbsp:' '}[key.toLowerCase()])).replace(/\s+/g,' ').trim();
+}
+function summaryFor(articles,settings={},preferredLink){
+ const rows=Array.isArray(settings.storySummaries)?settings.storySummaries:[];
+ const links=new Set(articles.map(h=>canonicalLink(h.link)).filter(Boolean));
+ const matching=rows.filter(row=>links.has(canonicalLink(row.link))&&String(row.text||'').trim());
+ const row=matching.find(row=>canonicalLink(row.link)===canonicalLink(preferredLink))||matching[0];
+ return row?String(row.text).trim():'';
+}
+// A jelzés tartalmi változást követ; az RSS időbélyegének vagy képének változása nem frissítés.
+class TopicTracker{
+ constructor(data){this.data=data&&typeof data==='object'&&!Array.isArray(data)?data:{};}
+ observe(key,articles,now=Date.now()){
+  const snapshot={};
+  for(const h of articles){const link=canonicalLink(h.link);if(link)snapshot[link]={source:cleanExcerpt(h.forras),fingerprint:cleanExcerpt(h.cim)+'\n'+cleanExcerpt(h.lead)};}
+  const prior=this.data[key];
+  if(!prior||!prior.articles||now-prior.seenAt>7*86400000){this.data[key]={articles:snapshot,seenAt:now,notice:null};this.prune(now);return null;}
+  const previousSources=new Set(Object.values(prior.articles).map(h=>h.source));
+  const added=[],updated=[],newSources=new Set();
+  for(const [link,h] of Object.entries(snapshot)){
+   const old=prior.articles[link];
+   if(!old){added.push(link);if(!previousSources.has(h.source))newSources.add(h.source);}
+   else if(old.fingerprint!==h.fingerprint)updated.push(link);
+  }
+  let notice=prior.notice&&now-prior.notice.at<3600000?prior.notice:null;
+  if(added.length||updated.length){
+   notice={at:now,added:[...new Set([...(notice?.added||[]),...added])],updated:[...new Set([...(notice?.updated||[]),...updated])],sources:[...new Set([...(notice?.sources||[]),...newSources])]};
+  }
+  // Hiányzó vagy átmenetileg elakadt forrás visszatérése ne számítson új forrásnak.
+  this.data[key]={articles:{...prior.articles,...snapshot},seenAt:now,notice};this.prune(now);return notice;
+ }
+ prune(now){const keys=Object.keys(this.data).sort((a,b)=>(this.data[b]?.seenAt||0)-(this.data[a]?.seenAt||0));for(const [i,key] of keys.entries())if(i>=60||now-(this.data[key]?.seenAt||0)>7*86400000)delete this.data[key];}
+}
+root.NHStories={Store,match,previousStories,canonicalLink,cleanExcerpt,summaryFor,TopicTracker};
 })(typeof module!=='undefined'?module.exports:window);

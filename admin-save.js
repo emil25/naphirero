@@ -41,10 +41,27 @@
       alert('A kézi ' + missing.join(' és ') + ' be van kapcsolva, de hiányzik a cím vagy a cikk linkje.');
       return false;
     }
+    const links = new Set();
+    for (const [index, row] of (data.storySummaries || []).entries()) {
+      let url;
+      try { url = new URL(row.link); } catch (_) {}
+      if (!url || !/^https?:$/.test(url.protocol) || !row.text || row.text.length > 6000) {
+        status('A(z) ' + (index + 1) + '. összefoglalóhoz érvényes cikklink és legfeljebb 6000 karakteres szöveg szükséges.', 'error');
+        document.getElementById('osszefoglalok')?.scrollIntoView({ behavior: 'smooth' });
+        return false;
+      }
+      url.hash = '';
+      for (const key of [...url.searchParams.keys()]) if (/^utm_/i.test(key) || /^(fbclid|gclid|msclkid)$/i.test(key)) url.searchParams.delete(key);
+      url.searchParams.sort();
+      if (links.has(url.href)) { status('Ugyanahhoz a cikkhez csak egy összefoglalót adj meg.', 'error'); return false; }
+      links.add(url.href);
+      row.link = url.href;
+    }
     return true;
   }
 
   async function save() {
+    if (window.adminReady && !window.adminSettingsLoaded) { status('A meglévő beállítások még nem töltődtek be. Várj egy kicsit, vagy frissítsd az admint.', 'error'); return; }
     const data = typeof window.beallitasokOsszeallit === 'function' ? window.beallitasokOsszeallit() : null;
     if (!data || !validate(data)) return;
     if (data.kiemeltTema && !data.kiemeltTema.aktiv) data.kiemeltTema.reset = Date.now();
@@ -83,6 +100,7 @@
   }
 
   function init() {
+    document.getElementById('allapot-uzenet')?.setAttribute('role', 'status');
     tokenField();
     const download = [...document.querySelectorAll('button')].find(button => /settings\.json letöltése/i.test(button.textContent || ''));
     if (download) {
@@ -108,7 +126,7 @@
     if (jsonBox) jsonBox.remove();
     window.letoltSettings = save;
     window.piszkozatMent = function () { if (typeof window.adminAllapotFrissit === 'function') window.adminAllapotFrissit(); };
-    loadServerSettings();
+    if (!window.adminReady) loadServerSettings();
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);

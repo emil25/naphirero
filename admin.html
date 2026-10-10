@@ -108,7 +108,7 @@ input[type=file]{display:none}
 .tema-panel .panel-test{background:linear-gradient(180deg,#fbfdfd,#f3f8f8)}.tema-aktiv{display:flex;align-items:center;gap:10px;margin-bottom:16px;padding:11px 13px;border:1px solid #cbdfe4;background:#edf6f7}.tema-aktiv input{width:auto;accent-color:#148b81}.tema-aktiv span{font-weight:700}
 .admin-token-wrap{display:grid;gap:4px;min-width:250px;padding:10px 12px;background:#fff;border:1px solid var(--line);border-radius:6px}.admin-token-wrap label{margin:0;font-size:10px}.admin-token-wrap input{width:100%;padding:8px 9px;border:1px solid var(--line);background:var(--paper-warm)}.admin-token-wrap small{font-size:10px;color:var(--ink-faint)}
 </style>
-<link rel="stylesheet" href="admin-ui.css?v=2bb70177">
+<link rel="stylesheet" href="admin-ui.css?v=5e7aee4c">
 </head>
 <body>
 
@@ -116,6 +116,7 @@ input[type=file]{display:none}
   <div class="header-in">
     <a class="logo" href="klasszikus"><span class="nap">nap</span><span class="hire">híre</span><span class="ro">.ro</span></a>
     <div class="admin-head-actions">
+      <a class="admin-head-link" href="szerkesztoi-seged.html">Szerkesztői segéd ↗</a>
       <a class="admin-head-link" href="klasszikus">← Híroldal megnyitása</a>
       <span class="admin-cimke">Szerkesztőségi admin</span>
     </div>
@@ -135,6 +136,7 @@ input[type=file]{display:none}
     </div>
   </div>
   <nav class="admin-nav" aria-label="Admin szakaszok">
+    <a href="#osszefoglalok">Összefoglalók</a>
     <a href="#attekintes">Áttekintés</a>
     <a href="#tema-magyar">Nap témái</a>
     <a href="#megjelenes">Megjelenés</a>
@@ -242,6 +244,16 @@ input[type=file]{display:none}
       </div>
     </div>
   </div>
+  </div>
+
+  <div class="panel" id="osszefoglalok">
+    <div class="panel-fej"><span class="jelzo"></span>Történetek összefoglalói</div>
+    <div class="panel-test">
+      <p class="summary-help">Add meg az eredeti cikk linkjét, és írj rövid magyar összefoglalót. Ez a cikk belső oldalán és a hozzá tartozó többforrásos történetben jelenik meg.</p>
+      <div id="summary-list"></div>
+      <button type="button" class="gomb-mas" id="summary-add">＋ Összefoglaló hozzáadása</button>
+      <p class="jegyzet">A „Mentés az oldalra” gomb az összefoglalókat is elmenti. Ha nincs szerkesztett szöveg, az olvasóoldal jelölt forrásrészletet mutat.</p>
+    </div>
   </div>
 
   <!-- BANNEREK -->
@@ -353,17 +365,37 @@ function bannerElonezetFrissit(elotag){
   else { img.src=''; doboz.lastChild.textContent = elotag === 'b0' ? 'Nincs beállítva kép – ez a hely üresen marad a honlapon, nem lóg ki jelölőhely.' : 'Nincs beállítva kép – üresen a szaggatott keretes jelölőhely látszik a honlapon.'; }
 }
 
+let szerkesztettAlap = {};
+let osszefoglaloSorszam = 0;
+function osszefoglaloSor(row = {}){
+  const item = document.createElement('div');
+  item.className = 'admin-summary-row';
+  const number = ++osszefoglaloSorszam;
+  item.innerHTML = `<div class="mezo"><label for="summary-link-${number}">Eredeti cikk linkje</label><input type="url" id="summary-link-${number}" data-summary-link placeholder="https://..."></div><div class="mezo"><label for="summary-text-${number}">Mi történt? – magyar összefoglaló</label><textarea id="summary-text-${number}" data-summary-text rows="5" maxlength="6000" placeholder="A történet lényege néhány mondatban."></textarea></div><button class="gomb-mas" type="button">Összefoglaló eltávolítása</button>`;
+  item.querySelector('[data-summary-link]').value = row.link || '';
+  item.querySelector('[data-summary-text]').value = row.text || '';
+  item.querySelector('button').onclick = () => { item.remove(); piszkozatMent(); };
+  document.getElementById('summary-list').append(item);
+  return item;
+}
+document.getElementById('summary-add').onclick = () => {
+  const row = osszefoglaloSor(); row.querySelector('input').focus();
+};
+
 function beallitasokOsszeallit(){
-  const forrasokKi = [...document.querySelectorAll('#forras-lista input:checked')].map(el => el.dataset.forras);
+  const forrasokKi = [...document.querySelectorAll('#forras-lista input:checked')].map(el => el.dataset.forras).concat((szerkesztettAlap.forrasokKi || []).filter(nev => !FORRASOK.some(forras => forras.nev === nev)));
   return {
+    ...szerkesztettAlap,
     theme: document.querySelector('input[name="theme"]:checked')?.value || 'modern',
     tagline: document.getElementById('f-szlogen').value.trim() || 'A napi hírfigyelő · percről percre',
     banners: {
+      ...szerkesztettAlap.banners,
       fejlec: { kep: document.getElementById('b0-kep').value.trim(), link: document.getElementById('b0-link').value.trim() },
       tartalom: { kep: document.getElementById('b1-kep').value.trim(), link: document.getElementById('b1-link').value.trim() },
       oldalsav: { kep: document.getElementById('b2-kep').value.trim(), link: document.getElementById('b2-link').value.trim() }
     },
     kiemeltTema: {
+      ...szerkesztettAlap.kiemeltTema,
       aktiv: document.getElementById('t-aktiv').checked,
       cim: document.getElementById('t-cim').value.trim(),
       lead: document.getElementById('t-lead').value.trim(),
@@ -372,6 +404,7 @@ function beallitasokOsszeallit(){
       forras: document.getElementById('t-forras').value.trim()
     },
     kiemeltTemaErdely: {
+      ...szerkesztettAlap.kiemeltTemaErdely,
       aktiv: document.getElementById('te-aktiv').checked,
       cim: document.getElementById('te-cim').value.trim(),
       lead: document.getElementById('te-lead').value.trim(),
@@ -379,7 +412,8 @@ function beallitasokOsszeallit(){
       link: document.getElementById('te-link').value.trim(),
       forras: document.getElementById('te-forras').value.trim()
     },
-    forrasokKi
+    forrasokKi,
+    storySummaries: [...document.querySelectorAll('.admin-summary-row')].map(row => ({link:row.querySelector('[data-summary-link]').value.trim(),text:row.querySelector('[data-summary-text]').value.trim()})).filter(row => row.link || row.text)
   };
 }
 
@@ -411,6 +445,9 @@ function jsonElonezetMutat(){
 }
 
 function beallitasokBetolt(adat){
+  szerkesztettAlap = adat;
+  document.getElementById('summary-list').replaceChildren();
+  if (Array.isArray(adat.storySummaries)) adat.storySummaries.forEach(osszefoglaloSor);
   document.querySelectorAll('input[name="theme"]').forEach(el => el.checked = el.value === (adat.theme || 'modern'));
   document.getElementById('f-szlogen').value = adat.tagline || '';
   const b = adat.banners || {};
@@ -472,13 +509,10 @@ function piszkozatMent(){
 }
 async function adminIndit(){
   adminMenteseTiltva = true;
+  window.adminSettingsLoaded = false;
   try{
-    const valasz = await fetch('settings.json', {cache:'no-store'});
-    if (valasz.ok) beallitasokBetolt(await valasz.json());
-  }catch(e){}
-  try{
-    const piszkozat = JSON.parse(localStorage.getItem(ADMIN_PISZKOZAT_KULCS) || 'null');
-    if (piszkozat && piszkozat.adat) beallitasokBetolt(piszkozat.adat);
+    const valasz = await fetch('/api/settings', {cache:'no-store'});
+    if (valasz.ok) { beallitasokBetolt(await valasz.json()); window.adminSettingsLoaded = true; }
   }catch(e){}
   adminMenteseTiltva = false;
   adminAllapotFrissit();
@@ -489,8 +523,8 @@ document.addEventListener('input', e => {
 document.addEventListener('change', e => {
   if (e.target.matches('input,textarea')) piszkozatMent();
 });
-adminIndit();
+window.adminReady = adminIndit();
 </script>
-<script src="/admin-save.js"></script>
+<script src="/admin-save.js?v=fa1ed879"></script>
 </body>
 </html>

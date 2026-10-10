@@ -59,24 +59,25 @@
 /* Címlapi hírfolyam: önálló képes nyitás és tömör hírcsoportok. */
 (() => {
   mozaikHTML = function(cikkek) {
-    const source = (typeof osszesHir !== 'undefined' && Array.isArray(osszesHir) && osszesHir.length) ? osszesHir : cikkek;
-    const items = [...new Map(source.filter(Boolean).map(h => [h.link,h])).values()]
+    // A külső szerkesztői szűrés (kiemelt téma, már elhelyezett hírek) maradjon érvényben.
+    const source = Array.isArray(cikkek) ? cikkek : [];
+    const items = [...new Map(source.filter(h => h?.link && Date.now()-new Date(h.datum)>=-300000 && Date.now()-new Date(h.datum)<=24*3600000 && /\p{L}{3}/u.test(h.cim||'')).map(h => [h.link,h])).values()]
       .sort((a,b) => new Date(b.datum) - new Date(a.datum));
     if (!items.length) return '';
     const link = h => `${dc(h)} href="${biztonsagos(h.link)}" target="_blank" rel="noopener"`;
     const meta = h => `<span class="nh-meta">${forrasIkonHTML(h,'kicsi')}<b>${biztonsagos(h.forras)}</b><span>· ${idoOta(h.datum)}</span></span>`;
-    const photo = h => h.kep ? `<span class="nh-photo"><img src="${biztonsagos(h.kep)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.parentElement.hidden=true"></span>` : '<span class="nh-photo nh-photo-fallback"></span>';
+    const photo = h => h.kep ? `<span class="nh-photo"><img src="${biztonsagos(h.kep)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.parentElement.hidden=true;this.closest('.nh-daily-lead,.nh-daily-card')?.classList.add('nh-no-photo')"></span>` : '';
     const useful = items.filter(h => !/(mindekozben|celeb|reklam|apple-event|meghivo|eljegyzes|horoszkop|szorakozas|bulvar)/i.test(String(h.link||'')+' '+String(h.cim||'')));
     const localSources=/3szék|hargita népe|marosvásárhelyi rádió/i;
     const localTerms=/erdély|erdely|székely|szekely|kolozsvár|kolozsvar|maros|hargita|kovászna|kovaszna|sepsi|csík|csik|udvarhely|brassó|brasso|partium|nagyvárad|nagyvarad|temesvár|temesvar|retyezát|retyezat|rmdsz|mík?onosz|romániai magyar|romaniai magyar/i;
-    const isErdely=h => localSources.test(String(h.forras||'')) || localTerms.test(String(h.cim||'')+' '+String(h.lead||'')+' '+String(h.link||''));
+    const isErdely=h => (h.newsRegion||h.region)==='erdely' || localSources.test(String(h.forras||'')) || localTerms.test(String(h.cim||'')+' '+String(h.lead||'')+' '+String(h.link||''));
     const isMagyar=h => (h.newsRegion||h.region)==='magyar';
-    const wordCache=new Map(),relatedCache=new Map();
-    const words=h => {if(!wordCache.has(h))wordCache.set(h,new Set(String(h.cim||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').match(/[a-z0-9]{5,}/g)||[]));return wordCache.get(h)};
-    const overlap=(a,b) => {const aw=words(a),bw=words(b);let n=0;aw.forEach(w=>{if(bw.has(w))n++});return n};
-    const sameStory=(a,b) => overlap(a,b)>=2;
-    const relatedSources=h => {if(!relatedCache.has(h))relatedCache.set(h,new Set(useful.filter(x=>Math.abs(new Date(x.datum)-new Date(h.datum))<36*3600000&&sameStory(h,x)).map(x=>x.forras)).size);return relatedCache.get(h)};
-    const score=h => relatedSources(h)*90 + (isErdely(h)?35:0) + (h.kep?8:0) + Math.max(0,36-(Date.now()-new Date(h.datum))/3600000);
+    const sameStory=(a,b) => nhSameEvent(a,b);
+    const relatedCache=new Map();
+    const coverage=osszesHir.filter(h=>Date.now()-new Date(h.datum)<=24*3600000 && new Date(h.datum)<=Date.now()+300000);
+    const relatedSources=h => {if(!relatedCache.has(h))relatedCache.set(h,new Set(coverage.filter(x=>sameStory(h,x)).map(x=>x.forras)).size);return relatedCache.get(h)};
+    const publicInterest=h => (/költségvetés|beruházás|kórház|iskola|választás|energia|nyugdíj|közlekedés|kormány|árvíz|földrengés/i.test(h.cim)?24:0)-(/lottó|horoszkóp|celeb|sztár/i.test(h.cim)?50:0);
+    const score=h => relatedSources(h)*30 + publicInterest(h) + (isErdely(h)?15:0) + (h.kep?4:0) + Math.max(0,24-(Date.now()-new Date(h.datum))/3600000);
     const ordered=[...useful].sort((a,b)=>score(b)-score(a)||new Date(b.datum)-new Date(a.datum));
     const chosen=[], seen=new Set();
     const addFrom=(pool,count) => {
@@ -88,16 +89,17 @@
     };
     addFrom(ordered.filter(isErdely),3);
     addFrom(ordered.filter(isMagyar),1);
+    addFrom(ordered.filter(h=>(h.newsRegion||h.region)==='vilag'),1);
     addFrom(ordered,5-chosen.length);
     if(!chosen.length) return '';
     let lead=chosen.filter(isErdely).sort((a,b)=>score(b)-score(a)).find(h=>h.kep) || chosen.find(h=>h.kep) || chosen[0];
     const rest=chosen.filter(h=>h!==lead).slice(0,4);
     window.__nhDailyLinks = new Set(chosen.map(h=>h.link));
     return `<section class="nh-mixed nh-daily-spread" id="vegyes-hirek">
-      <header class="nh-mixed-head"><div><span class="nh-eyebrow">A NAP FONTOS ÜGYEI</span><h2>Mai történetek</h2></div><span class="nh-mixed-tag">5 gyorsan átlátható hír</span></header>
+      <header class="nh-mixed-head"><div><span class="nh-eyebrow">A NAP FONTOS ÜGYEI</span><h2>Mai történetek</h2></div><span class="nh-mixed-tag">${chosen.length} gyorsan átlátható történet</span></header>
       <div class="nh-daily-layout">
-        <a class="nh-story nh-daily-lead" ${link(lead)}>${photo(lead)}<span class="nh-daily-shade"></span><span class="nh-copy"><b class="nh-daily-number">01</b>${meta(lead)}<h3>${biztonsagos(lead.cim)}</h3><p>${biztonsagos(String(lead.lead||'').slice(0,190))}</p></span></a>
-        <div class="nh-daily-river">${rest.map((h,i)=>`<a class="nh-daily-card nh-daily-card-${i+2}" ${link(h)}>${photo(h)}<span class="nh-daily-shade"></span><span class="nh-copy"><b class="nh-daily-number">0${i+2}</b>${meta(h)}<h3>${biztonsagos(h.cim)}</h3></span></a>`).join('')}</div>
+        <a class="nh-story nh-daily-lead${lead.kep?'':' nh-no-photo'}" ${link(lead)}>${photo(lead)}<span class="nh-copy">${meta(lead)}<h3>${biztonsagos(lead.cim)}</h3>${lead.lead?`<p>${biztonsagos(String(lead.lead).replace(/<[^>]*>/g,' ').replace(/The post[\s\S]*$/i,'').slice(0,190))}</p>`:''}</span></a>
+        ${rest.length?`<div class="nh-daily-river" data-count="${rest.length}">${rest.map((h,i)=>`<a class="nh-daily-card nh-daily-card-${i+2}${h.kep?'':' nh-no-photo'}" ${link(h)}>${photo(h)}<span class="nh-copy">${meta(h)}<h3>${biztonsagos(h.cim)}</h3></span></a>`).join('')}</div>`:''}
       </div>
     </section>`;
   };
@@ -146,7 +148,7 @@ function nhGroupStories(articles) {
     const representatives = groups.map(g => g.find(h => h.kep) || g[0]);
     const markup = document.createElement('template');
     markup.innerHTML = originalMosaic(representatives);
-    for (const anchor of markup.content.querySelectorAll('.nh-story')) {
+    for (const anchor of markup.content.querySelectorAll('.nh-story,.nh-daily-card')) {
       const index = representatives.findIndex(h => h.link === anchor.getAttribute('href'));
       if (index < 0) continue;
       const group = groups[index];
@@ -195,9 +197,7 @@ function nhGroupStories(articles) {
   const originalRender=rajzol;
   rajzol=function(){
     originalRender();
-    const start=new Date();start.setHours(0,0,0,0);
-    let recent=osszesHir.filter(h=>new Date(h.datum).getTime()>=start.getTime());
-    if(recent.length<6)recent=osszesHir.filter(h=>Date.now()-new Date(h.datum).getTime()<=24*3600000);
+    const recent=osszesHir.filter(h=>Date.now()-new Date(h.datum)>=-300000 && Date.now()-new Date(h.datum)<=24*3600000 && /\p{L}{3}/u.test(h.cim||''));
     ranked=nhGroupStories([...recent].sort((a,b)=>b.datum-a.datum)).sort((a,b)=>sourceCount(b)-sourceCount(a)||b.length-a.length||b[0].datum-a[0].datum);
     const mosaic=document.querySelector('.nh-mixed');
     const mainBlock=document.querySelector('.foblokk');
@@ -218,10 +218,11 @@ function nhGroupStories(articles) {
     takeOne(multi.filter(groupIsErdely));
     takeOne(multi);
     takeOne(multi.filter(groupIsErdely));
-    [...multi,...sidebarRanked].forEach(g=>{if(trending.length<5&&!used.has(g)){trending.push(g);used.add(g);}});
-    if(!trending.length)return;
+    multi.forEach(g=>{if(trending.length<5&&!used.has(g)){trending.push(g);used.add(g);}});
+    if(!trending.length){host.hidden=true;return;}
+    host.hidden=false;
     host.classList.add('nh-trending-host');
-    host.innerHTML='<section class="nh-trending nh-trending-side"><header><span class="nh-trending-kicker">A mai sajtó közös témái</span><h2>Mi pörög ma?</h2><p>Forráslefedettség alapján</p></header><ol>'+trending.map((g,i)=>{const marks=[...new Map(g.map(h=>[h.forras,h])).values()].slice(0,3).map(h=>forrasIkonHTML(h,'kicsi')).join('');const visual=g.find(h=>h.kep)||g[0];const photo=visual.kep?`<span class="nh-trending-image"><img src="${biztonsagos(visual.kep)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.parentElement.hidden=true"></span>`:'';return `<li><button type="button" data-story-rank="${i}">${photo}<span class="nh-trending-row"><span class="nh-rank">${String(i+1).padStart(2,'0')}</span><span class="nh-trending-copy"><strong>${biztonsagos(g[0].cim)}</strong><small><span class="nh-trending-sources">${marks}</span>${sourceCount(g)} forrás · ${g.length} cikk</small></span></span></button></li>`}).join('')+'</ol></section>';
+    host.innerHTML='<section class="nh-trending nh-trending-side"><header><span class="nh-trending-kicker">Több szerkesztőség beszámolói</span><h2>Mi pörög ma?</h2><p>A figyelt források közös történetei · az elmúlt 24 órából</p></header><ol data-count="'+trending.length+'">'+trending.map((g,i)=>{const marks=[...new Map(g.map(h=>[h.forras,h])).values()].slice(0,3).map(h=>forrasIkonHTML(h,'kicsi')).join('');const visual=g.find(h=>h.kep)||g[0];const photo=visual.kep?`<span class="nh-trending-image"><img src="${biztonsagos(visual.kep)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.parentElement.hidden=true"></span>`:'';return `<li><button type="button" data-story-rank="${i}">${photo}<span class="nh-trending-row"><span class="nh-trending-copy"><strong>${biztonsagos(g[0].cim)}</strong><small><span class="nh-trending-sources">${marks}</span>${sourceCount(g)} forrás · ${g.length} cikk</small></span></span></button></li>`}).join('')+'</ol></section>';
     mainBlock.classList.add('nh-trending-layout');
     if(host.parentElement===mainBlock)mainBlock.insertAdjacentElement('afterend',host);
     const section=host.querySelector('.nh-trending');

@@ -4,18 +4,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; connect-src 'self'; img-src 'self' https: data: blob:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; media-src 'self' https:; base-uri 'self'; form-action 'self'; frame-ancestors 'self';">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script>
-  // A régi renderelő és az új editorial renderelő ugyanazt a tartalmi gyökeret használja.
-  // A tartalom addig marad rejtve, amíg az editorial renderer át nem veszi a rajzolást.
-  window.__NH_EDITORIAL_READY__ = false;
-  window.__NH_REVEAL__ = function(){
-    if (window.__NH_EDITORIAL_READY__) document.documentElement.classList.remove('nh-booting','nh-topic-syncing');
-  };
-  // Ha egy külső script hibázna, ne maradjon végtelen betöltőképernyő.
-  setTimeout(function(){
-    if (!window.__NH_EDITORIAL_READY__) document.documentElement.classList.remove('nh-booting','nh-topic-syncing');
-  }, 4500);
-</script>
+
 <title>NapHíre.ro – Erdélyi és magyarországi hírek egy helyen</title>
 <meta name="description" content="Friss erdélyi és magyarországi hírek percről percre. Politika, gazdaság, kultúra, sport – minden, ami számít.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1608,23 +1597,17 @@ html{scrollbar-gutter:stable}
 .fejlec-in>.logo{min-width:0;flex:0 1 auto}
 .premium-header-actions{margin-left:auto}
 </style>
-<link rel="stylesheet" href="rovat-design.css?v=62f5a084">
-<link rel="stylesheet" href="story-view.css?v=7c9d5547">
-<link rel="stylesheet" href="article-view.css?v=8b1e9f6f">
-<link rel="stylesheet" href="editorial-home.css?v=116f70e8">
-<script defer src="rovat-design.js?v=e443b15a"></script>
-<script defer src="story-engine.js?v=7a310fec"></script>
-<script defer src="story-view.js?v=7a310fec"></script>
-<script defer src="editorial-model.js?v=7a310fec"></script>
-<script defer src="editorial-home.js?v=8b562a8f"></script>
-<style>
-html.nh-booting #tartalom{min-height:58vh;position:relative}
-html.nh-booting #tartalom>*{visibility:hidden}
-html.nh-booting #tartalom::before{content:'NapHíre';position:absolute;left:50%;top:110px;transform:translateX(-50%);font:850 34px/1 Archivo,Inter,sans-serif;letter-spacing:-.05em;color:#203c4d}
-html.nh-booting #tartalom::after{content:'';position:absolute;left:50%;top:165px;width:84px;height:3px;transform:translateX(-50%);background:linear-gradient(90deg,#ff816e 0 34%,#dce7ea 34% 100%);animation:nhBoot 1s ease-in-out infinite alternate}
-@keyframes nhBoot{to{width:150px}}
-@media(prefers-reduced-motion:reduce){html.nh-booting #tartalom::after{animation:none}}
-</style>
+<link rel="stylesheet" href="rovat-design.css?v=62f5a084" onerror="document.documentElement.dataset.nhLoadError='1'">
+<link rel="stylesheet" href="story-view.css?v=c21c87d9" onerror="document.documentElement.dataset.nhLoadError='1'">
+<link rel="stylesheet" href="article-view.css?v=8b1e9f6f" onerror="document.documentElement.dataset.nhLoadError='1'">
+<link rel="stylesheet" href="editorial-home.css?v=116f70e8" onerror="document.documentElement.dataset.nhLoadError='1'">
+<link rel="stylesheet" href="home-runtime.css?v=64af3067" onerror="document.documentElement.dataset.nhLoadError='1'">
+<script defer src="home-runtime.js?v=38da86c3" onerror="document.documentElement.dataset.nhLoadError='1'"></script>
+<script defer src="rovat-design.js?v=e443b15a" onerror="document.documentElement.dataset.nhLoadError='1'"></script>
+<script defer src="story-engine.js?v=a101cd0c" onerror="document.documentElement.dataset.nhLoadError='1'"></script>
+<script defer src="story-view.js?v=d2347144" onerror="document.documentElement.dataset.nhLoadError='1'"></script>
+<script defer src="editorial-model.js?v=7a310fec" onerror="document.documentElement.dataset.nhLoadError='1'"></script>
+<script defer src="editorial-home.js?v=873ac088" onerror="document.documentElement.dataset.nhLoadError='1'"></script>
 </head>
 <body>
 
@@ -1776,16 +1759,9 @@ const NOILEG_FORRAS = [
   { nev:'Nőileg', urls:['https://noileg.ro/feed/','https://noileg.ro/feed','https://noileg.ro/rss'] },
 ];
 
-/* Letöltési stratégiák – sorban próbálja őket, amíg az egyik nem válaszol.
-   Az rss2json kész JSON-t ad vissza, a többi CORS-proxyn át hozza a nyers XML-t. */
+/* A hírforrásokat a saját szerveroldali RSS-végpont közvetíti. */
 const STRATEGIAK = [
-  u => ({ url: `/api/rss?url=${encodeURIComponent(u)}`, tipus:'text' }), // Vercel szerveroldali RSS-kiszolgáló
-  u => ({ url: `/rss?url=${encodeURIComponent(u)}`, tipus:'text' }), // helyi fejlesztői kiszolgáló
-  u => ({ url: u, tipus:'text' }),  // közvetlen próba – sok RSS-nél ez is működik, és ingyenes/korlátlan
-  u => ({ url:`https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(u)}`, tipus:'text' }),
-  u => ({ url:`https://api.allorigins.win/raw?url=${encodeURIComponent(u)}`, tipus:'text' }),
-  u => ({ url:`https://api.allorigins.win/get?url=${encodeURIComponent(u)}`, tipus:'json' }),
-  u => ({ url:`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(u)}`, tipus:'rss2json' }), // erősen korlátozott, ezért utolsó próba
+  u => ({ url: `/api/rss?url=${encodeURIComponent(u)}`, tipus:'text' })
 ];
 
 let osszesHir = [];
@@ -1820,23 +1796,7 @@ function fejlecBannerHTML(){
   </a>`;
 }
 async function betoltBeallitasok(){
-  try{
-    const valasz = await fetch('settings.json', { cache:'no-store' });
-    if (valasz.ok){
-      const nyers = await valasz.json();
-      BEALLITASOK = { ...BEALLITASOK, ...nyers,
-        banners: { ...BEALLITASOK.banners, ...(nyers.banners||{}) },
-        kiemeltTema: { ...BEALLITASOK.kiemeltTema, ...(nyers.kiemeltTema||{}) },
-        kiemeltTemaErdely: { ...BEALLITASOK.kiemeltTemaErdely, ...(nyers.kiemeltTemaErdely||{}) }
-      };
-      const view = new URLSearchParams(location.search).get('view');
-      if (BEALLITASOK.theme === 'classic' && view !== 'modern'){
-        location.replace('legacy.html?view=classic');
-        return;
-      }
-    }
-  }catch(e){ /* nincs settings.json, marad az alapértelmezés */ }
-  document.querySelectorAll('.szlogen').forEach(el => el.textContent = BEALLITASOK.tagline);
+  return NHHome.loadSettings();
 }
 
 /* ---------- Segédek ---------- */
@@ -1975,19 +1935,7 @@ function jsonFeldolgoz(j, forras){
 }
 
 async function forrasFeldolgoz(forras){
-  const deadline = Date.now() + 10000;
-  for (const url of forras.urls){
-    for (const strategia of STRATEGIAK){
-      if (Date.now() > deadline) throw new Error("Forrás időtúllépés");
-      const eredmeny = await leker(url, strategia);
-      if (!eredmeny) continue;
-      const hirek = eredmeny.mod === 'json'
-        ? jsonFeldolgoz(eredmeny.adat, forras)
-        : xmlFeldolgoz(eredmeny.adat, forras);
-      if (hirek && hirek.length) return hirek;
-    }
-  }
-  throw new Error('nem elérhető');
+  return NHHome.loadSource(forras);
 }
 
 /* Mentett előzmény tartalék: ha az ingyenes proxyk épp mind akadoznak, ne üres hibaüzenet
@@ -1996,22 +1944,9 @@ const HIR_GYORSITOTAR_KULCS = 'naphire_hir_gyorsitotar_v1';
 let gyorsitotarKorabol = null; // ha a jelenlegi hírek a tartalékból jönnek, ide kerül az időbélyeg
 let tartalekTipus = null;
 
-/* Rövid, valós forrásokra mutató biztonsági készlet.  Csak akkor látszik, ha
-   az előnézeti környezetben minden RSS-kérés időtúllép, így a kezdőlap sosem
-   marad üres. A cikkek linkjei az eredeti szerkesztőségek oldalaira mutatnak. */
-const TARTALEK_HIREK = [
-  { cim:'Lezuhant a szegedi kormányhivatal tetejéről egy ipari alpinista', link:'https://hvg.hu/itthon/20260901_lezuhant-szegedi-kormanyhivatal-ipari-alpinista', lead:'A munkás egy étterem tetejére esett és meghalt.', kep:'', forras:'HVG', region:'magyar', datum:'2026-09-01T15:40:00+03:00', kategoriak:'belföld közélet' },
-  { cim:'Lezuhant a szegedi kormányhivatal tetejéről, meghalt egy ipari alpinista', link:'https://index.hu/belfold/2026/09/01/baleset-ipari-alpinista-halaleset-szeged-meghalt/', lead:'A szegedi balesetről több szerkesztőség is beszámolt.', kep:'', forras:'Index', region:'magyar', datum:'2026-09-01T15:25:00+03:00', kategoriak:'belföld' },
-  { cim:'Meghalt egy munkás, miután lezuhant a szegedi kormányhivatal tetejéről', link:'https://telex.hu/belfold/2026/09/01/halalos-baleset-munkas-szegedi-kormanyhivatal-teteje-rendorseg-nyomozas', lead:'A rendőrség vizsgálja a halálos munkahelyi baleset körülményeit.', kep:'', forras:'Telex', region:'magyar', datum:'2026-09-01T14:55:00+03:00', kategoriak:'belföld' },
-  { cim:'További tömbházakat korszerűsítenek', link:'https://hargitanepe.ro/tovabbi-tombhazakat-korszerusitenek', lead:'Gyergyószentmiklóson több lakónegyedet érintő felújítás indul.', kep:'', forras:'Hargita Népe', region:'erdely', datum:'2026-09-01T16:10:00+03:00', kategoriak:'erdély helyi' },
-  { cim:'Marosvásárhely felkerült az európai szecessziós városok térképére', link:'https://kronika.ro/erdelyi-hirek/marosvasarhely-felkerult-az-europai-szecesszios-varosok-terkepere', lead:'Új kulturális térképen kapott helyet Marosvásárhely.', kep:'', forras:'Krónika', region:'erdely', datum:'2026-09-01T15:40:00+03:00', kategoriak:'erdély kultúra' },
-  { cim:'Már közzé is tették, hogy mikor lesz jövőben az érettségi', link:'https://szekelyhon.ro/aktualis/mar-kozze-is-tettek-hogy-mikor-lesz-jovoben-az-erettsegi', lead:'A következő évek vizsganaptárát is ismertették.', kep:'', forras:'Székelyhon', region:'erdely', datum:'2026-09-01T15:20:00+03:00', kategoriak:'erdély oktatás' },
-  { cim:'Bomba robbant egy elektromos elosztó központnál Németországban', link:'https://hvg.hu/vilag/20260901_bomba-elektromos-eloszto-kozpont-nemetorszag', lead:'A hatóságok vizsgálják a németországi robbanás körülményeit.', kep:'', forras:'HVG', region:'magyar', datum:'2026-09-01T15:35:00+03:00', kategoriak:'világ' },
-  { cim:'„A jelenlegi formájában azt hiszem, vége” – bezár az MCC brüsszeli irodája', link:'https://index.hu/kulfold/2026/09/01/mcc-frank-furedi-brusszel-tisza-bezar/', lead:'Az intézmény brüsszeli irodájának jövőjéről döntés született.', kep:'', forras:'Index', region:'magyar', datum:'2026-09-01T15:47:00+03:00', kategoriak:'világ közélet' },
-].map(h => ({ ...h, datum:new Date(h.datum) }));
 function hirGyorsitotarMent(hirek){
   try{
-    const konnyu = hirek.slice(0, 200).map(h => ({ ...h, datum: h.datum.toISOString() }));
+    const konnyu = hirek.slice(0, 400).map(h => ({ ...h, datum: h.datum.toISOString() }));
     localStorage.setItem(HIR_GYORSITOTAR_KULCS, JSON.stringify({ hirek: konnyu, mentveKor: Date.now() }));
   }catch(e){ /* nincs elérhető tároló, nem gond */ }
 }
@@ -2025,96 +1960,7 @@ function hirGyorsitotarBetolt(){
 }
 
 async function mindenHirBetolt(){
-  const gomb = document.getElementById('frissit-gomb');
-  gomb.classList.add('forog');
-  hibasForrasok = [];
-  const gyujto = [];
-  const elozoLegujabb = (osszesHir || []).reduce((max, h) => Math.max(max, new Date(h.datum).getTime() || 0), 0);
-
-  const osszesit = () => {
-    // Azonos cikk kiszűrése URL alapján; a külön források azonos címei megmaradnak.
-    const latott = new Set();
-    const hirek = gyujto.filter(h => {
-      const kulcs = h.link;
-      if (latott.has(kulcs)) return false;
-      latott.add(kulcs);
-      return true;
-    });
-    hirek.sort((a,b) => b.datum - a.datum);
-    osszesHir = hirek;
-    gyorsitotarKorabol = null;
-    tartalekTipus = null;
-  };
-
-  const aktivForrasok = FORRASOK.filter(f => !BEALLITASOK.forrasokKi.includes(f.nev));
-  const kesleltet = ms => new Promise(r => setTimeout(r, ms));
-  let koraiRajz = false;
-  const koraiTimer = setInterval(() => {
-    const beertForrasok = new Set(gyujto.map(h => h.forras)).size;
-    if (!koraiRajz && gyujto.length >= 8 && beertForrasok >= 2){
-      koraiRajz = true;
-      osszesit();
-      // A gyors első rajz már élő hírekből készül: a korábbi nap témájának
-      // böngészőben tárolt választását ne vigyük át erre az adatkészletre.
-      temaValasztasTorol('magyar');
-      temaValasztasTorol('erdely');
-      hirGyorsitotarMent(osszesHir);
-      rajzol();
-      window.__NH_REVEAL__?.();
-    }
-  }, 250);
-  const mindenForras = Promise.all(aktivForrasok.map((f, i) =>
-    kesleltet(i * 180) // ne induljon minden forrás lekérése egyszerre – a proxyk másodpercenkénti korlátot tartanak
-      .then(() => forrasFeldolgoz(f))
-      .then(h => { gyujto.push(...h); })
-      .catch(() => { hibasForrasok.push(f.nev); })
-  ));
-  // A fejléc és a tartalom ne várjon percekig egy leállt RSS-proxyra.
-  // A kezdőképernyő már a beépített tartalékból látszik, ezért ez csak a
-  // háttérben érkező élő hírek maximális várakozási ideje.
-  await mindenForras;
-  clearInterval(koraiTimer);
-
-  // A teljes oldal csak egyszer frissül: nem ugrál minden beérkező RSS-forrásnál.
-  const tartalekrolValt = !!gyorsitotarKorabol;
-  osszesit();
-
-  const ujLegujabb = osszesHir.reduce((max, h) => Math.max(max, new Date(h.datum).getTime() || 0), 0);
-  // Új élő cikk érkezésekor a régiós témát újraválasztjuk. Azonos RSS-készletnél
-  // megmarad a stabil téma, így a normál újrarajzolás nem okoz ugrálást.
-  if (!tartalekrolValt && ujLegujabb > elozoLegujabb + 60 * 1000){
-    temaValasztasTorol('magyar');
-    temaValasztasTorol('erdely');
-  }
-
-  // Az első, tartalékból rajzolt témát ne rögzítsük az élő készlet fölé.
-  // A későbbi ötpercenkénti frissítések már nem törlik a stabil témaválasztást.
-  if (tartalekrolValt && osszesHir.length){
-    delete TEMA_KIVALASZTAS.magyar;
-    delete TEMA_KIVALASZTAS.erdely;
-  }
-
-  if (osszesHir.length){
-    hirGyorsitotarMent(osszesHir);
-  } else {
-    // minden forrás bukott ebben a körben – nézzük, van-e korábbi, elmentett hírkészlet
-    const tartalek = hirGyorsitotarBetolt();
-    if (tartalek && tartalek.hirek.length){
-      osszesHir = tartalek.hirek;
-      gyorsitotarKorabol = tartalek.mentveKor;
-      tartalekTipus = 'cache';
-    } else {
-      osszesHir = TARTALEK_HIREK.map(h => ({ ...h, rovat:rovatBesorol(h) }));
-      gyorsitotarKorabol = Date.now();
-      tartalekTipus = 'static';
-    }
-  }
-
-  gomb.classList.remove('forog');
-  document.getElementById('frissitve').textContent =
-    (gyorsitotarKorabol ? 'Korábbi hírek · lekérés sikertelen: ' : 'Források ellenőrizve: ') + new Date().toLocaleTimeString('hu-HU',{hour:'2-digit',minute:'2-digit'});
-  rajzol();
-  window.__NH_REVEAL__?.();
+  return NHHome.refresh();
 }
 
 /* ---------- Videó- és blogsáv: külön adatkészletek, nem keverednek a hírekbe ---------- */
@@ -3433,45 +3279,14 @@ document.getElementById('kereso-mezo').addEventListener('input', e => {
   keresoSzo = e.target.value.trim();
   rajzol();
 });
-document.getElementById('frissit-gomb').addEventListener('click', () => betoltBeallitasok().then(mindenHirBetolt));
+document.getElementById('frissit-gomb').addEventListener('click', () => NHHome.refresh());
 
 /* ---------- Indítás ---------- */
 document.getElementById('mai-datum').textContent =
   new Date().toLocaleDateString('hu-HU',{year:'numeric',month:'long',day:'numeric',weekday:'long'});
 document.getElementById('ev').textContent = new Date().getFullYear();
 
-// Az első képkockán a legutóbbi teljes, két régiót tartalmazó gyorsítótár
-// jelenik meg. A csak egy régióból származó régi cache-t nem használjuk.
-const indulasiCache = hirGyorsitotarBetolt();
-const indulasiRegiok = new Set((indulasiCache && indulasiCache.hirek || []).map(h => h.region));
-const teljesCache = indulasiCache && indulasiCache.hirek.length >= 12
-  && indulasiRegiok.has('erdely') && indulasiRegiok.has('magyar')
-  && Date.now() - indulasiCache.mentveKor < 24 * 3600 * 1000;
-if (teljesCache){
-  osszesHir = indulasiCache.hirek.map(h => ({ ...h, rovat:h.rovat || rovatBesorol(h) }));
-  gyorsitotarKorabol = indulasiCache.mentveKor;
-  tartalekTipus = 'cache';
-} else {
-  // Élő RSS-adat nélkül ne rajzoljuk ki a régi beépített tartalék híreket.
-  // A betöltő állapot marad látható az első élő hírkészletig.
-  osszesHir = [];
-  gyorsitotarKorabol = null;
-  tartalekTipus = 'static';
-}
-renderForrasaink();
-// A gyorsítótárat csak előkészítjük. A képernyőt a deferrel betöltött
-// editorial renderer rajzolja ki, így a régi sablon egyetlen képkockára sem villan fel.
-window.__NH_CACHE_READY__ = osszesHir.length > 0;
-
-betoltBeallitasok().then(() => {
-  renderForrasaink();
-  mindenHirBetolt();
-  videoSavFrissit();
-});
-setInterval(() => {
-  betoltBeallitasok().then(mindenHirBetolt);
-  videoSavFrissit();
-}, 5 * 60 * 1000); // 5 percenként automatikus frissítés
+// A közös indító a végleges rendererek és a beállítások után rajzol.
 </script>
 </body>
 </html>

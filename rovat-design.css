@@ -285,7 +285,7 @@ header.fo nav.rovatok button.pp{background:#193748!important;color:#ffc1b5!impor
 
 
 /* 2026-09-09 — képek szabadon, címek külön; a jobb oldalsáv teljes szélességű történetsáv. */
-.foblokk.nh-trending-layout{padding-right:0!important}
+.foblokk.nh-trending-layout{display:block!important;padding-right:0!important;width:100%!important;max-width:none!important}
 .jobb-sav.nh-trending-host{
   position:static!important;inset:auto!important;width:100%!important;height:auto!important;
   overflow:visible!important;margin:30px 0 34px!important;padding:0!important;border:0!important;
@@ -518,7 +518,7 @@ html.nh-topic-syncing .tema-sav::before{
 
 /* 2026-09-10 — a Mai történetek minden renderelési állapotban feloldja a régi 332 px-es oldalsávot. */
 .foblokk:has(#vegyes-hirek){
-  padding-right:0!important;width:100%!important;max-width:none!important
+  display:block!important;padding-right:0!important;width:100%!important;max-width:none!important
 }
 .foblokk:has(#vegyes-hirek)>div:first-child,
 .foblokk:has(#vegyes-hirek) #vegyes-hirek{

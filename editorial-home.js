@@ -5,11 +5,15 @@
  const attrs=h=>`${dc(h)} href="${e(h.link)}" target="_blank" rel="noopener noreferrer"`;
  const card=(h,cls='',img=true)=>`<a class="ed-article ${cls}" ${attrs(h)}>${img?photo(h):''}<span>${meta(h)}<h3>${e(h.cim)}</h3></span></a>`;
  const normal=s=>String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
- const meaningfulTitle=h=>{const t=normal(h?.cim).replace(/[^a-z0-9 ]/g,' ').replace(/\s+/g,' ').trim();return t.length>=10&&/[a-z]{3}/.test(t)};
+ // Reuse article features during one render; reset after edits and source updates.
+ const articleMemo=fn=>{let values=new WeakMap();const memo=h=>{if(values.has(h))return values.get(h);const value=fn(h);values.set(h,value);return value};memo.clear=()=>{values=new WeakMap()};return memo};
+ let relationCache=new WeakMap();
+ const meaningfulTitle=articleMemo(h=>{const t=normal(h?.cim).replace(/[^a-z0-9 ]/g,' ').replace(/\s+/g,' ').trim();return t.length>=10&&/[a-z]{3}/.test(t)});
  const topicStop=new Set('hogy vagy mint szerint utan elott kozott miatt csak mar meg egy ezt azt lesz volt van nem magyar magyarorszag erdely hir friss'.split(' '));
- const topicTokens=h=>new Set(normal((h.cim||'')+' '+(h.kategoriak||'')).replace(/[^a-z0-9 ]/g,' ').split(/\s+/).filter(w=>w.length>4&&!topicStop.has(w)).map(w=>w.slice(0,9)));
- const family=h=>{const s=normal((h.cim||'')+' '+(h.lead||''));for(const [key,re] of [['parlament',/parlament|orszaggyules|kepviselo|hazelnok|ules/],['iskola',/iskola|tanev|oktatas|diak|tanar/],['idojaras',/idojaras|hidegfront|kanikula|vihar|eso|havazas/],['valasztas',/valasztas|szavazas|exit poll|mandatum/],['ukrajna',/ukrajna|kijev|zelenszkij|orosz haboru/],['gazdasag',/inflacio|koltsegvetes|forint|uzemanyag|minimalber/]])if(re.test(s))return key;return ''};
- const related=(a,b)=>{if(nhSameEvent(a,b))return true;if(Math.abs(new Date(a.datum)-new Date(b.datum))>30*3600000)return false;const x=topicTokens(a),y=topicTokens(b),shared=[...x].filter(t=>y.has(t)).length;return shared>=2&&shared/Math.max(1,Math.min(x.size,y.size))>=.34};
+ const topicTokens=articleMemo(h=>new Set(normal((h.cim||'')+' '+(h.kategoriak||'')).replace(/[^a-z0-9 ]/g,' ').split(/\s+/).filter(w=>w.length>4&&!topicStop.has(w)).map(w=>w.slice(0,9))));
+ const family=articleMemo(h=>{const s=normal((h.cim||'')+' '+(h.lead||''));for(const [key,re] of [['parlament',/parlament|orszaggyules|kepviselo|hazelnok|ules/],['iskola',/iskola|tanev|oktatas|diak|tanar/],['idojaras',/idojaras|hidegfront|kanikula|vihar|eso|havazas/],['valasztas',/valasztas|szavazas|exit poll|mandatum/],['ukrajna',/ukrajna|kijev|zelenszkij|orosz haboru/],['gazdasag',/inflacio|koltsegvetes|forint|uzemanyag|minimalber/]])if(re.test(s))return key;return ''});
+ const relatedUncached=(a,b)=>{if(nhSameEvent(a,b))return true;if(Math.abs(new Date(a.datum)-new Date(b.datum))>30*3600000)return false;const x=topicTokens(a),y=topicTokens(b),shared=[...x].filter(t=>y.has(t)).length;return shared>=2&&shared/Math.max(1,Math.min(x.size,y.size))>=.34};
+ const related=(a,b)=>{let row=relationCache.get(a);if(!row){row=new WeakMap();relationCache.set(a,row)}if(row.has(b))return row.get(b);const result=relatedUncached(a,b);row.set(b,result);return result};
  const samePlacementTopic=(a,b)=>related(a,b)||(family(a)&&family(a)===family(b));
  const distinct=list=>{const out=[];for(const h of list){if(!out.some(a=>nhSameEvent(a,h)))out.push(h)}return out};
  const sectionDistinct=list=>{const out=[];for(const h of list){if(!out.some(a=>samePlacementTopic(a,h)))out.push(h)}return out};
@@ -194,6 +198,7 @@
 
  const previous=rajzol;
  rajzol=function(){
+  meaningfulTitle.clear();topicTokens.clear();family.clear();relationCache=new WeakMap();
   if(input!==osszesHir){input=osszesHir;for(const h of osszesHir){const c=NHEditorial.classify(h);h.newsRegion=c.geo;h.rovat=c.section}}
   usedArticles=[];
   previous();
@@ -207,10 +212,6 @@
   if(scores.length)sport?.insertAdjacentHTML('afterend',`<div class="ed-scores"><span>A sporthírekben közölt eredmények</span>${scores.map(h=>`<a ${attrs(h)}>${e(h.cim)}</a>`).join('')}</div>`);
  };
  const nav=document.querySelector('.rovatok-in');for(const [key,name] of [['eletmod','Magazin']]){const b=document.createElement('button');b.type='button';b.textContent=name;b.onclick=ev=>{ev.stopPropagation();if(!document.querySelector('#rovat-'+key)){history.replaceState(null,'',location.pathname);valtRovat('mind')}document.querySelector('#rovat-'+key)?.scrollIntoView({behavior:'smooth'})};nav.append(b)}
- if (osszesHir && osszesHir.length){
-  rajzol();
-  refreshRomanPress();
- }
- window.__NH_EDITORIAL_READY__ = true;
- window.__NH_REVEAL__?.();
+ window.__NH_RENDERER_LOADED__ = true;
+ document.addEventListener('nh:home-ready', () => refreshRomanPress(), { once: true });
 })();

@@ -5,7 +5,10 @@ const ALLOWED_HOSTS = new Set([
   'telex.hu', 'www.telex.hu', 'hvg.hu', 'www.hvg.hu', '24.hu', 'www.24.hu',
   'index.hu', 'www.index.hu', '444.hu', 'www.444.hu', 'origo.hu', 'www.origo.hu',
   'youtube.com', 'www.youtube.com', 'szekelykonyhaeskert.ro', 'www.szekelykonyhaeskert.ro',
-  'noileg.ro', 'www.noileg.ro'
+  'noileg.ro', 'www.noileg.ro', 'atv.hu', 'www.atv.hu',
+  'marosvasarhelyiradio.ro', 'www.marosvasarhelyiradio.ro',
+  'hotnews.ro', 'www.hotnews.ro', 'rss.hotnews.ro',
+  'g4media.ro', 'www.g4media.ro', 'digi24.ro', 'www.digi24.ro'
 ]);
 
 const MAX_REDIRECTS = 3;
@@ -23,21 +26,23 @@ function parseAllowedUrl(value) {
 }
 
 async function fetchFeed(initialUrl) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 3500);
+  try { return await fetchRedirects(initialUrl, controller.signal); }
+  finally { clearTimeout(timeout); }
+}
+
+async function fetchRedirects(initialUrl, signal) {
   let target = initialUrl;
   for (let redirect = 0; redirect <= MAX_REDIRECTS; redirect += 1) {
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 9000);
-    let response;
-    try {
-      response = await fetch(target, {
+    const response = await fetch(target, {
         redirect: 'manual',
-        signal: controller.signal,
+        signal,
         headers: {
           Accept: 'application/rss+xml, application/atom+xml, application/xml, text/xml;q=0.9, */*;q=0.2',
           'User-Agent': 'NapHire.ro RSS reader (+https://naphirero.vercel.app/)'
         }
       });
-    } finally { clearTimeout(timeout); }
 
     if ([301, 302, 303, 307, 308].includes(response.status)) {
       const location = response.headers.get('location');

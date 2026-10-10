@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="hu">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow"><title>NapHíre · Szerkesztői segéd</title>
+  <link rel="stylesheet" href="editor-assistant.css?v=2">
+  <script src="editor-assistant.js?v=2" defer></script>
+</head>
+<body>
+  <header class="masthead"><a class="brand" href="klasszikus">naphíre<span>.ro</span></a><nav aria-label="Szerkesztői navigáció"><a href="admin.html">← Admin</a><a href="klasszikus">Híroldal ↗</a></nav></header>
+  <main>
+    <section class="intro"><div><p class="eyebrow">NAPHÍRE · SZERKESZTŐSÉG</p><h1>Szerkesztői segéd</h1><p>Fontos változások, követhető ügyek, eredeti források.</p></div><span class="editor-only">Szerkesztői ellenőrzésre</span></section>
+    <p class="scope">A jelzések itt tekinthetők át. A címlapra kerüléshez szerkesztői döntés szükséges.</p>
+    <section class="connection" aria-label="Belépés és ellenőrzés">
+      <div><label for="assistant-token">Admin kód</label><input id="assistant-token" type="password" autocomplete="current-password" placeholder="Ugyanaz a kód, mint az adminban"></div>
+      <button id="connect" class="primary">Megnyitás</button><button id="scan" disabled>Források ellenőrzése</button>
+      <label class="auto"><input id="auto" type="checkbox" disabled> 5 percenként, amíg nyitva van</label>
+    </section>
+    <p id="status" class="status" role="status" aria-live="polite">A jelzések megnyitásához add meg az admin kódot.</p>
+    <p id="fixture-note" class="fixture-note" hidden>ELLENŐRZÉSI ELŐNÉZET · Minden esemény és hír tesztadat.</p>
+    <section class="overview" aria-label="Áttekintés"><div><span>Ellenőrzésre vár</span><strong id="count-open">—</strong></div><div><span>Elérhető forrás</span><strong id="count-sources">—</strong></div><div><span>Legutóbbi ellenőrzés</span><strong id="checked-at" class="time">Még nem történt</strong></div></section>
+    <section id="energy-overview" class="panel energy-overview" hidden aria-label="Aktuális magyar áramár"></section>
+    <section class="panel inbox"><div class="section-head"><div><p class="eyebrow">SZERKESZTŐI OLVASÓLISTA</p><h2>Friss hírek a forrásokból</h2></div><label class="filter-label" for="inbox-region">Terület<select id="inbox-region"><option value="erdely">Erdély</option><option value="magyar">Magyarország</option><option value="mind">Mindkettő</option></select></label></div><p class="muted">Átnézhető friss cikkek, kiadónként legfeljebb négy. Ez az olvasólista nem fontossági rangsor; a követett ügyek találatai lent külön jelzést kapnak.</p><div id="digest" class="digest"><p class="empty">Megnyitás után lekérjük a friss híreket.</p></div></section>
+    <section class="feed-section"><div class="section-head"><div><p class="eyebrow">AMI FIGYELMET KÉRHET</p><h2>Jelzések</h2></div><label class="filter-label" for="filter">Mutasd<select id="filter"><option value="open">Ellenőrzésre várók</option><option value="all">Összes jelzés</option><option value="quake">Földrengések</option><option value="energy">Áramár</option><option value="news">Figyelt ügyek</option></select></label></div><div id="signals" class="signals"><p class="empty">Belépés után megjelennek a közösen mentett jelzések.</p></div></section>
+    <div class="settings-grid">
+      <section class="panel"><p class="eyebrow">ADATFORRÁSOK</p><h2>Mit figyelünk?</h2><div id="source-health"><p class="muted">Az első ellenőrzés után látszik a források állapota.</p></div><p class="fine-print">A hibás forrás üres válasza nem jelent eseménymentes időszakot. Az USGS nem minden kisebb helyi rengést rögzít.</p><p class="fine-print">Áramár: Energy-Charts / Bundesnetzagentur · SMARD.de, CC BY 4.0. Teljes napi, idővel súlyozott nagykereskedelmi átlagok, nem lakossági tarifák.</p><a href="https://api.energy-charts.info/" target="_blank" rel="noopener noreferrer">Áramáradatok és licenc ↗</a></section>
+      <section class="panel"><p class="eyebrow">JELZÉSI SZABÁLYOK</p><h2>Csak ami számít</h2><form id="rules-form"><label for="magnitude">Földrengés alsó magnitúdója</label><input id="magnitude" type="number" min="2" max="8" step="0.1" value="3.5" required><div class="row"><div><label for="price-percent">Áramárváltozás (%)</label><input id="price-percent" type="number" min="5" max="200" value="20" required></div><div><label for="price-absolute">Legalább (EUR/MWh)</label><input id="price-absolute" type="number" min="1" max="500" value="10" required></div></div><p class="fine-print">Árjelzéshez mindkét küszöb teljesüljön. Nulla közeli előző árnál az abszolút eltérés számít.</p><button type="submit" id="save-rules" disabled>Szabályok mentése</button></form></section>
+    </div>
+    <section class="panel watched"><div class="section-head"><div><p class="eyebrow">ERDÉLY ÉS MAGYARORSZÁG</p><h2>Figyelt ügyek</h2></div><span id="watch-count">0 / 12</span></div><p class="muted">Az összes megadott kulcsszó szerepeljen a címben vagy az RSS-részletben. A találat egy átnézendő cikk; nem igazolja automatikusan, hogy minden forrás ugyanarról az eseményről ír.</p><div id="watches"></div><form id="watch-form" class="watch-form"><div><label for="watch-label">Ügy neve</label><input id="watch-label" maxlength="100" required placeholder="Például: a magánrepülős ügy"></div><div><label for="watch-region">Források</label><select id="watch-region"><option value="erdely">Erdélyi sajtó</option><option value="magyar">Magyarországi sajtó</option><option value="mind">Mindkettő</option></select></div><div class="keywords"><label for="watch-keywords">2–5 kulcsszó, vesszővel</label><input id="watch-keywords" required placeholder="alkotmánybíró, magánrepül"></div><button type="submit" id="add-watch" disabled>Ügy követése</button></form><p class="fine-print">Erdély: Maszol, Krónika, Székelyhon, Transtelex. Magyarország: Telex, HVG, 24.hu, Index. Az adminban kikapcsolt források itt sem kerülnek lekérésre.</p></section>
+    <footer>Az ellenőrzés kézzel vagy a megnyitott segédben indul. A lap bezárása után nem fut háttérfigyelés. A mentés az admin meglévő szerveroldali kapcsolatát használja.</footer>
+  </main>
+</body>
+</html>
