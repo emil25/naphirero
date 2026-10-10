@@ -1,0 +1,102 @@
+/* NapHíre Körkép: a klasszikus címlaptól különálló, világos magazin-ritmusú nézet. */
+html.nh-korkep{--ink:#173748;--paper:#f4f3ef;--paper-warm:#f7f0e6;--nap:#df6755;--parazs:#c95443;--ej:#f4f3ef}
+html.nh-korkep body{background:#e9efee;color:#173748}
+html.nh-korkep .topbar{background:#e6eeec;color:#526b6b;border-bottom:1px solid #d6e0dc}
+html.nh-korkep .topbar .frissit-btn{color:#42625d;border-color:#c9d7d2}
+html.nh-korkep header.fo{background:#f8f7f3;color:#173748;border-bottom:0}
+html.nh-korkep .logo .nap{color:#173748}
+html.nh-korkep .rovatok{background:#e9dfd1;border-top:3px solid #d96755;border-bottom:1px solid #d8cdbf;box-shadow:0 5px 16px #17374812}
+html.nh-korkep .rovatok-in button{color:#344e55}
+html.nh-korkep .rovatok-in button.aktiv{background:#1f6970;color:white}
+html.nh-korkep .rovatok-in button.pp{background:#d96755;color:white}
+html.nh-korkep .korkep-masthead{display:block;margin:0 auto;padding:0 clamp(16px,4vw,48px);background:#f8f7f3}
+html.nh-korkep .korkep-masthead[hidden]{display:none!important}
+html.nh-korkep .korkep-masthead-in{max-width:1400px;margin:0 auto;padding:30px 0 28px;display:flex;align-items:end;justify-content:space-between;gap:24px;border-bottom:1px solid #d8dfdc}
+html.nh-korkep .korkep-masthead p{margin:0 0 8px;color:#a35243;font:800 10px/1.3 Inter,sans-serif;letter-spacing:.18em}
+html.nh-korkep .korkep-masthead h1{margin:0;color:#193748;font:850 clamp(38px,5vw,66px)/.98 Archivo,Inter,sans-serif;letter-spacing:-.065em}
+html.nh-korkep .korkep-masthead h1 span{font-family:'Source Serif 4',Georgia,serif;font-weight:650;font-style:italic;color:#1f7772;letter-spacing:-.06em}
+html.nh-korkep .korkep-masthead b{display:block;margin-top:11px;color:#5a7378;font:500 14px/1.5 Inter,sans-serif}
+html.nh-korkep .korkep-edition{flex:0 0 auto;text-align:right;color:#587177;font:700 11px/1.5 Inter,sans-serif}
+html.nh-korkep .korkep-edition span{display:block;color:#a35243;font-size:9px;letter-spacing:.15em}
+html.nh-korkep main{max-width:1480px;margin:0 auto;padding:24px clamp(16px,3vw,42px) 60px;background:#f8f7f3}
+html.nh-korkep .tema-sav{margin:0 0 28px!important;background:#e6efed!important;color:#173748!important;border:0!important;border-left:6px solid #d96755!important;border-radius:0 18px 18px 0!important;box-shadow:none!important}
+html.nh-korkep .tema-sav:before{display:none!important}
+html.nh-korkep .tema-sav-in{padding:27px clamp(18px,3vw,38px)!important}
+html.nh-korkep .tema-sav .ts-fej{color:#173748!important;font-size:clamp(28px,3vw,42px)!important}
+html.nh-korkep .tema-sav .ts-fej .alcim{color:#607a7b!important}
+html.nh-korkep .tema-sav .ts-forras-label{color:#67817f!important}
+html.nh-korkep .tema-sav .ts-forras-pill{background:#fff!important;color:#34565e!important}
+html.nh-korkep .tema-sav .ts-racs{gap:16px!important}
+html.nh-korkep .tema-sav .ts-kep{min-height:300px!important;border-radius:12px!important;background:#d5e2de!important;box-shadow:none!important}
+html.nh-korkep .tema-sav .ts-fo{background:#fff!important;color:#173748!important;border-radius:12px!important;padding:clamp(20px,3vw,38px)!important}
+html.nh-korkep .tema-sav .ts-fo h2{color:#173748!important;font-size:clamp(25px,2.7vw,39px)!important;line-height:1.08!important}
+html.nh-korkep .tema-sav .ts-fo p{color:#586f75!important}
+html.nh-korkep .tema-sav .ts-fo-cimke{color:#a35243!important}
+html.nh-korkep .tema-sav .ts-masok{background:#d8e6e3!important;border-color:#c5d7d2!important;border-radius:12px!important}
+html.nh-korkep .tema-sav .ts-masok-cim{color:#396d69!important;border-color:#c1d4cf!important}
+html.nh-korkep .tema-sav .ts-masok a{border-color:#c1d4cf!important}
+html.nh-korkep .tema-sav .ts-masok .nt-cim{color:#173748!important}
+html.nh-korkep .tema-sav .ts-masok .nt-meta{color:#658080!important}
+html.nh-korkep .nh-daily-spread{margin:28px 0!important;padding:clamp(18px,2.5vw,34px)!important;background:#f3eadc!important;border:0!important;border-top:5px solid #1f7772!important;border-radius:0 22px 0 22px!important}
+html.nh-korkep .nh-daily-spread .nh-mixed-head{padding:0 0 18px!important;border-bottom:1px solid #ddcfbd}
+html.nh-korkep .nh-daily-spread .nh-eyebrow{color:#a35243!important}
+html.nh-korkep .nh-daily-spread .nh-mixed-head h2{color:#173748!important;font:750 clamp(32px,3.5vw,48px)/1 'Source Serif 4',Georgia,serif!important;letter-spacing:-.04em!important}
+html.nh-korkep .nh-daily-spread .nh-mixed-tag{background:#fff;color:#58716e;border:1px solid #dfd4c5}
+html.nh-korkep .nh-daily-spread .nh-daily-layout{display:grid!important;grid-template-columns:minmax(0,1.2fr) minmax(300px,.8fr)!important;gap:14px!important;background:transparent!important;margin-top:18px!important}
+html.nh-korkep .nh-daily-spread .nh-daily-lead{display:flex!important;flex-direction:column!important;min-height:0!important;background:#fff!important;border-radius:14px!important;overflow:hidden}
+html.nh-korkep .nh-daily-spread .nh-daily-lead .nh-photo{position:relative!important;inset:auto!important;width:100%!important;height:auto!important;min-height:0!important;aspect-ratio:16/9;flex:none!important}
+html.nh-korkep .nh-daily-spread .nh-daily-lead .nh-copy{position:static!important;padding:22px 24px 25px!important;background:#fff!important;color:#173748!important}
+html.nh-korkep .nh-daily-spread .nh-daily-lead h3{color:#173748!important;font:760 clamp(26px,2.7vw,39px)/1.08 Archivo,Inter,sans-serif!important}
+html.nh-korkep .nh-daily-spread .nh-daily-lead p{color:#5a7075!important}
+html.nh-korkep .nh-daily-spread .nh-daily-river{display:grid!important;grid-template-columns:1fr 1fr!important;grid-template-rows:auto!important;align-items:stretch!important;gap:12px!important;background:transparent!important}
+html.nh-korkep .nh-daily-spread .nh-daily-card{display:flex!important;flex-direction:column!important;min-height:0!important;height:auto!important;background:#fff!important;border-radius:12px!important;overflow:hidden}
+html.nh-korkep .nh-daily-spread .nh-daily-card .nh-photo{position:relative!important;inset:auto!important;width:100%!important;height:auto!important;min-height:0!important;aspect-ratio:16/10;flex:none!important}
+html.nh-korkep .nh-daily-spread .nh-daily-card .nh-copy{position:static!important;flex:1;padding:13px 14px 16px!important;background:#fff!important;color:#173748!important}
+html.nh-korkep .nh-daily-spread .nh-daily-card h3{color:#173748!important;font:740 clamp(16px,1.35vw,20px)/1.16 Archivo,Inter,sans-serif!important}
+html.nh-korkep .nh-daily-spread .nh-daily-card.nh-no-photo{display:block!important}
+html.nh-korkep .nh-daily-spread .nh-daily-card .nh-photo[hidden]{display:none!important}
+html.nh-korkep .nh-trending-host{background:#e5efed!important;color:#173748!important;border:0!important;border-top:4px solid #d96755!important;border-radius:0!important;box-shadow:none!important}
+html.nh-korkep .nh-trending-host .nh-trending{padding:clamp(20px,3vw,38px)!important;color:#173748!important}
+html.nh-korkep .nh-trending-host .nh-trending header{border-color:#c7d7d3!important}
+html.nh-korkep .nh-trending-host .nh-trending-kicker{color:#a35243!important}
+html.nh-korkep .nh-trending-host .nh-trending h2{color:#173748!important;font:750 clamp(32px,3.5vw,48px)/1 'Source Serif 4',Georgia,serif!important}
+html.nh-korkep .nh-trending-host .nh-trending header p{color:#5d7777!important}
+html.nh-korkep .nh-trending-host .nh-trending ol{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;grid-auto-rows:auto!important;gap:14px!important;background:transparent!important}
+html.nh-korkep .nh-trending-host .nh-trending li{min-width:0;background:#fff!important;border-radius:12px!important;overflow:hidden}
+html.nh-korkep .nh-trending-host .nh-trending li:first-child{grid-column:auto!important;grid-row:span 2!important}
+html.nh-korkep .nh-trending-host .nh-trending li:first-child .nh-trending-image{height:230px!important}
+html.nh-korkep .nh-trending-host .nh-trending-image{height:150px!important}
+html.nh-korkep .nh-trending-host .nh-trending-row{padding:15px!important}
+html.nh-korkep .nh-trending-host .nh-trending strong{color:#173748!important}
+html.nh-korkep .nh-trending-host .nh-trending li:first-child strong{font:750 25px/1.12 'Source Serif 4',Georgia,serif!important}
+html.nh-korkep .nh-trending-host .nh-trending li:first-child .nh-trending-row{padding:19px!important}
+html.nh-korkep .nh-trending-host .nh-trending li[data-empty='true']{display:none!important}
+html.nh-korkep .rd-section{margin:38px 0!important;padding:clamp(18px,2.6vw,34px)!important;background:#f0f4f2!important;border-top:3px solid #1f7772!important;border-radius:0 18px 0 18px!important}
+html.nh-korkep .rd-header{margin-bottom:20px!important}
+html.nh-korkep .rd-title-block h2{color:#173748!important}
+html.nh-korkep .rd-lead,html.nh-korkep .rd-hungary-feature,html.nh-korkep .rd-culture-feature{border-radius:12px!important;overflow:hidden}
+html.nh-korkep .rd-photo{overflow:hidden}
+
+@media(max-width:900px){
+  html.nh-korkep .korkep-masthead-in{align-items:start;flex-direction:column}
+  html.nh-korkep .korkep-edition{text-align:left}
+  html.nh-korkep .nh-daily-spread .nh-daily-layout{grid-template-columns:1fr!important}
+  html.nh-korkep .nh-daily-spread .nh-daily-river{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  html.nh-korkep .nh-trending-host .nh-trending ol{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  html.nh-korkep .nh-trending-host .nh-trending li:first-child{grid-row:auto!important}
+}
+@media(max-width:600px){
+  html.nh-korkep .korkep-masthead{padding-inline:18px}
+  html.nh-korkep .korkep-masthead-in{padding:22px 0}
+  html.nh-korkep main{padding:16px 12px 40px}
+  html.nh-korkep .tema-sav-in{padding:20px 14px!important}
+  html.nh-korkep .tema-sav .ts-racs{grid-template-columns:1fr!important}
+  html.nh-korkep .tema-sav .ts-kep{min-height:0!important;height:auto!important;aspect-ratio:16/9}
+  html.nh-korkep .nh-daily-spread{padding:17px!important}
+  html.nh-korkep .nh-daily-spread .nh-daily-river{grid-template-columns:1fr!important}
+  html.nh-korkep .nh-daily-spread .nh-daily-card{display:grid!important;grid-template-columns:112px minmax(0,1fr)!important;flex-direction:row!important}
+  html.nh-korkep .nh-daily-spread .nh-daily-card .nh-photo{height:100%!important;min-height:120px!important;aspect-ratio:auto!important}
+  html.nh-korkep .nh-daily-spread .nh-daily-card.nh-no-photo{display:block!important}
+  html.nh-korkep .nh-trending-host .nh-trending ol{grid-template-columns:1fr!important}
+  html.nh-korkep .nh-trending-host .nh-trending li:first-child .nh-trending-image{height:200px!important}
+}

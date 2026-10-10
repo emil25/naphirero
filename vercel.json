@@ -16,11 +16,32 @@
     {
       "source": "/klasszikus",
       "destination": "/classic-editorial-previous.html"
+    },
+    {
+      "source": "/korkep",
+      "destination": "/classic-editorial-previous.html"
     }
   ],
   "headers": [
     {
       "source": "/klasszikus",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        },
+        {
+          "key": "CDN-Cache-Control",
+          "value": "no-store"
+        },
+        {
+          "key": "Vercel-CDN-Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    },
+    {
+      "source": "/korkep",
       "headers": [
         {
           "key": "Cache-Control",

@@ -4,7 +4,7 @@ Statikus hírportál saját RSS-közvetítővel és tartós szerkesztőségi men
 
 ## A közzétett nézet
 
-A `vercel.json` a `/` útvonalat a `/klasszikus` oldalra irányítja. A `/klasszikus` a `classic-editorial-previous.html` változatot szolgálja ki. Az `index.html` és a `legacy.html` külön is elérhető; egyik sem vált nézetet egy később érkező szerkesztőségi beállítás miatt.
+A `vercel.json` a `/` útvonalat a `/klasszikus` oldalra irányítja. A `/klasszikus` a `classic-editorial-previous.html` klasszikus címlapját szolgálja ki. A `/korkep` ugyanennek a gyors, közös hírbetöltésnek egy külön nevű és eltérő, világos editorial elrendezésű változata; a felső gombbal mindkét irányban át lehet váltani. Az `index.html`, az `uj.html` és a `legacy.html` továbbra is külön elérhető; egyik sem vált nézetet egy később érkező szerkesztőségi beállítás miatt.
 
 Vercelen ennek a Git-repozitóriumnak a gyökere a projekt gyökere. Framework Preset: Other. Nincs külön build vagy output könyvtár.
 
