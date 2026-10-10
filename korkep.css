@@ -4,9 +4,9 @@ html.nh-korkep body{background:#e9efee;color:#173748}
 html.nh-korkep .topbar{background:#e6eeec!important;color:#526b6b!important;border-bottom:1px solid #d6e0dc!important}
 html.nh-korkep .topbar .datum,html.nh-korkep .topbar .idojaras{color:#526b6b!important}
 html.nh-korkep .topbar .frissit-btn{color:#42625d!important;border-color:#c9d7d2!important;background:#fff!important}
-html.nh-korkep header.fo{position:relative!important;background:#f8f7f3!important;color:#173748!important;border:0!important;box-shadow:none!important}
+html.nh-korkep header.fo{position:relative!important;background:#f8f7f3!important;background-image:none!important;color:#173748!important;border:0!important;box-shadow:none!important}
 html.nh-korkep header.fo:before,html.nh-korkep .fejlec-in:before,html.nh-korkep .fejlec-in:after{display:none!important}
-html.nh-korkep .fejlec-in{background:#f8f7f3!important}
+html.nh-korkep header.fo .fejlec-in{background:#f8f7f3!important;background-image:none!important}
 html.nh-korkep .logo .nap{color:#173748}
 html.nh-korkep .logo .brand-name,html.nh-korkep .logo .brand-domain{color:#173748!important}
 html.nh-korkep .logo .szlogen{color:#526b6b!important}
