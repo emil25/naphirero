@@ -28,3 +28,21 @@ test('Körkép saját, mobilra igazodó, világos editorial elrendezést kap', (
   assert.match(css, /@media\(max-width:600px\)/);
   assert.match(css, /\[hidden\]\{display:none!important\}/);
 });
+
+test('Körkép rövid, hírekre fókuszáló nyitást és erősebb színkontrasztot használ', () => {
+  assert.match(js, /mastheadTitle\.textContent = 'Mai hírek'/);
+  assert.match(js, /themeTitle/);
+  assert.match(css, /\.korkep-masthead\{padding:0 clamp\(16px,4vw,48px\);background:#17645f\}/);
+  assert.match(css, /main\{padding-top:17px;background:#fff\}/);
+});
+
+test('A Körkép külön sorrendben rendezi a napi válogatást és a többforrásos trendeket', () => {
+  assert.match(js, /insertBefore\(dailySection, featureGrid\)/);
+  assert.match(js, /anchor\.insertAdjacentElement\('afterend', latest\)/);
+  assert.match(css, /\.rd-erdely \.rd-transylvania-top/);
+  assert.match(css, /\.rd-magyarorszag \.rd-hungary-feature/);
+  assert.match(css, /\.rd-gazdasag \.rd-money-layout/);
+  assert.match(css, /\.rd-sport \.rd-sport-layout/);
+  assert.match(css, /\.rd-kultura \.rd-culture-layout/);
+  assert.match(css, /clip-path:polygon/);
+});
