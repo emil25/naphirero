@@ -1,5 +1,6 @@
 (() => {
  let input=null;const e=biztonsagos;
+ const isKorkep=location.pathname.replace(/\/+$/,'')==='/korkep';
  const photo=h=>h.kep?`<span class="ed-photo"><img src="${e(h.kep)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.parentElement.hidden=true"></span>`:'';
  const meta=h=>`<span class="ed-meta">${e(h.forras)} · ${idoOta(new Date(h.datum))}</span>`;
  const attrs=h=>`${dc(h)} href="${e(h.link)}" target="_blank" rel="noopener noreferrer"`;
@@ -121,7 +122,7 @@
    (async()=>{const r=await fetch('/rss?url='+encodeURIComponent('https://szekelykonyhaeskert.ro/'),{signal:AbortSignal.timeout(7000)});if(!r.ok)return;const doc=new DOMParser().parseFromString(await r.text(),'text/html');const items=[...doc.querySelectorAll('h4 a[href^="/recept/"]')].slice(0,3).map(a=>{const box=a.parentElement.parentElement.querySelector('.photo-box');const img=box?.getAttribute('style')?.match(/url\(['"]?([^'"\)]+)/)?.[1];return {cim:a.textContent.trim(),link:new URL(a.getAttribute('href'),'https://szekelykonyhaeskert.ro/').href,kep:img?new URL(img,'https://szekelykonyhaeskert.ro/').href:''}});if(items.length){magazines.konyha=items;updateMagazines()}})()
   ]);
  }
- fetch('magazine-selection.json').then(r=>r.json()).then(data=>{Object.assign(magazines,data);updateMagazines()}).catch(()=>{}).finally(refreshMagazineSources);
+ if(!isKorkep)fetch('magazine-selection.json').then(r=>r.json()).then(data=>{Object.assign(magazines,data);updateMagazines()}).catch(()=>{}).finally(refreshMagazineSources);
 
  const romanCacheKey='naphire_roman_lapszemle_v5';
  let romanNews=[];let romanAll=[];
@@ -207,12 +208,12 @@
   updateRomanPress();
   const culture=document.querySelector('#rovat-kultura');if(!culture)return;
   const pool=distinct(fresh());
-  culture.insertAdjacentHTML('afterend',magazineHTML());
+  if(!isKorkep)culture.insertAdjacentHTML('afterend',magazineHTML());
   const economy=document.querySelector('#rovat-gazdasag .rd-header');economy?.insertAdjacentHTML('afterend','<div class="ed-economy-topics"><span>Árak és bérek</span><span>Energia</span><span>Vállalatok</span><span>Közpénzek</span></div>');
   const sport=document.querySelector('#rovat-sport .rd-header');const scores=pool.filter(available).filter(h=>h.rovat==='sport'&&/\b\d{1,2}\s*[–:-]\s*\d{1,2}\b/.test(h.cim)).slice(0,3);
   if(scores.length)sport?.insertAdjacentHTML('afterend',`<div class="ed-scores"><span>A sporthírekben közölt eredmények</span>${scores.map(h=>`<a ${attrs(h)}>${e(h.cim)}</a>`).join('')}</div>`);
  };
- const nav=document.querySelector('.rovatok-in');for(const [key,name] of [['eletmod','Magazin']]){const b=document.createElement('button');b.type='button';b.textContent=name;b.onclick=ev=>{ev.stopPropagation();if(!document.querySelector('#rovat-'+key)){history.replaceState(null,'',location.pathname);valtRovat('mind')}document.querySelector('#rovat-'+key)?.scrollIntoView({behavior:'smooth'})};nav.append(b)}
+ if(!isKorkep){const nav=document.querySelector('.rovatok-in');for(const [key,name] of [['eletmod','Magazin']]){const b=document.createElement('button');b.type='button';b.textContent=name;b.onclick=ev=>{ev.stopPropagation();if(!document.querySelector('#rovat-'+key)){history.replaceState(null,'',location.pathname);valtRovat('mind')}document.querySelector('#rovat-'+key)?.scrollIntoView({behavior:'smooth'})};nav.append(b)}}
  window.__NH_RENDERER_LOADED__ = true;
  document.addEventListener('nh:home-ready', () => refreshRomanPress(), { once: true });
 })();

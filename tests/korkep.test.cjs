@@ -8,6 +8,7 @@ const korkepHtml = fs.readFileSync(require.resolve('../korkep.html'), 'utf8');
 const css = fs.readFileSync(require.resolve('../korkep.css'), 'utf8');
 const js = fs.readFileSync(require.resolve('../korkep.js'), 'utf8');
 const app = fs.readFileSync(require.resolve('../korkep-app.js'), 'utf8');
+const editorial = fs.readFileSync(require.resolve('../classic-editorial-previous.js'), 'utf8');
 
 test('Körkép külön útvonalon nyílik, a klasszikus marad a címlap alapértelmezése', () => {
   assert.ok(config.rewrites.some(route => route.source === '/korkep' && route.destination === '/korkep.html'));
@@ -34,6 +35,9 @@ test('Körkép a közös híradatot használja, nem indít külön forrásletöl
 test('Körképből kikerültek a régi magazin- és VB-sáv maradványai', () => {
   assert.doesNotMatch(korkepHtml + app, /Nőileg|Székely Konyha|video-sav|VB 2026|vbPanelFrissit|Kísérleti editorial/);
   assert.match(app, /function szekcioHTML\(\)\{ return ""; \}/);
+  assert.match(editorial, /const isKorkep=location\.pathname\.replace/);
+  assert.match(editorial, /if\(!isKorkep\)culture\.insertAdjacentHTML/);
+  assert.match(editorial, /if\(!isKorkep\)fetch\('magazine-selection\.json'/);
 });
 
 test('Körkép saját, mobilra igazodó, világos editorial elrendezést kap', () => {
@@ -41,6 +45,8 @@ test('Körkép saját, mobilra igazodó, világos editorial elrendezést kap', (
   assert.match(css, /\.nh-daily-river/);
   assert.match(css, /\.nh-trending-host/);
   assert.match(css, /@media\(max-width:600px\)/);
+  assert.match(css, /header\.fo \.logo \.brand-name\{color:#173d45!important\}/);
+  assert.match(css, /@media\(max-width:700px\)\{\s*html\.nh-korkep \.korkep-masthead-in\{align-items:flex-start;flex-direction:column/);
   assert.match(css, /\[hidden\]\{display:none!important\}/);
 });
 
