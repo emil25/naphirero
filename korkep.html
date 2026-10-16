@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="hu" class="nh-korkep nh-booting">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; connect-src 'self'; img-src 'self' https: data: blob:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; media-src 'self' https:; base-uri 'self'; form-action 'self'; frame-ancestors 'self';">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NapHíre Körkép – fontos történetek több forrásból</title>
+<meta name="description" content="Erdély, Magyarország és a világ fontos történetei egy helyen, több hírforrásból.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,400..900&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="classic-editorial-base.css?v=1">
+
+
+
+
+
+
+<link rel="stylesheet" href="rovat-design.css?v=20261008-width" onerror="document.documentElement.dataset.nhLoadError='1'">
+<link rel="stylesheet" href="story-view.css?v=20261008-updates" onerror="document.documentElement.dataset.nhLoadError='1'">
+<link rel="stylesheet" href="classic-editorial-previous.css?v=20261008-editorial" onerror="document.documentElement.dataset.nhLoadError='1'">
+<link rel="stylesheet" href="home-runtime.css?v=64af3067" onerror="document.documentElement.dataset.nhLoadError='1'">
+<link rel="stylesheet" href="korkep.css?v=8">
+<script defer src="home-runtime.js?v=38da86c3" onerror="document.documentElement.dataset.nhLoadError='1'"></script>
+<script defer src="rovat-design.js?v=20261008-selection" onerror="document.documentElement.dataset.nhLoadError='1'"></script>
+<script defer src="story-engine.js?v=a101cd0c" onerror="document.documentElement.dataset.nhLoadError='1'"></script>
+<script defer src="story-view.js?v=20261008-updates" onerror="document.documentElement.dataset.nhLoadError='1'"></script>
+<script defer src="editorial-model.js?v=20261008-culture" onerror="document.documentElement.dataset.nhLoadError='1'"></script>
+<script defer src="classic-editorial-previous.js?v=20261008-editorial" onerror="document.documentElement.dataset.nhLoadError='1'"></script>
+<script defer src="korkep.js?v=5"></script>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-in">
+    <span class="datum" id="mai-datum"></span>
+    <div class="idojaras">
+      <span id="frissitve"></span>
+      <button class="frissit-btn" id="frissit-gomb" title="Hírek frissítése">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M21 12a9 9 0 1 1-2.64-6.36M21 3v6h-6"/></svg>
+        Frissítés
+      </button>
+    </div>
+  </div>
+</div>
+
+<header class="fo">
+  <div class="fejlec-in">
+    <a href="#" class="logo" aria-label="naphire.ro – főoldal" onclick="valtRovat('mind');return false">
+      <span class="logo-mark" aria-hidden="true"></span>
+      <span class="logo-szoveg">
+        <span class="logo-fo"><span class="brand-name">naphire</span><span class="brand-domain">.ro</span></span>
+        <span class="szlogen">A napi hírfigyelő · percről percre</span>
+      </span>
+    </a>
+    <div class="regio-kapcsolo" role="group" aria-label="Címlap régiója">
+      <button type="button" data-regio="erdely" onclick="valtRegio('erdely')">Erdély</button>
+      <button type="button" data-regio="mind" class="aktiv" onclick="valtRegio('mind')">Hírfolyam</button>
+      <button type="button" data-regio="magyar" onclick="valtRegio('magyar')">Magyarország</button>
+    </div>
+    <div class="premium-header-actions">      <a href="/korkep" title="NapHíre Körkép" style="display:inline-flex;align-items:center;white-space:nowrap;color:#173b4b;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;border:1px solid #c5d7d5;border-radius:999px;padding:8px 11px;background:#fff">Körkép</a>
+      <div class="kereso">
+        <input type="search" id="kereso-mezo" placeholder="Keresés…" aria-label="Keresés a hírekben">
+      </div>
+      <button class="header-live" type="button" onclick="valtRovat('friss')">Friss hírek</button>
+      <button class="header-menu" type="button" aria-label="Menü" aria-expanded="false" onclick="const nyitva=this.closest('header').classList.toggle('menu-open');this.setAttribute('aria-expanded',String(nyitva))"><i></i></button>
+    </div>
+  </div>
+  <nav class="rovatok" id="rovat-sav">
+    <div class="rovatok-in">
+      <button data-rovat="mind" class="aktiv">Főoldal</button>
+      <button data-rovat="erdely" class="sz-zold">Erdély</button>
+      <button data-rovat="magyar" class="sz-piros">Magyarország</button>
+      <button data-rovat="gazdasag" class="sz-arany">Gazdaság</button>
+      <button data-rovat="sport" class="sz-kek">Sport</button>
+      <button data-rovat="kultura" class="sz-lila">Kultúra</button>
+      <button data-rovat="friss" class="pp">● Percről percre</button>
+    </div>
+  </nav>
+</header>
+
+<section class="korkep-masthead" aria-label="NapHíre Körkép" hidden>
+  <div class="korkep-masthead-in">
+    <div><p>ERDÉLY · MAGYARORSZÁG · VILÁG</p><h1>NapHíre <span>Körkép</span></h1><b>A nap fontos ügyei, több szerkesztőség nézőpontjából.</b></div>
+    <div class="korkep-edition"><span>MAI KIADÁS</span><time id="korkep-date"></time></div>
+  </div>
+</section>
+
+<main>
+  <div id="tartalom">
+    <div class="betoltes">
+      <div class="napocska"></div>
+      Hírek betöltése Erdélyből és Magyarországról…
+    </div>
+  </div>
+</main>
+
+<section class="forrasaink">
+  <div class="forrasaink-in">
+    <h3>Forrásaink</h3>
+    <div class="forrasaink-lista" id="forrasaink-lista"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="lablec-in">
+    <div>
+      <div class="logo">
+      <span class="logo-mark" aria-hidden="true"></span>
+      <span class="logo-szoveg">
+        <span class="logo-fo"><span class="brand-name">naphire</span><span class="brand-domain">.ro</span></span>
+        <span class="szlogen">A napi hírfigyelő · percről percre</span>
+      </span>
+    </div>
+      <p>Erdélyi és magyarországi hírek egy helyen, percről percre. A cikkek a partneroldalak RSS-csatornáiból származnak – a címre kattintva az eredeti forráson olvashatod tovább.</p>
+    </div>
+    <div>
+      <h4>Rovatok</h4>
+      <ul>
+        <li><a href="#" onclick="valtRovat('mind');return false">Főoldal</a></li>
+        <li><a href="#" onclick="valtRovat('erdely');return false">Erdély</a></li>
+        <li><a href="#" onclick="valtRovat('magyar');return false">Magyarország</a></li>
+        <li><a href="#" onclick="valtRovat('friss');return false">Percről percre</a></li>
+        <li><a href="/korkep">Körkép főoldal</a></li>
+        <li><a href="/klasszikus">Klasszikus változat</a></li>
+        <li><a href="admin.html">Szerkesztői admin</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="lablec-allapot" class="lablec-allapot" aria-live="polite"></div>
+  <div class="lablec-also">© <span id="ev"></span> naphíre.ro · Független, algoritmikus sajtószemle és AI-vezérelt hírplatform · Minden cikk a megjelölt forrás tulajdona · <span style="color:#4a5871">build 2026-07-05 07:00 UTC</span></div>
+</footer>
+
+<script src="korkep-app.js?v=1"></script>
+</body>
+</html>
+
+

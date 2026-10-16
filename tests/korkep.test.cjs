@@ -4,21 +4,36 @@ const fs = require('node:fs');
 
 const config = JSON.parse(fs.readFileSync(require.resolve('../vercel.json'), 'utf8'));
 const html = fs.readFileSync(require.resolve('../classic-editorial-previous.html'), 'utf8');
+const korkepHtml = fs.readFileSync(require.resolve('../korkep.html'), 'utf8');
 const css = fs.readFileSync(require.resolve('../korkep.css'), 'utf8');
 const js = fs.readFileSync(require.resolve('../korkep.js'), 'utf8');
+const app = fs.readFileSync(require.resolve('../korkep-app.js'), 'utf8');
 
 test('Körkép külön útvonalon nyílik, a klasszikus marad a címlap alapértelmezése', () => {
-  assert.ok(config.rewrites.some(route => route.source === '/korkep' && route.destination === '/classic-editorial-previous.html'));
+  assert.ok(config.rewrites.some(route => route.source === '/korkep' && route.destination === '/korkep.html'));
   assert.ok(config.rewrites.some(route => route.source === '/klasszikus' && route.destination === '/classic-editorial-previous.html'));
   assert.ok(config.redirects.some(route => route.source === '/' && route.destination === '/klasszikus'));
 });
 
+test('Körkép külön HTML-oldalt használ, a klasszikus címlap megmarad', () => {
+  assert.match(korkepHtml, /<html lang="hu" class="nh-korkep nh-booting">/);
+  assert.match(korkepHtml, /korkep-app\.js/);
+  assert.match(html, /classic-editorial-base\.css/);
+  assert.equal((korkepHtml.match(/<style\b/g) || []).length, 0);
+  assert.equal((html.match(/<style\b/g) || []).length, 0);
+});
+
 test('Körkép a közös híradatot használja, nem indít külön forrásletöltést', () => {
   assert.match(html, /href="\/korkep"[^>]*>Körkép</);
-  assert.match(html, /korkep\.css/);
-  assert.match(html, /korkep\.js/);
+  assert.match(korkepHtml, /korkep\.css/);
+  assert.match(korkepHtml, /korkep\.js/);
   assert.match(js, /location\.pathname[^;]*=== '\/korkep'/);
   assert.doesNotMatch(js, /fetch\s*\(/);
+});
+
+test('Körképből kikerültek a régi magazin- és VB-sáv maradványai', () => {
+  assert.doesNotMatch(korkepHtml + app, /Nőileg|Székely Konyha|video-sav|VB 2026|vbPanelFrissit|Kísérleti editorial/);
+  assert.match(app, /function szekcioHTML\(\)\{ return ""; \}/);
 });
 
 test('Körkép saját, mobilra igazodó, világos editorial elrendezést kap', () => {
@@ -32,8 +47,8 @@ test('Körkép saját, mobilra igazodó, világos editorial elrendezést kap', (
 test('Körkép rövid, hírekre fókuszáló nyitást és erősebb színkontrasztot használ', () => {
   assert.match(js, /mastheadTitle\.textContent = 'Mai hírek'/);
   assert.match(js, /themeTitle/);
-  assert.match(css, /\.korkep-masthead\{padding:0 clamp\(16px,4vw,48px\);background:#17645f\}/);
-  assert.match(css, /main\{padding-top:17px;background:#fff\}/);
+  assert.match(css, /\.korkep-masthead\{background:#f07861;padding-inline:clamp\(16px,4vw,48px\)\}/);
+  assert.match(css, /main\{max-width:none;padding:0 clamp\(16px,4vw,48px\) 56px;background:#fff\}/);
 });
 
 test('A Körkép külön sorrendben rendezi a napi válogatást és a többforrásos trendeket', () => {
