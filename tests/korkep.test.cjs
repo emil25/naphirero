@@ -46,6 +46,8 @@ test('Körkép saját, mobilra igazodó, világos editorial elrendezést kap', (
   assert.match(css, /\.nh-trending-host/);
   assert.match(css, /@media\(max-width:600px\)/);
   assert.match(css, /header\.fo \.logo \.brand-name\{color:#173d45!important\}/);
+  assert.match(css, /\.regio-kapcsolo button\{color:#173d45!important\}/);
+  assert.match(css, /\.regio-kapcsolo button\.aktiv\{color:#fff!important\}/);
   assert.match(css, /@media\(max-width:700px\)\{\s*html\.nh-korkep \.korkep-masthead-in\{align-items:flex-start;flex-direction:column/);
   assert.match(css, /\[hidden\]\{display:none!important\}/);
 });

@@ -222,6 +222,8 @@ html.nh-korkep .ro-press>footer b{color:#17645f!important}
 html.nh-korkep header.fo .logo .brand-name{color:#173d45!important}
 html.nh-korkep header.fo .logo .brand-domain{color:#f07861!important}
 html.nh-korkep header.fo .logo .szlogen{color:#526b68!important}
+html.nh-korkep .regio-kapcsolo button{color:#173d45!important}
+html.nh-korkep .regio-kapcsolo button.aktiv{color:#fff!important}
 html.nh-korkep .korkep-masthead-in{gap:10px;min-width:0}
 html.nh-korkep .korkep-masthead-in>div:first-child{min-width:0}
 html.nh-korkep .korkep-edition{flex:0 0 auto;max-width:100%;text-align:right}
